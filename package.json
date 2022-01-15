@@ -1,0 +1,22 @@
+{
+  "name": "minerapp",
+  "version": "1.0.0",
+  "description": "electron app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/specfor/minerAPP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/specfor/minerAPP/issues"
+  },
+  "homepage": "https://github.com/specfor/minerAPP#readme",
+  "devDependencies": {
+    "electron": "^16.0.7"
+  }
+}
