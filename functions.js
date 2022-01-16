@@ -20,20 +20,28 @@ let btnLogOut = document.querySelector("#menu-log-out-btn");
 // change the active section to hidden.
 function hideActiveArea() {
     activeElement = document.querySelector("#" + activeBodyAreaId);
-    activeElement.classList.toggle("static-section");
+    activeElement.classList.toggle("hider");
+}
+
+function showElement(id) {
+    element = document.querySelector("#" + id);
+    element.classList.toggle("hider")
+    activeBodyAreaId = id;
+    idSplit = id.split("-");
+    activeSideBarButtonId = "menu-" + idSplit[0] + "-btn";
 }
 
 btnDashboard.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-dashboard-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("dashboard-area")
     }
 });
 
 btnUser.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-user-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("user-area")
     }
 
 });
@@ -41,42 +49,42 @@ btnUser.addEventListener("click", ()=>{
 btnMessages.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-messages-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("messages-area")
     }
 });
 
 btnAnalytics.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-analytics-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("analytics-area")
     }
 });
 
 btnFiles.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-files-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("files-area")
     }
 });
 
 btnOrders.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-orders-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("orders-area")
     }
 });
 
 btnSave.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-saved-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("saved-area")
     }
 });
 
 btnSettings.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-settings-btn") {
         hideActiveArea();
-        dashboardSection.className = "home-section";
+        showElement("settings-area")
     }
 });
 
