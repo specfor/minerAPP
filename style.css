@@ -320,6 +320,7 @@
   color: white;
   justify-content: space-between;
   border: none;
+  backdrop-filter: blur(40px);
 }
 .card:hover{
   border-style: solid;
@@ -371,6 +372,7 @@
   background-repeat: no-repeat;
   background-size: 100% 75%;
   width: 100%;
+  
 }
 .down-bar .sec_2{
   background-color: rgba(240, 248, 255, 0.152);
@@ -393,4 +395,32 @@
   transition: all 0.5s ease;
   z-index: 2;
 
+}
+/*adjestmens for support icons*/
+.sec_2 .logos{
+  display: inline-block;
+  padding: 10px;
+  padding-right: 5px;
+  padding-left:0px;
+}
+
+.links {
+  position:relative;
+  border-radius: 10px;
+  color: #FFF;
+  background-color: #11101dc9;
+  width: 390px;
+  margin-left: -550px;
+  bottom: -160px;
+  padding-left: 100px;
+  z-index: -1;
+  justify-content: space-between}
+
+.links .header_links{
+  margin-left: 83x;
+}
+
+
+.sec_2 .logos .logo_icons {
+  display: inline-block;
 }
