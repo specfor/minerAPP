@@ -264,11 +264,6 @@
   transition-property: background, box-shadow;
 }
 
-.datetime:hover{
-  background: #2E94E3;
-  box-shadow: 0 0 30px #2E94E3;
-}
-
 .date{
   font-size: 10px;
   font-weight: 300;
@@ -365,10 +360,9 @@
   background-color: #11101d7c;
 }
 .down-bar{
- 
   display: grid;
   grid-template-columns: 3fr 1fr;
-  height: 385px;
+  height: 440px;
   width: 100%;
 }
 .down-bar .sec_1{
@@ -385,7 +379,7 @@
   font-size: 32px;
   font-weight: 800;
   color: aliceblue;
-  align-: center;
+  margin-left: 35px;
 }
 
 .static-section{
