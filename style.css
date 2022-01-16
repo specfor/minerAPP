@@ -207,7 +207,7 @@
 .sidebar li.profile .job{
   font-size: 12px;
 }
-.sidebar .profile #log_out{
+.sidebar .profile #menu-log-out-btn{
   position: absolute;
   top: 50%;
   right: 0;
@@ -219,7 +219,7 @@
   border-radius: 0px;
   transition: all 0.5s ease;
 }
-.sidebar.open .profile #log_out{
+.sidebar.open .profile #menu-log-out-btn{
   width: 50px;
   background: none;
 }

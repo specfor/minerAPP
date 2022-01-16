@@ -1,8 +1,10 @@
-const { app } = require("electron");
-console.log("started");
 // Use this variable to set dashboard btn as the active sidebar button at app start.
 // Later change the variable to the relavent class id when change the main content according to the button press.
 let activeSideBarButtonId = "menu-dashboard-btn";
+let activeBodyAreaId = "dashboard-area";
+
+// Main content areas for buttons
+let dashboardSection = document.querySelector("#dashboard-area");
 
 // Variables with main content areas relavent to left menubar buttons.
 let btnDashboard = document.querySelector("#menu-dashboard-btn");
@@ -15,13 +17,10 @@ let btnSave = document.querySelector("#menu-saved-btn");
 let btnSettings = document.querySelector("#menu-settings-btn");
 let btnLogOut = document.querySelector("#menu-log-out-btn");
 
-// Main content areas for buttons
-let dashboardSection = document.querySelector("#dashboard-area");
-
 // change the active section to hidden.
 function hideActiveArea() {
-    activeElement = document.querySelector("#" + activeSideBarButtonId);
-    activeElement.className = "static-section";
+    activeElement = document.querySelector("#" + activeBodyAreaId);
+    activeElement.classList.toggle("static-section");
 }
 
 btnDashboard.addEventListener("click", ()=>{
@@ -37,37 +36,50 @@ btnUser.addEventListener("click", ()=>{
         dashboardSection.className = "home-section";
     }
 
-});btnMessages.addEventListener("click", ()=>{
+});
+
+btnMessages.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-messages-btn") {
         hideActiveArea();
         dashboardSection.className = "home-section";
     }
 });
+
 btnAnalytics.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-analytics-btn") {
         hideActiveArea();
         dashboardSection.className = "home-section";
     }
-});btnFiles.addEventListener("click", ()=>{
+});
+
+btnFiles.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-files-btn") {
         hideActiveArea();
         dashboardSection.className = "home-section";
     }
-});btnOrders.addEventListener("click", ()=>{
+});
+
+btnOrders.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-orders-btn") {
         hideActiveArea();
         dashboardSection.className = "home-section";
     }
-});btnSave.addEventListener("click", ()=>{
+});
+
+btnSave.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-saved-btn") {
         hideActiveArea();
         dashboardSection.className = "home-section";
     }
-});btnSettings.addEventListener("click", ()=>{
+});
+
+btnSettings.addEventListener("click", ()=>{
     if (activeSideBarButtonId != "menu-settings-btn") {
         hideActiveArea();
         dashboardSection.className = "home-section";
     }
-});btnLogOut.addEventListener("click", ()=>{
+});
+
+btnLogOut.addEventListener("click", ()=>{
     app.quit();
 });
