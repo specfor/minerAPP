@@ -21,56 +21,56 @@
     </div>
     <ul class="nav-list">
       <li>
-        <a href="#">
+        <a id="menu-dashboard-btn" href="#">
           <i class='bx bx-grid-alt'></i>
           <span class="links_name">Dashboard</span>
         </a>
          <span class="tooltip">Dashboard</span>
       </li>
       <li>
-       <a href="#">
+       <a id="menu-user-btn" href="#">
          <i class='bx bx-user' ></i>
          <span class="links_name">User</span>
        </a>
        <span class="tooltip">User</span>
      </li>
      <li>
-       <a href="#">
+       <a id="menu-messages-btn" href="#">
          <i class='bx bx-chat' ></i>
          <span class="links_name">Messages</span>
        </a>
        <span class="tooltip">Messages</span>
      </li>
      <li>
-       <a href="#">
+       <a id="menu-analytics-btn" href="#">
          <i class='bx bx-pie-chart-alt-2' ></i>
          <span class="links_name">Analytics</span>
        </a>
        <span class="tooltip">Analytics</span>
      </li>
      <li>
-       <a href="#">
+       <a id="menu-files-btn" href="#">
          <i class='bx bx-folder' ></i>
          <span class="links_name">File Manager</span>
        </a>
        <span class="tooltip">Files</span>
      </li>
      <li>
-       <a href="#">
+       <a id="menu-orders-btn" href="#">
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">Order</span>
        </a>
        <span class="tooltip">Order</span>
      </li>
      <li>
-       <a href="#">
+       <a id="menu-saved-btn" href="#">
          <i class='bx bx-heart' ></i>
          <span class="links_name">Saved</span>
        </a>
        <span class="tooltip">Saved</span>
      </li>
      <li>
-       <a href="#">
+       <a id="menu-settings-btn" href="#">
          <i class='bx bx-cog' ></i>
          <span class="links_name">Setting</span>
        </a>
@@ -84,14 +84,14 @@
              <div class="job">_his level</div>
            </div>
          </div>
-         <i class='bx bx-log-out' id="log_out" ></i>
+         <i class='bx bx-log-out' id="menu-log-out-btn"></i>
      </li>
     </ul>
   </div>
 
   <!--  main area-->
 
-  <section class="home-section">
+  <section id="dashboard-area" class="home-section ">
     <div class="cardbox">
       <div class="card">
         <div class="numbers">600$</div>
@@ -187,16 +187,15 @@
 
   </div>
   </section>
-  <section class="static-section">
+  <section class="static-section ">
     <h1>hello</h1>
   </section>
 
 
 
   <script>
-
-
-
+  
+  console.log("data");
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
   let searchBtn = document.querySelector(".bx-search");
@@ -220,5 +219,7 @@
    }
   }
   </script>
+
+  <script src="functions.js"></script>
 </body>
 </html>
