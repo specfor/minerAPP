@@ -252,6 +252,55 @@
   margin: 18px;
 }
 
+.datetime{
+  color: #fff;
+  background: #10101e15;
+  font-family: "Segoe UI", sans-serif;
+  width: 240px;
+  padding: 15px 10px;
+  border-radius: 5px;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(255, 255, 255, 0.1));
+  transition: 0.5s;
+  transition-property: background, box-shadow;
+}
+
+.datetime:hover{
+  background: #2E94E3;
+  box-shadow: 0 0 30px #2E94E3;
+}
+
+.date{
+  font-size: 10px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.time{
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time span:not(:last-child){
+  position: relative;
+  margin: 0 6px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.time span:last-child{
+  background: #2E94E3;
+  font-size: 10px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-top: 10px;
+  padding: 0 5px;
+  border-radius: 3px;
+}
+
 @media (max-width: 420px) {
   .sidebar li .tooltip{
     display: none;
@@ -271,14 +320,16 @@
   position: relative;
   padding: 30px;
   background-color: #1d1b31;
-  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.80);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.40);
   border-radius: 10px;
   color: white;
   justify-content: space-between;
+  border: none;
 }
 .card:hover{
   border-style: solid;
   border-color: rgb(255, 255, 255);
+  margin: -5px;
 }
 .iconBx {
   font-size: 50px;
@@ -299,3 +350,41 @@
   font-size: 12px;
   padding-top: 10px;
 }
+
+/*
+.leside{
+  width: 600px;
+  background-color: #1d1b31;
+  padding: 30px;
+  border-radius: 10px;
+}
+.head_tile{
+  display: flex;
+}*/
+.down_gap{
+  background-color: #11101d7c;
+}
+.down-bar{
+ 
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  height: 385px;
+  width: 100%;
+}
+.down-bar .sec_1{
+  background-color: rgba(240, 248, 255, 0.152);
+  background-image: url("https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-stylized-photography-001-850px.png");
+  background-repeat: no-repeat;
+  background-size: 100% 75%;
+  width: 100%;
+}
+.down-bar .sec_2{
+  background-color: rgba(240, 248, 255, 0.152);
+}
+#header{
+  font-size: 32px;
+  font-weight: 800;
+  color: aliceblue;
+  align-self: center;
+}
+/*  clock  */
