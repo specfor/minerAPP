@@ -253,15 +253,16 @@
 }
 
 .datetime{
+  margin-top: 10px;
   color: #fff;
   background: #10101e15;
   font-family: "Segoe UI", sans-serif;
   width: 240px;
   padding: 15px 10px;
   border-radius: 5px;
-  -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(255, 255, 255, 0.1));
+  /*-webkit-box-reflect: below 1px linear-gradient(transparent, rgba(255, 255, 255, 0.1));
   transition: 0.5s;
-  transition-property: background, box-shadow;
+  transition-property: background, box-shadow;*/
 }
 
 .date{
@@ -320,7 +321,7 @@
   color: white;
   justify-content: space-between;
   border: none;
-  backdrop-filter: blur(40px);
+  
 }
 .card:hover{
   border-style: solid;
@@ -375,13 +376,25 @@
   
 }
 .down-bar .sec_2{
-  background-color: rgba(240, 248, 255, 0.152);
+  backdrop-filter: blur(80px);
+  background: #10101e15;
+  margin: 10px;
+  border-radius: 10px;
 }
 #header{
   font-size: 32px;
   font-weight: 800;
   color: aliceblue;
-  margin-left: 35px;
+  text-align: center;
+  background: #10101e15;
+}
+#discription{
+  font-size: 15px;
+  font-weight: 400;
+  color: aliceblue;
+  text-align: center;
+  margin-top: -15px;
+
 }
 
 .static-section{
@@ -409,17 +422,13 @@
   border-radius: 10px;
   color: #FFF;
   background-color: #11101dc9;
-  width: 390px;
-  margin-left: -550px;
+  width: 240px;
   bottom: -160px;
-  padding-left: 100px;
   z-index: -1;
-  justify-content: space-between}
-
-.links .header_links{
-  margin-left: 83x;
+  justify-content: space-between;
+  padding: 10px;
+  text-align: center;
 }
-
 
 .sec_2 .logos .logo_icons {
   display: inline-block;
