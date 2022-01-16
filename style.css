@@ -226,10 +226,11 @@
 
 
 
-
+.hider{
+  visibility:hidden;
+}
 
 .static-section{
-  visibility:hidden;
   position: relative;
   background: #031344d2;
   min-height: 100vh;
@@ -240,7 +241,6 @@
   z-index: 2;
 }
 .support-section{
-  visibility:hidden;
   position: relative;
   background: #031344d2;
   min-height: 100vh;
@@ -251,7 +251,6 @@
   z-index: 2;
 }
 .settings-section{
-  visibility:hidden;
   position: relative;
   background: #031344d2;
   min-height: 100vh;
