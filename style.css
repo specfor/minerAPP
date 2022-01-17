@@ -232,7 +232,7 @@
 }
 
 .static-section{
-  position: relative;
+  position: absolute;
   background: #031344d2;
   min-height: 100vh;
   top: 0;
@@ -240,6 +240,7 @@
   width: calc(100% - 78px);
   transition: all 0.5s ease;
   z-index: 2;
+
 }
 .support-section{
   position: relative;
@@ -457,7 +458,7 @@
 
 .btn_c{
   position: absolute;
-  top: 55s0px;
+  top: 550px;
   left: 300px;
   font-family: "Roboto", sans-serif;
   font-size: 18px;
