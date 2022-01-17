@@ -1,3 +1,6 @@
+// -------------------- LEFT MENU BAR HANDLING --------------------
+
+
 // Use this variable to set dashboard btn as the active sidebar button at app start.
 // Later change the variable to the relavent class id when change the main content according to the button press.
 let activeSideBarButtonId = "menu-dashboard-btn";
@@ -91,3 +94,8 @@ btnSettings.addEventListener("click", ()=>{
 btnLogOut.addEventListener("click", ()=>{
     app.quit();
 });
+
+
+
+
+// -------------------- OTHER STUFF --------------------

@@ -272,29 +272,29 @@
         var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         var ids = ["dayname", "month", "daynum", "year", "hour", "minutes", "seconds", "period"];
         var values = [week[dname], months[mo], dnum.pad(2), yr, hou.pad(2), min.pad(2), sec.pad(2), pe];
-        for(var i = 0; i < ids.length; i++)
-        document.getElementById(ids[i]).firstChild.nodeValue = values[i];
+        for(var i = 0; i < ids.length; i++){
+          document.getElementById(ids[i]).textContent = values[i];
+        }
   }
 
-  function initClock(){
-    updateClock();
-    window.setInterval("updateClock()", 1);
-  }
+  updateClock();
+  window.setInterval("updateClock()", 1);
+
   //clock scpit end
 
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
-  let searchBtn = document.querySelector(".bx-search");
+  // let searchBtn = document.querySelector(".bx-search");
 
   closeBtn.addEventListener("click", ()=>{
     sidebar.classList.toggle("open");
     menuBtnChange();//calling the function(optional)
   });
 
-  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
-    sidebar.classList.toggle("open");
-    menuBtnChange(); //calling the function(optional)
-  });
+  // searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  //   sidebar.classList.toggle("open");
+  //   menuBtnChange(); //calling the function(optional)
+  // });
 
   // following are the code to change sidebar button(optional)
   function menuBtnChange() {
