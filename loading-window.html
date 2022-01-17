@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>gwagiwaeg aufg</h1>
+
+  <script>
+    // var app = require("app");
+    // var mainWindow = require("mainwindow");
+    const remote = require('electron').remote;
+    
+    this.setTimeout(() => {
+      remote.send("close-loading-window");
+    }, 6000);
+  </script>
+</body>

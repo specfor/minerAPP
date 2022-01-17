@@ -5,22 +5,38 @@ const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
 function createWindow () {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1100,
-    height: 650,
-    
-    // webPreferences: {
-    //   preload: path.join(__dirname, 'preload.js')
-    // }
+  const loadingWindow = new BrowserWindow({
+    width: 300,
+    height: 300,
+    resizable: false,
+    minimizable: false,
+    frame: false,
   })
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
-  mainWindow.setMenu(null)
+  loadingWindow.loadFile('loading-window.html')
+  loadingWindow.setMenu(null)
+  
+  loadingWindow.on("close", function(){
+     // Create the browser window.
+    const mainWindow = new BrowserWindow({
+      width: 1100,
+      height: 650,
+      resizable: false,
+      // webPreferences: {
+      //   preload: path.join(__dirname, 'preload.js')
+      // }
+    })
+
+    // and load the index.html of the app.
+    mainWindow.loadFile('index.html')
+    mainWindow.setMenu(null)
+  })
+  
   // Open the DevTools.
+  // loadingWindow.webContents.openDevTools()
   // mainWindow.webContents.openDevTools()
 }
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -45,3 +61,8 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+// ------------- CUSTOM METHODS ---------------
+
+app.on("close-loading-window", function () {
+  BrowserWindow.loadingWindow.close()
+})
