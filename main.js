@@ -11,17 +11,23 @@ function createWindow () {
     resizable: false,
     minimizable: false,
     frame: false,
+    show: false,
   })
 
   loadingWindow.loadFile('loading-window.html')
   loadingWindow.setMenu(null)
   
+  loadingWindow.once('ready-to-show', () => {
+    loadingWindow.show();
+  });
+
   loadingWindow.on("close", function(){
      // Create the browser window.
     const mainWindow = new BrowserWindow({
       width: 1100,
       height: 650,
       resizable: false,
+      show: false,
       // webPreferences: {
       //   preload: path.join(__dirname, 'preload.js')
       // }
@@ -30,6 +36,10 @@ function createWindow () {
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     mainWindow.setMenu(null)
+
+    mainWindow.once('ready-to-show', () => {
+      mainWindow.show();
+    });
   })
   
   // Open the DevTools.
