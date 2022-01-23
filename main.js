@@ -6,12 +6,16 @@ const path = require('path')
 
 function createWindow () {
   const loadingWindow = new BrowserWindow({
-    width: 300,
+    width: 450,
     height: 300,
     resizable: false,
     minimizable: false,
     frame: false,
     show: false,
+
+    webPreferences: {
+      preload: __dirname + '\\loading.js'
+    }
   })
 
   loadingWindow.loadFile('loading-window.html')
@@ -19,6 +23,7 @@ function createWindow () {
   
   loadingWindow.once('ready-to-show', () => {
     loadingWindow.show();
+
   });
 
   loadingWindow.on("close", function(){

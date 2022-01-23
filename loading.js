@@ -1,0 +1,23 @@
+console.log("asm")
+
+// const { app, BrowserWindow } = require('electron')
+
+// this.close()
+
+    
+
+window.addEventListener("load", (event) => {
+    let statusDisplay = document.getElementById("loading_msg");
+    
+    // looking for internet connection
+    statusDisplay.textContent = "Checking internet connectivity..."
+
+    if (navigator.onLine) {
+        statusDisplay.textContent = "You are online."
+    } else{
+        statusDisplay.textContent = "You are offline."
+    }
+
+    
+  
+  });
