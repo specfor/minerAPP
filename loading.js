@@ -1,7 +1,8 @@
 console.log("asm")
+// remote = require("electron").remote
 
-// const { app, BrowserWindow } = require('electron')
 
+// console.log(remote.getVersion())
 // this.close()
 
     

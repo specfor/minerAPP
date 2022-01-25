@@ -4,6 +4,27 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
+var AutoLaunch = require('auto-launch');
+
+function autoStart(){
+  var AutoLauncher = new AutoLaunch({
+    name: 'Minersupp',
+    // path: '/Applications/Minecraft.app',
+  });
+  
+  
+  console.log(AutoLauncher.isEnabled())
+  if (AutoLauncher.isEnabled()) {
+    AutoLauncher.disable()
+    console.log('disabled')
+  }else{
+    AutoLauncher.enable()
+    
+    console.log('enabled')
+  }
+  AutoLauncher.enable();
+}
+
 function createWindow () {
   const loadingWindow = new BrowserWindow({
     width: 450,
@@ -14,7 +35,7 @@ function createWindow () {
     show: false,
 
     webPreferences: {
-      preload: __dirname + '\\loading.js'
+      preload: path.join(__dirname, 'loading.js')
     }
   })
 
@@ -22,8 +43,8 @@ function createWindow () {
   loadingWindow.setMenu(null)
   
   loadingWindow.once('ready-to-show', () => {
-    loadingWindow.show();
-
+  loadingWindow.show();
+    
   });
 
   loadingWindow.on("close", function(){
@@ -38,18 +59,24 @@ function createWindow () {
       // }
     })
 
+    
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     mainWindow.setMenu(null)
-
+    
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
+      btn_auto_start = mainWindow.document.getElementById("btn-auto-start")
+      
+      btn_auto_start. addEventListener("click", autoStart)
     });
+
+    
+    // mainWindow.webContents.openDevTools()
   })
   
   // Open the DevTools.
   // loadingWindow.webContents.openDevTools()
-  // mainWindow.webContents.openDevTools()
 }
 
 
