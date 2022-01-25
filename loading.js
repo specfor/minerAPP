@@ -3,7 +3,7 @@ console.log("asm")
 
 
 // console.log(remote.getVersion())
-// this.close()
+
 
     
 
@@ -20,5 +20,5 @@ window.addEventListener("load", (event) => {
     }
 
     
-  
+    window.setTimeout(()=> {window.close()}, 3000)
   });

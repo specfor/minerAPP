@@ -98,4 +98,18 @@ btnLogOut.addEventListener("click", ()=>{
 
 
 
-// -------------------- OTHER STUFF --------------------
+// -------------------- NETWORK STATUS --------------------
+let lbl_network_status = document.getElementById("home-internet-status")
+
+function getNetworkStatus() {
+    if (navigator.onLine) {
+        lbl_network_status.textContent = "ONLINE"
+        console.log(1)
+    }else{
+        lbl_network_status.textContent = "OFFLINE"
+        console.log(0)
+    }
+}
+
+getNetworkStatus()
+setInterval(getNetworkStatus, 5000)

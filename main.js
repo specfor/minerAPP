@@ -66,13 +66,13 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
-      btn_auto_start = mainWindow.document.getElementById("btn-auto-start")
+      // btn_auto_start = mainWindow.document.getElementById("btn-auto-start")
       
-      btn_auto_start. addEventListener("click", autoStart)
+      // btn_auto_start. addEventListener("click", autoStart)
     });
 
     
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
   })
   
   // Open the DevTools.
