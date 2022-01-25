@@ -50,7 +50,7 @@ function createWindow () {
   loadingWindow.on("close", function(){
      // Create the browser window.
     const mainWindow = new BrowserWindow({
-      width: 1100,
+      width: 900,
       height: 650,
       resizable: false,
       show: false,

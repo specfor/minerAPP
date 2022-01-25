@@ -278,7 +278,150 @@
   left: 250px;
   width: calc(100% - 250px);
 }
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
 
+.datetime{
+  margin-top: 10px;
+  color: #fff;
+  background: #10101e15;
+  font-family: "Segoe UI", sans-serif;
+  width: 240px;
+  padding: 15px 10px;
+  border-radius: 5px;
+  /*-webkit-box-reflect: below 1px linear-gradient(transparent, rgba(255, 255, 255, 0.1));
+  transition: 0.5s;
+  transition-property: background, box-shadow;*/
+}
+
+.date{
+  font-size: 10px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.time{
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time span:not(:last-child){
+  position: relative;
+  margin: 0 6px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.time span:last-child{
+  background: #2E94E3;
+  font-size: 10px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-top: 10px;
+  padding: 0 5px;
+  border-radius: 3px;
+}
+
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+.cardbox{
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 20px;
+
+}
+.card {
+  position: relative;
+  padding: 30px;
+  background-color: #1d1b31;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.40);
+  border-radius: 10px;
+  color: white;
+  justify-content: space-between;
+  border: none;
+  
+}
+.card:hover{
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  margin: -5px;
+}
+.iconBx {
+  font-size: 50px;
+  position: absolute;
+  top: 24px;
+  right: 25px;
+  bottom: 6px;
+}
+.card .numbers{
+  position: relative;
+  color: white;
+  font-size: 30px;
+  padding-top: 0px;
+}
+.card .caedname{
+  position: relative;
+  color: white;
+  font-size: 12px;
+  padding-top: 10px;
+}
+
+
+/*
+.leside{
+  width: 600px;
+  background-color: #1d1b31;
+  padding: 30px;
+  border-radius: 10px;
+}
+.head_tile{
+  display: flex;
+}*/
+.down_gap{
+  background-color: #11101d7c;
+}
+.down-bar{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  height: 440px;
+  width: 100%;
+}
+.down-bar .sec_1{
+  background-color: rgba(240, 248, 255, 0.152);
+  background-repeat: no-repeat;
+  background-size: 100% 75%;
+  width: 100%;
+  
+}
+.down-bar .sec_2{
+  backdrop-filter: blur(80px);
+  background: #10101e15;
+  margin: 10px;
+  border-radius: 10px;
+}
+#header{
+  font-size: 32px;
+  font-weight: 800;
+  color: aliceblue;
+  text-align: center;
+  background: #10101e15;
+}
 #discription{
   font-size: 15px;
   font-weight: 400;
@@ -287,6 +430,7 @@
   margin-top: -15px;
 
 }
+
 
 /*adjestmens for support icons*/
 .sec_2 .logos{
@@ -484,79 +628,3 @@
   content: "75%";
 }
 /*                         status-tab | progress bar   END                    */
-
-
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-nav{
-	position: relative;
-  top: 14px;
-  left: 570px;
-	width: 210px;
-	height: 30px;
-	background: #34495e;
-	border-radius: 8px;
-	font-size: 0;
-	box-shadow: 0 2px 3px 0 rgba(0,0,0,.1);
-
-}
-nav a{
-  padding: 0px;
-  margin-top: -10px;
-	font-size: 15px;
-	text-transform: uppercase;
-	color: white;
-	text-decoration: none;
-	line-height: 50px;
-	position: relative;
-	z-index: 1;
-	display: inline-block;
-	text-align: center;
-}
-nav .animation{
-	position: absolute;
-	height: 100%;
-	/* height: 5px; */
-	top: 0;
-	/* bottom: 0; */
-	z-index: 0;
-	background: #1abc9c;
-	border-radius: 8px;
-	transition: all .5s ease 0s;
-}
-nav a:nth-child(1){
-	width: 100px;
-}
-nav .start-home, a:nth-child(1):hover~.animation{
-	width: 100px;
-	left: 0;
-}
-nav a:nth-child(2){
-	width: 110px;
-}
-nav a:nth-child(2):hover~.animation{
-	width: 110px;
-	left: 100px;
-}
-nav a:nth-child(3){
-	width: 100px;
-}
-nav a:nth-child(3):hover~.animation{
-	width: 100px;
-	left: 210px;
-}
-nav a:nth-child(4){
-	width: 160px;
-}
-nav a:nth-child(4):hover~.animation{
-	width: 160px;
-	left: 310px;
-}
-nav a:nth-child(5){
-	width: 120px;
-}
-nav a:nth-child(5):hover~.animation{
-	width: 120px;
-	left: 470px;
-}
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
