@@ -12,7 +12,6 @@ function autoStart(){
     // path: '/Applications/Minecraft.app',
   });
   
-  
   console.log(AutoLauncher.isEnabled())
   if (AutoLauncher.isEnabled()) {
     AutoLauncher.disable()
@@ -66,9 +65,8 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
-      // btn_auto_start = mainWindow.document.getElementById("btn-auto-start")
-      
-      // btn_auto_start. addEventListener("click", autoStart)
+      let code = `let btn_auto_start = document.getElementById("btn-auto-start");btn_auto_start.addEventListener('click', ()=>{console.log("click")});`;
+      mainWindow.webContents.executeJavaScript(code);
     });
 
     
@@ -108,3 +106,10 @@ app.on('window-all-closed', function () {
 app.on("close-loading-window", function () {
   BrowserWindow.loadingWindow.close()
 })
+
+var ipc = require('electron').ipcMain;
+
+ipc.on('invokeAction', function(event, data){
+  autoStart()
+  event.sender.send('actionReply', 'done');
+});
