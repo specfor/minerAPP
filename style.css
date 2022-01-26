@@ -1,3 +1,12 @@
+/*
+2B2E4A -main
+E84545 -second
+903749 - bg
+53354A - text or else
+*/
+
+
+
 /* Google Font Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
@@ -494,24 +503,27 @@ nav{
   left: 570px;
 	width: 210px;
 	height: 30px;
-	background: #34495e;
+  background: #ffffff;
 	border-radius: 8px;
 	font-size: 0;
 	box-shadow: 0 2px 3px 0 rgba(0,0,0,.1);
-
 }
+
 nav a{
   padding: 0px;
   margin-top: -10px;
 	font-size: 15px;
 	text-transform: uppercase;
-	color: white;
+	color: grey;
 	text-decoration: none;
 	line-height: 50px;
 	position: relative;
 	z-index: 1;
 	display: inline-block;
 	text-align: center;
+}
+#gpus_count{
+  color: white;
 }
 nav .animation{
 	position: absolute;
@@ -527,11 +539,11 @@ nav .animation{
 nav a:nth-child(1){
 	width: 100px;
 }
-/*
+
 nav .start-home, a:nth-child(1):hover~.animation{
 	width: 100px;
 	left: 0;
-}*/
+}
 nav a:nth-child(2){
 	width: 110px;
 }
@@ -561,10 +573,11 @@ nav a:nth-child(5):hover~.animation{
 	left: 470px;
 }
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 .checkbox{
   position:relative;
-  top: -300px;
-  left: 250px;
+  top: -105px;
+  left: 150px;
 
   height: 80px;
   width: 240px;
@@ -589,7 +602,7 @@ nav a:nth-child(5):hover~.animation{
   transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 .checkbox input:checked{
-  background: #664AFF;
+  background: #1abc9c;
 }
 .checkbox input:before{
   position: absolute;
@@ -614,19 +627,90 @@ input:checked:before{
   padding-right: 20px;
 }
 input:checked ~ .text:before{
-  color: #664AFF;
+  color: #1abc9c;
   font-size: 27px;
   content: "Mining";
 }
 
 /*--------------------------END RUN BOX-----------------------------*/
-.panel{
-
+/**/
+.widjet{
   position: relative;
+  display: grid;
+  grid-template-columns:2fr 1fr;
+  grid-gap:10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  top: 10px;
+  height: 450px;
+}
+.widjet .left-pane{
+  background-image:linear-gradient(to right,#5b4b8d 20%,#dcd8e85f);
+  color: white;
   padding: 20px;
+  border-radius: 4px;
+
+}
+.widjet .right-pane{
+  /*background-image:linear-gradient(to right,#5b4b8d 20%,#dcd8e85f);*/
+  padding: 20px;
+  border-radius: 4px;
+  color: white;
+}
+/**/
+/*-------------------BG-DESIGN--------------------------------------*/
+.panel{
+  position: relative;
+  top: 0px;
+  padding: 10px;
   left: 10px;
   width: 795px;
-  height: 500px;
-  border: 2px solid white;
-  border-radius: 10px;
+  height: 130px;
+  border: 2px solid rgba(255, 255, 255, 0.452);
+  border-radius: 6px;
+}
+.dis{
+  top: 18PX;
+  left: 390PX;
+  width: 300px;
+  position: relative;
+  padding-left: 30px;
+  border-left: 2px solid rgb(255, 255, 255);
+}
+.dis .mini{
+  font-size: 11px;
+  display: flex;
+  color: #d9d9d98c;
+}
+/*--------------------------------------------------------------------------*/
+/*all-text-edits*/
+.front_startup {
+  position: relative;
+  background-color: #11101d;
+  justify-content:space-between;
+  padding: 20px;
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+.front_startup h2{
+  position: relative;
+  top: 0px;
+  letter-spacing: 10px;
+  font-size: 25px;
+}
+.front_startup h1{
+  position: relative;
+  font-size:10px;
+  }
+.front_startup {
+  position: relative;
+  background-color: #11101d;
+  justify-content:space-between;
+  padding: 20px;
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  border-bottom: 1px solid white;
 }
