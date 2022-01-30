@@ -274,7 +274,7 @@ E84545 -second
 
 .home-section{
   position: relative;
-  background: #031344d2;
+  background: #11101D;
   min-height: 100vh;
   top: 0;
   left: 78px;
@@ -676,12 +676,16 @@ input:checked ~ .text:before{
   position: relative;
   padding-left: 30px;
   border-left: 2px solid rgb(255, 255, 255);
+
 }
 .dis .mini{
-  font-size: 11px;
-  display: flex;
+  font-size: 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   color: #d9d9d98c;
+  grid-gap: 10px;
 }
+
 /*--------------------------------------------------------------------------*/
 /*all-text-edits*/
 .front_startup {
@@ -713,4 +717,43 @@ input:checked ~ .text:before{
   height: 50%;
   text-align: center;
   border-bottom: 1px solid white;
+}
+.widjet .left-pane .up_ .info_fs{
+display: grid;
+grid-gap: 5px;
+grid-template-columns: 1fr 1fr;
+}
+.info_fs .item {
+padding: 5px;
+background-color: #d9d9d93a;
+border-radius: 4px;
+}
+.info_fs .item h6{
+  color: #1abc9c;
+  font-size: 18px;
+  padding-left: 6px;
+}
+.info_fs .item h4{
+  color: #ffffff;
+  padding-left: 10px;
+  font-size: 13px;
+}
+#head{
+  padding-bottom: 6px;
+}
+.down_ h2{
+  margin-top: 10px;
+  color: #d9d9d9;
+  text-align: center;
+
+}
+.down_ .main_tile{
+  border-radius: 5px;
+  background-color: #6565ee54;
+  color: #d9d9d9;
+  text-align: center;
+  height: 250px;
+}
+.down_ .main_tile h1{
+padding: 100px;
 }
