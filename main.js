@@ -13,6 +13,9 @@ function autoStart(){
   });
   
   console.log(AutoLauncher.isEnabled())
+  AutoLauncher.enable()
+  console.log(AutoLauncher.isEnabled())
+
   if (AutoLauncher.isEnabled()) {
     AutoLauncher.disable()
     console.log('disabled')
@@ -21,6 +24,31 @@ function autoStart(){
     console.log('enabled')
   }
 }
+
+// --------------------------------------------------------------------
+function createConfigurationWindow(){
+  const configuration_window = new BrowserWindow({
+      // parent: top, 
+      // modal: true,
+      width: 850,
+      height: 500,
+      resizable: false,
+      // minimizable: false,
+      // frame: false,
+      show: false,
+
+      // webPreferences: {
+      //   preload: path.join(__dirname, 'loading.js')
+      // }
+  })
+
+  configuration_window.loadFile('pop-up-configuration.html')
+  configuration_window.setMenu(null)
+  configuration_window.show()
+
+  // configuration_window.webContents.openDevTools()
+}
+// --------------------------------------------------------------
 
 function createWindow () {
   const loadingWindow = new BrowserWindow({
@@ -64,6 +92,7 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
+      createConfigurationWindow()
       // let code = `let btn_auto_start = document.getElementById("btn-auto-start");btn_auto_start.addEventListener('click', ()=>{console.log("click")});`;
       // mainWindow.webContents.executeJavaScript(code);
     });
