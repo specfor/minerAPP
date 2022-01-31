@@ -1,33 +1,33 @@
 // -------------------- LEFT MENU BAR HANDLING --------------------
 
-
 // Use this variable to set dashboard btn as the active sidebar button at app start.
 // Later change the variable to the relavent class id when change the main content according to the button press.
 let activeSideBarButtonId = "menu-dashboard-btn";
 let activeBodyAreaId = "dashboard-area";
 
 // Main content areas for buttons
-let dashboardSection = document.querySelector("#dashboard-area");
+let dashboardSection = document.getElementById("dashboard-area");
 
 // Variables with main content areas relavent to left menubar buttons.
-let btnDashboard = document.querySelector("#menu-dashboard-btn");
-let btnUser = document.querySelector("#menu-user-btn");
-let btnMessages = document.querySelector("#menu-messages-btn");
-let btnAnalytics = document.querySelector("#menu-analytics-btn");
-let btnFiles = document.querySelector("#menu-files-btn");
-let btnOrders = document.querySelector("#menu-orders-btn");
-let btnSave = document.querySelector("#menu-saved-btn");
-let btnSettings = document.querySelector("#menu-settings-btn");
-let btnLogOut = document.querySelector("#menu-log-out-btn");
+let btnDashboard = document.getElementById("menu-dashboard-btn");
+let btnUser = document.getElementById("menu-user-btn");
+let btnMessages = document.getElementById("menu-messages-btn");
+let btnAnalytics = document.getElementById("menu-analytics-btn");
+let btnFiles = document.getElementById("menu-files-btn");
+let btnOrders = document.getElementById("menu-orders-btn");
+let btnSave = document.getElementById("menu-saved-btn");
+let btnSettings = document.getElementById("menu-settings-btn");
+let btnLogOut = document.getElementById("menu-log-out-btn");
+
 
 // change the active section to hidden.
 function hideActiveArea() {
-    activeElement = document.querySelector("#" + activeBodyAreaId);
+    activeElement = document.getElementById(activeBodyAreaId);
     activeElement.classList.toggle("hider");
 }
 
 function showElement(id) {
-    element = document.querySelector("#" + id);
+    element = document.getElementById(id);
     element.classList.toggle("hider")
     activeBodyAreaId = id;
     idSplit = id.split("-");

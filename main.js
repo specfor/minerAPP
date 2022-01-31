@@ -9,7 +9,7 @@ var AutoLaunch = require('auto-launch');
 function autoStart(){
   var AutoLauncher = new AutoLaunch({
     name: 'Minersupp',
-    // path: '/Applications/Minecraft.app',
+    path: path.join(__dirname, 'minerapp'),
   });
   
   console.log(AutoLauncher.isEnabled())
@@ -18,10 +18,8 @@ function autoStart(){
     console.log('disabled')
   }else{
     AutoLauncher.enable()
-    
     console.log('enabled')
   }
-  AutoLauncher.enable();
 }
 
 function createWindow () {
@@ -53,9 +51,10 @@ function createWindow () {
       height: 650,
       resizable: false,
       show: false,
-      // webPreferences: {
-      //   preload: path.join(__dirname, 'preload.js')
-      // }
+
+      webPreferences: {
+        preload: path.join(__dirname, 'main-preload.js')
+      }
     })
 
     
@@ -65,12 +64,12 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
-      let code = `let btn_auto_start = document.getElementById("btn-auto-start");btn_auto_start.addEventListener('click', ()=>{console.log("click")});`;
-      mainWindow.webContents.executeJavaScript(code);
+      // let code = `let btn_auto_start = document.getElementById("btn-auto-start");btn_auto_start.addEventListener('click', ()=>{console.log("click")});`;
+      // mainWindow.webContents.executeJavaScript(code);
     });
 
     
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
   })
   
   // Open the DevTools.
@@ -109,7 +108,7 @@ app.on("close-loading-window", function () {
 
 var ipc = require('electron').ipcMain;
 
-ipc.on('invokeAction', function(event, data){
+ipc.on('setAutoStart', function(event, data){
   autoStart()
-  event.sender.send('actionReply', 'done');
+  event.sender.send('autoStartReply', 'done');
 });
