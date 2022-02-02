@@ -30,8 +30,8 @@ function createConfigurationWindow(){
   const configuration_window = new BrowserWindow({
       // parent: top, 
       // modal: true,
-      width: 850,
-      height: 500,
+      width: 450,
+      height: 400,
       resizable: false,
       // minimizable: false,
       // frame: false,
