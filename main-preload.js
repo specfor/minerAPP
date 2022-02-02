@@ -1,4 +1,5 @@
 const { ipcRenderer, BrowserWindow } = require('electron')
+const path = require('path')
 
 function setupAutoStart(){
     ipcRenderer.on('autoStartReply', (event, arg) => {
@@ -7,29 +8,20 @@ function setupAutoStart(){
     ipcRenderer.send('setAutoStart', 'ping')
 }
 
-// function createConfigurationWindow(){
-//     const configuration_window = new BrowserWindow({
-//         parent: top, 
-//         modal: true,
-//         width: 450,
-//         height: 300,
-//         resizable: false,
-//         minimizable: false,
-//         frame: false,
-//         show: false,
-
-//         // webPreferences: {
-//         //   preload: path.join(__dirname, 'loading.js')
-//         // }
-//     })
-
-//     configuration_window.loadFile('pop-up-configuration.html')
-//     configuration_window.setMenu(null)
-//     configuration_window.show()
+function downloadEngine(){
+    ipcRenderer.send('downloadEngine', {payload : {url, properties: {}}})
+}
 
 
-//     configuration_window.webContents.openDevTools()
-// }
+ipcRenderer.on("engine-download-progress", (event, args) => {
+    const progress = args[0];
+    // set progress in progress bar
+})
+
+ipcRenderer.on("engine-download-complete", (event, args) => {
+    const progress = args[0];
+    // set progress in progress bar
+})
 
 window.addEventListener("load", (event) => {
     // ------------------ AUTO START -------------------
@@ -43,6 +35,6 @@ window.addEventListener("load", (event) => {
     let btn_configuration = document.getElementById('btn-configuration')
 
     btn_configuration.addEventListener("click", ()=>{
-        // createConfigurationWindow()
+        ipcRenderer.send("showConfigurationWindow")
     });
   });

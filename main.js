@@ -3,6 +3,8 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const {download} = require('electron-dl')
+const ipc = require('electron').ipcMain;
 
 var AutoLaunch = require('auto-launch');
 
@@ -25,11 +27,12 @@ function autoStart(){
   }
 }
 
+
 // --------------------------------------------------------------------
-function createConfigurationWindow(){
+function createConfigurationWindow(ownerWindow){
   const configuration_window = new BrowserWindow({
-      // parent: top, 
-      // modal: true,
+      parent: ownerWindow, 
+      modal: true,
       width: 850,
       height: 500,
       resizable: false,
@@ -46,7 +49,7 @@ function createConfigurationWindow(){
   configuration_window.setMenu(null)
   configuration_window.show()
 
-  // configuration_window.webContents.openDevTools()
+  configuration_window.webContents.openDevTools()
 }
 // --------------------------------------------------------------
 
@@ -92,13 +95,14 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
-      createConfigurationWindow()
+      // createConfigurationWindow(mainWindow)
       // let code = `let btn_auto_start = document.getElementById("btn-auto-start");btn_auto_start.addEventListener('click', ()=>{console.log("click")});`;
       // mainWindow.webContents.executeJavaScript(code);
     });
 
     
     mainWindow.webContents.openDevTools()
+    return mainWindow
   })
   
   // Open the DevTools.
@@ -115,7 +119,9 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0){
+        mainWindow = createWindow()
+    } 
   })
 })
 
@@ -135,9 +141,20 @@ app.on("close-loading-window", function () {
   BrowserWindow.loadingWindow.close()
 })
 
-var ipc = require('electron').ipcMain;
-
 ipc.on('setAutoStart', function(event, data){
   autoStart()
   event.sender.send('autoStartReply', 'done');
 });
+
+ipc.on("downloadEngine", async(event, {payload}) => {
+  let properties = payload.properties ? {...payload.properties} : {};
+  // download folder
+  const download_path = path.join(__dirname, "")
+  const download_url = ""
+
+  await download(BrowserWindow.getFocusedWindow(), download_url, 
+  {...properties, onProgress: (progress) => {mainWindow.webContents.send('engine-download-progress', progress)},
+    onCompleted: (item) => {mainWindow.webContents.send('engine-download-complete', item)}});
+})
+
+ipc.on("showConfigurationWindow", createConfigurationWindow)
