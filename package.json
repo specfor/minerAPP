@@ -30,12 +30,12 @@
     "appId": "com.minerapp.app",
     "productName": "MINER APP",
     "target": "NSIS",
-    "directory":{
+    "directories":{
       "output": "build"
     },
     "nsis":{
-    "allowToChangeInstallationDirectory": true,
-    "oneClick": false
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
     }
   }
 
