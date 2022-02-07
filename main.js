@@ -158,12 +158,12 @@ ipc.on("downloadEngine", async(event, {payload}) => {
   console.log('main - download started');
   let properties = payload.properties ? {...payload.properties} : {};
   // download folder
-  const download_path = path.join(__dirname, "nbminer.tgz")
+  const download_path = path.join(__dirname, "downloads")
   const download_url = "https://dl.nbminer.com/NBMiner_40.1_Linux.tgz"
 
   await download(BrowserWindow.fromId(mainWindowId), download_url,
-  {onProgress: (progress) => {
-    console.log(progress.percent * 100);
+  {directory:download_path ,onProgress: (progress) => {
+    // console.log(progress.percent * 100);
     BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100));
     },
     onCompleted: (item) => {
