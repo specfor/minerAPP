@@ -4,7 +4,8 @@
   "description": "electron app",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -28,8 +29,13 @@
   "build":{
     "appId": "com.minerapp.app",
     "productName": "MINER APP",
+    "target": "NSIS",
     "directory":{
       "output": "build"
+    },
+    "nsis":{
+    "allowToChangeInstallationDirectory": true,
+    "oneClick": false
     }
   }
 
