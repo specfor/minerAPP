@@ -8,6 +8,9 @@ const ipc = require('electron').ipcMain;
 
 var AutoLaunch = require('auto-launch');
 
+var mainWindowId = null;
+
+
 function autoStart(){
   var AutoLauncher = new AutoLaunch({
     name: 'Minersupp',
@@ -92,7 +95,7 @@ function createWindow () {
       }
     })
 
-    
+    mainWindowId = mainWindow.id;
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     mainWindow.setMenu(null)
@@ -124,7 +127,7 @@ app.whenReady().then(() => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0){
-        mainWindow = createWindow()
+        mainWindowret = createWindow()
     } 
   })
 })
@@ -151,14 +154,23 @@ ipc.on('setAutoStart', function(event, data){
 });
 
 ipc.on("downloadEngine", async(event, {payload}) => {
+  console.log('main - download started');
   let properties = payload.properties ? {...payload.properties} : {};
   // download folder
-  const download_path = path.join(__dirname, "")
-  const download_url = ""
+  const download_path = path.join(__dirname, "nbminer.tgz")
+  const download_url = "https://dl.nbminer.com/NBMiner_40.1_Linux.tgz"
 
-  await download(BrowserWindow.getFocusedWindow(), download_url, 
-  {...properties, onProgress: (progress) => {mainWindow.webContents.send('engine-download-progress', progress)},
-    onCompleted: (item) => {mainWindow.webContents.send('engine-download-complete', item)}});
+  await download(BrowserWindow.fromId(mainWindowId), download_url,
+  {onProgress: (progress) => {
+    console.log(progress.percent * 100);
+    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100));
+    },
+    onCompleted: (item) => {
+      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
+      console.log(item.path);
+    }
+  });
+  console.log("main - finished dowloading")
 })
 
 ipc.on("showConfigurationWindow", createConfigurationWindow)

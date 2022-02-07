@@ -9,18 +9,19 @@ function setupAutoStart(){
 }
 
 function downloadEngine(){
-    ipcRenderer.send('downloadEngine', {payload : {url, properties: {}}})
+    ipcRenderer.send('downloadEngine', {payload : {properties: {}}})
 }
 
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
     const progress = args[0];
+    console.log(progress);
     // set progress in progress bar
 })
 
 ipcRenderer.on("engine-download-complete", (event, args) => {
     const progress = args[0];
-    // set progress in progress bar
+    console.log('done donwloading');
 })
 
 window.addEventListener("load", (event) => {
@@ -37,4 +38,6 @@ window.addEventListener("load", (event) => {
     btn_configuration.addEventListener("click", ()=>{
         ipcRenderer.send("showConfigurationWindow")
     });
+
+    downloadEngine()
   });
