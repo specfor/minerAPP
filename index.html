@@ -12,6 +12,7 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </head>
 
+<<<<<<< HEAD
 <body>
   <div class="sidebar">
     <div class="logo-details">
@@ -137,25 +138,77 @@
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
   let searchBtn = document.querySelector(".bx-search");
+=======
+<body scroll="no" style="overflow: hidden">
 
-  closeBtn.addEventListener("click", ()=>{
-    sidebar.classList.toggle("open");
-    menuBtnChange();//calling the function(optional)
-  });
 
+  <div class="tabs">
+
+    <div class="tab-header">
+      <div class="tile">Mine</div>
+      <div class="tile">Wallet</div>
+      <div class="tile">Settings</div>
+      <div class="tile"> info</div>
+    </div>
+
+
+    <div class="tab-indicaters">
+
+    </div>
+
+    <div class="tab-body">
+      <div class="active">
+        <h1>UPCOMING UPDATEfghfgh 1</h1>
+      </div>
+      <div>
+        <h1>UPCOMING UPDATE 2</h1>
+      </div>
+      <div>
+        <h1>UPCOMING UPDATE 3</h1>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+>>>>>>> >appearance changed
+
+
+<<<<<<< HEAD
   searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
     sidebar.classList.toggle("open");
     menuBtnChange(); //calling the function(optional)
   });
+=======
 
-  // following are the code to change sidebar button(optional)
-  function menuBtnChange() {
-   if(sidebar.classList.contains("open")){
-     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-   }else {
-     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-   }
-  }
+  <script>
+
+    /*  PLS CORRECT THESE SETTINGS FOR TABS TRANSTITIONS  */
+    let tabs =document.querySelector(".tabs");
+    let tabheader =tabs.querySelector(".tab-header");
+    let tabBody =tabs.querySelector(".tab-body");
+    let tabIndicaters =tabs.querySelector(".tab-indicaters");
+    let tabHeaderNodes =tabs.querySelectorAll(".tab-header > div");
+    let tabBodyNodes =tabs.querySelectorAll(".tab-body > div");
+
+    for (let i=0;i<tabHeaderNodes.length;i++){
+      tabHeaderNodes[i].addEventListener("click",function(){
+        tabheader.querySelector(".active").classList.remove("active");
+        tabHeaderNodes[i].classList.add("active");
+        tabBody.querySelector(".active").classList.remove("active");
+        tabBodyNodes[i].classList.add("active");
+        tabIndicaters.style.left = calc(calc(calc(25% - 5px) * ${i}) + 10px)
+      });
+    }
+    /*------------------------------------------------------*/
+
+    
+    
+    
+>>>>>>> >appearance changed
+
   </script>
 </body>
 </html>
