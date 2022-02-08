@@ -196,6 +196,23 @@ input:checked ~ .text:before{
   animation: like-gif steps(28) 1s infinite both;
 }
 
+.right-pane{
+  color: white;
+  position: fixed;
+  top: 140px;
+  left: 270px;
+  width: 300px;
+  border-left: 2px solid white;
+  padding-left: 30px;
+}
+.right-pane .head{
+  display: flex;
+  color: rgb(243, 218, 23);
+}
+.right-pane .head h1{
+  font-size: 35px;
+  letter-spacing: 1.5px;
+  color: white;
 }
 /*--------------------------END RUN BOX-----------------------------*/
 
@@ -205,3 +222,50 @@ input:checked ~ .text:before{
   color: red;
   font-size: 22px;
 }
+/*--------------     Notification icon ---------------------*/
+.icon-button {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  right: 30px;
+  top:10px ;
+
+  color: #333333;
+  background: #dddddd;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.icon-button:active {
+  background: #cccccc;
+}
+
+.icon-button__badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  width: 15px;
+  height: 15px;
+  background: red;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+#wifi_badge{
+  right: 70px;
+}
+#wifi_badge .icon-button__badge{
+  width: 0px;
+  height: 0px;
+}
+/*--------------     Notification icon ---------------------*/
