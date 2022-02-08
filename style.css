@@ -144,7 +144,7 @@
   cursor: pointer;
   padding: 15px;
   padding-top: 0px;
-  padding-bottom: 0px;
+  padding-bottom: 6px;
 }
 
 .tabs .tab-header >div.active{
@@ -152,16 +152,14 @@
 }
 .tabs .tab-indicaters{
   position:absolute;
-  background-color:#d9e5f9;
-  top: 3px;
-  left: 140px;
-  height: 20px;
+  background-color:#001537;
+  top: 30px;
+  left: 150px;
+  height: 0px;
   width: calc(25%-5px);
-  padding: 15px 30px 15px 30px;
+  padding: 0px 20px 3px 20px;
   border-radius: 8px;
-  
 }
-
 .tabs .tab-body{
   position: relative;
   background-color: #f5f5f5;
@@ -185,5 +183,72 @@
 .tabs .tab-body h1{
   width: 100%;
   color: aqua;
+<<<<<<< HEAD
 >>>>>>> >appearance changed
 }
+=======
+}
+
+/* COMPONANT : run button */
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.checkbox{
+  position:relative;
+  top: -105px;
+  left: 150px;
+
+  height: 80px;
+  width: 240px;
+  padding: 10px;
+  display: flex;
+  background: #fff;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px 30px rgba(0,0,0,.2);
+  justify-content: space-between;
+}
+.checkbox input{
+  outline: none;
+  height: 40px;
+  width: 90px;
+  border-radius: 50px;
+  -webkit-appearance: none;
+  position: relative;
+  background: #e6e6e6;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.checkbox input:checked{
+  background: #1abc9c;
+}
+.checkbox input:before{
+  position: absolute;
+  content: "";
+  left: 0;
+  height: 100%;
+  width: 40px;
+  background: linear-gradient(#fff,#f2f2f2,#e6e6e6,#d9d9d9);
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  border-radius: 50px;
+  transform: scale(0.85);
+  transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+input:checked:before{
+  left: 50px;
+}
+.checkbox .text:before{
+  content: "idle";
+  font-size: 25px;
+  font-weight: 500;
+  color: #bfbfbf;
+  padding-right: 20px;
+}
+input:checked ~ .text:before{
+  color: #1abc9c;
+  font-size: 27px;
+  content: "Mining";
+}
+
+/*--------------------------END RUN BOX-----------------------------*/
+>>>>>>> button added
