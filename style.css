@@ -270,8 +270,12 @@
   background: #1abc9c;
 }
 .checkbox input:before{
+<<<<<<< HEAD
   
   position: relative;
+=======
+  position: absolute;
+>>>>>>> mining button disappearance fixed
   content: "";
   left: 0;
   height: 100%;
