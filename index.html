@@ -152,9 +152,9 @@
 =======
       <div>
         <div class="lft">
-        <div class="set-frame">
-          <div class="config">
-            <div class="form">
+          <div class="set-frame">
+            <div class="config">
+              <div class="form">
               <h4>Configuration</h4>
               <label class="custom-field one">
                 <input type="text" placeholder=" "/>
@@ -175,12 +175,11 @@
             </div>
 
 
-            <label class="custom-select">
-              Select from number options
+            <label class="custom-select" id="miner">
               <select name="sample">
-                <option value="1">one</option>
-                <option value="2">two</option>
-                <option value="3">three</option>
+                <option value="1">NBminer</option>
+                <option value="2">T-rex</option>
+                <option value="3">Gminer</option>
               </select>
             </label>
 
@@ -196,6 +195,7 @@
           </div>
 
         </div>
+
       </div>
 >>>>>>> few changes
 
@@ -222,6 +222,48 @@
 =======
 
   <script>
+    document.querySelectorAll('.custom-select').forEach(setupSelector);
+
+function setupSelector(selector) {
+  selector.addEventListener('change', e => {
+    console.log('changed', e.target.value)
+  })
+
+  selector.addEventListener('mousedown', e => {
+    if(window.innerWidth >= 420) {// override look for non mobile
+      e.preventDefault();
+
+      const select = selector.children[0];
+      const dropDown = document.createElement('ul');
+      dropDown.className = "selector-options";
+
+      [...select.children].forEach(option => {
+        const dropDownOption = document.createElement('li');
+        dropDownOption.textContent = option.textContent;
+
+        dropDownOption.addEventListener('mousedown', (e) => {
+          e.stopPropagation();
+          select.value = option.value;
+          selector.value = option.value;
+          select.dispatchEvent(new Event('change'));
+          selector.dispatchEvent(new Event('change'));
+          dropDown.remove();
+        });
+
+        dropDown.appendChild(dropDownOption);   
+      });
+
+      selector.appendChild(dropDown);
+
+      // handle click out
+      document.addEventListener('click', (e) => {
+        if(!selector.contains(e.target)) {
+          dropDown.remove();
+        }
+      });
+    }
+  });
+}
     
     /* PLS CORRECT THESE SETTINGS FOR TABS TRANSTITIONS*/  
     
