@@ -57,33 +57,6 @@ E84545 -second
 }
 
 
-.tabs .tab-indicaters{
-  z-index: 2;
-  position:absolute;
-  background-color:#001537;
-  top: 30px;
-  left: calc(calc(25%) + 55px);
-  height: 0px;
-  width: calc(25%+25px); 
-  width: 70px;
-  padding: 0px 20px 3px 20px;
-  border-radius: 8px;
-}
-
-
-.tabs .tab-indicaters >div.hover{
-  z-index: 2;
-  position:absolute;
-  background-color:#001537;
-  top: 30px;
-  left: calc(calc(25%) + 55px);
-  height: 0px;
-  /* width: calc(25%+25px); */
-  width: 70px;
-  padding: 0px 20px 3px 20px;
-  border-radius: 8px;
-}
-
 .tabs .tab-body{
   position: relative;
   background-color: #393D48;
@@ -131,7 +104,6 @@ E84545 -second
 
 }
 .checkbox input{
-  
   outline: none;
   height: 40px;
   width: 90px;
@@ -147,8 +119,7 @@ E84545 -second
   background: #1abc9c;
 }
 .checkbox input:before{
-  
-  position: relative;
+  position: absolute;
   content: "";
   left: 0;
   height: 100%;
