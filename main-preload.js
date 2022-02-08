@@ -26,18 +26,18 @@ ipcRenderer.on("engine-download-complete", (event, args) => {
 
 window.addEventListener("load", (event) => {
     // ------------------ AUTO START -------------------
-    let btn_auto_start = document.getElementById('click')
+    // let btn_auto_start = document.getElementById('click')
 
-    btn_auto_start.addEventListener("click", ()=>{
-        setupAutoStart()
-    });
+    // btn_auto_start.addEventListener("click", ()=>{
+    //     setupAutoStart()
+    // });
 
     // ------------------ CONFIGURATION WINDOW ------------------
-    let btn_configuration = document.getElementById('btn-configuration')
+    // let btn_configuration = document.getElementById('btn-configuration')
 
-    btn_configuration.addEventListener("click", ()=>{
-        ipcRenderer.send("showConfigurationWindow")
-    });
+    // btn_configuration.addEventListener("click", ()=>{
+    //     ipcRenderer.send("showConfigurationWindow")
+    // });
 
-    downloadEngine()
+    // downloadEngine()
   });

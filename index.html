@@ -145,7 +145,7 @@
   <div class="tabs">
 
     <div class="tab-header">
-      <div class="tile">Mine</div>
+      <div class="tile active">Mine</div>
       <div class="tile">Wallet</div>
       <div class="tile">Settings</div>
       <div class="tile"> info</div>
@@ -173,7 +173,9 @@
       <div>
         <h1>UPCOMING UPDATE 3</h1>
       </div>
-
+      <div>
+        <h1>info</h1>
+      </div>
     </div>
 
   </div>
@@ -206,7 +208,7 @@
         tabHeaderNodes[i].classList.add("active");
         tabBody.querySelector(".active").classList.remove("active");
         tabBodyNodes[i].classList.add("active");
-        tabIndicaters.style.left = calc(calc(calc(25% - 5px) * ${i}) + 10px)
+        tabIndicaters.style.left = 'calc(calc(calc(25% - 5px) * ${i}) + 10px)';
       });
     }
     /*------------------------------------------------------*/
