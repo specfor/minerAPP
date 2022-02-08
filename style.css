@@ -16,6 +16,7 @@ E84545 -second
   font-family: "Poppins" , sans-serif;
   text-decoration: none;
 
+
 }
 .tabs{
   position: absolute;
@@ -51,15 +52,16 @@ E84545 -second
   position:absolute;
   background-color:#001537;
   top: 30px;
-  left: 150px;
+  left: calc(calc(25%) + 60px);
   height: 0px;
-  width: calc(25%-5px);
+  /* width: calc(25%+25px); */
+  width: 70px;
   padding: 0px 20px 3px 20px;
   border-radius: 8px;
 }
 .tabs .tab-body{
   position: relative;
-  background-color: #f5f5f5;
+  background-color: #282A35;
   width: 100%;
 }
 
