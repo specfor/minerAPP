@@ -25,14 +25,21 @@
   "dependencies": {
     "auto-launch": "^5.0.5",
     "electron-dl": "^3.3.0",
-    "extract-zip": "^2.0.1",
+<<<<<<< Updated upstream
+    "extract-zip": "^2.0.1"
+=======
     "save": "^2.4.0"
+>>>>>>> Stashed changes
   },
   "build": {
     "appId": "com.minerapp.app",
     "productName": "MINER APP",
     "target": "NSIS",
+<<<<<<< Updated upstream
     "directories": {
+=======
+    "directory": {
+>>>>>>> Stashed changes
       "output": "build"
     },
     "nsis": {
