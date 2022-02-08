@@ -123,7 +123,7 @@ E84545 -second
   background: #1abc9c;
 }
 .checkbox input:before{
-  position: relative;
+  position: absolute;
   content: "";
   left: 0;
   height: 100%;
