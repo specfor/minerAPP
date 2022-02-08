@@ -57,7 +57,7 @@ function createConfigurationWindow(ownerWindow){
   configuration_window.setMenu(null)
   configuration_window.show()
 
-  configuration_window.webContents.openDevTools()
+  //configuration_window.webContents.openDevTools()
 }
 // --------------------------------------------------------------
 
