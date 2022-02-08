@@ -33,7 +33,22 @@
     <div class="tab-body">
       <div class="active">
 
-        <h1>UPCOMING UPDATE 1</h1>
+        <div class="panel">
+          <div class="dis">
+            <div class="mini">
+              <h2>Total hashrate</h2>
+              <h1> 865 MHz</h1>
+            </div>
+            <div class="mini">
+              <h2>Total watts</h2>
+              <h1> 851W</h1>
+            </div>
+            <div class="mini">
+              <h2>Est.reward</h2>
+              <h1> 18$</h1>
+            </div>
+          </div>
+        </div>
         
         <div class="checkbox">
           <input type="checkbox" id="click">
@@ -75,7 +90,7 @@
         tabHeaderNodes[i].classList.add("active");
         tabBody.querySelector(".active").classList.remove("active");
         tabBodyNodes[i].classList.add("active");
-        tabIndicaters.style.left = `calc(calc(calc(25% - 5px) * ${i}) + 10px)`;
+        /*tabIndicaters.style.left = `calc(calc(calc(45% - 0px) * ${i}) + 10px)`;*/
       });
     }
     /*------------------------------------------------------*/
