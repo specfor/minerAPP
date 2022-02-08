@@ -194,8 +194,8 @@
 
 .checkbox{
   position:relative;
-  top: -105px;
-  left: 150px;
+  top: 105px;
+  left: 40px;
 
   height: 80px;
   width: 240px;
@@ -250,5 +250,38 @@ input:checked ~ .text:before{
   content: "Mining";
 }
 
-/*--------------------------END RUN BOX-----------------------------*/
->>>>>>> button added
+/*-------------------BG-DESIGN--------------------------------------*/
+.panel{
+  background-color: #001537;
+  position: relative;
+  top: 210px;
+  padding: 10px;
+  margin-left: 15px;
+  width: 560px;
+  height: 130px;
+  border: 2px solid rgba(255, 255, 255, 0.452);
+  border-radius: 6px;
+}
+.dis{
+  top: 18PX;
+  left: 90PX;
+  width: 300px;
+  position: relative;
+  padding-left: 30px;
+  border-left: 2px solid rgb(255, 255, 255);
+
+}
+.dis .mini{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  color: #d9d9d98c;
+  grid-gap: 2px;
+}
+
+.dis .mini h2 , h1{
+  font-size: 12px;
+  left: 0px;
+}
+/*--------------------------------------------------------------------------*/
+
+/*--------------------------END RUN BOX-----------------------------*/>>>>>>> button added
