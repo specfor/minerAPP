@@ -15,8 +15,9 @@ E84545 -second
   box-sizing: border-box;
   font-family: "Poppins" , sans-serif;
   text-decoration: none;
-
-
+}
+.body{
+  background-color: #282A35;
 }
 .tabs{
   position: absolute;
@@ -66,30 +67,31 @@ E84545 -second
 }
 
 .tabs .tab-body >div{
-  position: absolute;
+  z-index: -1;
+  width: 600px;
+  height: 450px;
+  background-color: #282A35;
+  position: fixed;
   opacity: 0;
-  top: -100%;
   /*transform: translateY(-10px);*/
+  margin-top: -50px;
 }
 
 .tabs .tab-body >div.active{
+  
   width: 100%;
   opacity: 1;
   top: 30px;
   transform: translateY(0px);
 }
 
-.tabs .tab-body h1{
-  width: 100%;
-  color: aqua;
-}
 
 /* COMPONANT : run button */
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 .checkbox{
   position:relative;
-  top: 105px;
+  top: 185px;
   left: 40px;
 
   height: 80px;
@@ -101,6 +103,7 @@ E84545 -second
   border-radius: 5px;
   box-shadow: 5px 5px 30px rgba(0,0,0,.2);
   justify-content: space-between;
+
 }
 .checkbox input{
   outline: none;
@@ -147,11 +150,11 @@ input:checked ~ .text:before{
 
 /*-------------------BG-DESIGN--------------------------------------*/
 .panel{
-  background-color: #001537;
   position: relative;
-  top: 210px;
+  top: 295px;
   padding: 10px;
-  margin-left: 15px;
+  padding-bottom: 2px;
+  margin-left: 18px;
   width: 560px;
   height: 130px;
   border: 2px solid rgba(255, 255, 255, 0.452);
@@ -159,7 +162,7 @@ input:checked ~ .text:before{
 }
 .dis{
   top: 18PX;
-  left: 90PX;
+  left: 260PX;
   width: 300px;
   position: relative;
   padding-left: 30px;
@@ -171,12 +174,23 @@ input:checked ~ .text:before{
   grid-template-columns: 2fr 1fr;
   color: #d9d9d98c;
   grid-gap: 2px;
+  font-size: 10px;
 }
-
-.dis .mini h2 , h1{
-  font-size: 12px;
-  left: 0px;
+.dis .mini h2{
+  font-size: 14px;
+  margin-right: 0px;
+}
+.dis .mini h1{
+  font-size: 14px;
+  margin-left: -30px;
 }
 /*--------------------------------------------------------------------------*/
 
 /*--------------------------END RUN BOX-----------------------------*/
+
+.wallet-tab h1{
+  position: fixed;
+  top: 60px;
+  color: red;
+  font-size: 22px;
+}
