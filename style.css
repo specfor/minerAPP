@@ -16,12 +16,15 @@ E84545 -second
   font-family: "Poppins" , sans-serif;
   text-decoration: none;
 }
+
 .body{
   background-color: #282A35;
 }
+
 .tabs{
   position: absolute;
 }
+
 .tabs .tab-header{
   z-index: 2;
   position: relative;
@@ -48,9 +51,27 @@ E84545 -second
 }
 
 .tabs .tab-header >div.active{
-  color: #2d589e;
+  color: #1abc9c;
+  border-bottom: 2px solid #1abc9c;
+  
 }
+
+
 .tabs .tab-indicaters{
+  z-index: 2;
+  position:absolute;
+  background-color:#001537;
+  top: 30px;
+  left: calc(calc(25%) + 55px);
+  height: 0px;
+  width: calc(25%+25px); 
+  width: 70px;
+  padding: 0px 20px 3px 20px;
+  border-radius: 8px;
+}
+
+
+.tabs .tab-indicaters >div.hover{
   z-index: 2;
   position:absolute;
   background-color:#001537;
@@ -62,6 +83,7 @@ E84545 -second
   padding: 0px 20px 3px 20px;
   border-radius: 8px;
 }
+
 .tabs .tab-body{
   position: relative;
   background-color: #393D48;
@@ -92,6 +114,7 @@ E84545 -second
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 .checkbox{
+
   position:relative;
   top: 190px;
   left: 40px;
@@ -108,6 +131,7 @@ E84545 -second
 
 }
 .checkbox input{
+  
   outline: none;
   height: 40px;
   width: 90px;
@@ -123,6 +147,7 @@ E84545 -second
   background: #1abc9c;
 }
 .checkbox input:before{
+  
   position: relative;
   content: "";
   left: 0;
@@ -201,7 +226,7 @@ input:checked ~ .text:before{
 .right-pane{
   color: white;
   position: fixed;
-  top: 140px;
+  top: 125px;
   left: 270px;
   width: 300px;
   border-left: 2px solid white;
@@ -215,6 +240,19 @@ input:checked ~ .text:before{
   font-size: 35px;
   letter-spacing: 1.5px;
   color: white;
+}
+.right-pane h3{
+  margin-top: -12px;
+  color: #1abc9c;
+  font-size: 25px;
+  justify-content: space-between;
+}
+.right-pane h5{
+  letter-spacing: .8px;
+  line-height: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
 }
 /*--------------------------END RUN BOX-----------------------------*/
 
