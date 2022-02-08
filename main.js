@@ -5,8 +5,8 @@ const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const {download} = require('electron-dl')
 const ipc = require('electron').ipcMain;
-
-var AutoLaunch = require('auto-launch');
+const extract = require('extract-zip')
+const AutoLaunch = require('auto-launch');
 
 var mainWindowId = null;
 
@@ -159,19 +159,31 @@ ipc.on("downloadEngine", async(event, {payload}) => {
   let properties = payload.properties ? {...payload.properties} : {};
   // download folder
   const download_path = path.join(__dirname, "downloads")
-  const download_url = "https://dl.nbminer.com/NBMiner_40.1_Linux.tgz"
+  // const download_url = "https://dl.nbminer.com/NBMiner_40.1_Linux.tgz"
+  const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
+  let download_file = "";
 
   await download(BrowserWindow.fromId(mainWindowId), download_url,
   {directory:download_path ,onProgress: (progress) => {
     // console.log(progress.percent * 100);
-    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100));
+    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
     },
     onCompleted: (item) => {
       BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
-      console.log(item.path);
+      // console.log(item.path);
+      download_file = item.path;
     }
   });
   console.log("main - finished dowloading")
+ 
+  try {
+    await extract(download_file, { dir: download_path })
+    console.log('Extraction complete')
+  } catch (err) {
+    console.log(err)
+    // handle any errors
+  }
+  
 })
 
 ipc.on("showConfigurationWindow", createConfigurationWindow)
