@@ -86,8 +86,8 @@ function createWindow () {
   loadingWindow.on("close", function(){
      // Create the browser window.
     const mainWindow = new BrowserWindow({
-      width: 900,
-      height: 650,
+      width: 600,
+      height: 450,
       resizable: false,
       show: false,
 
