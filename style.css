@@ -170,7 +170,11 @@
 }
 .tabs .tab-body{
   position: relative;
+<<<<<<< HEAD
   background-color: #f5f5f5;
+=======
+  background-color: #393D48;
+>>>>>>> >animation added
   width: 100%;
 }
 
@@ -178,7 +182,7 @@
   z-index: -1;
   width: 600px;
   height: 450px;
-  background-color: #282A35;
+  background-color: #393D48;
   position: fixed;
   opacity: 0;
   /*transform: translateY(-10px);*/
@@ -210,7 +214,7 @@
 
 .checkbox{
   position:relative;
-  top: 185px;
+  top: 190px;
   left: 40px;
 
   height: 80px;
@@ -280,7 +284,7 @@ input:checked ~ .text:before{
   border-radius: 6px;
 }
 .dis{
-  top: 18PX;
+  top: 20PX;
   left: 260PX;
   width: 300px;
   position: relative;
@@ -304,10 +308,24 @@ input:checked ~ .text:before{
   margin-left: -30px;
 }
 /*--------------------------------------------------------------------------*/
+.gif {
+  position: fixed;
+  top: 80px;
+  left: 30px;
+  width: 260px; 
+  height: 210px;
+  background: url(./Coin.gif) 0 0 no-repeat;
+  background-size: 3000%;
+  animation: like-gif steps(28) 1s infinite both;
+}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*--------------------------END RUN BOX-----------------------------*/>>>>>>> button added
 =======
+=======
+}
+>>>>>>> >animation added
 /*--------------------------END RUN BOX-----------------------------*/
 
 .wallet-tab h1{
