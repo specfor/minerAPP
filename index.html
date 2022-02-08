@@ -75,7 +75,7 @@
         tabHeaderNodes[i].classList.add("active");
         tabBody.querySelector(".active").classList.remove("active");
         tabBodyNodes[i].classList.add("active");
-        tabIndicaters.style.left = `calc(calc(calc(25% - 5px) * ${i}) + 10px)`;
+        tabIndicaters.style.left = `calc(calc(calc(25%) * ${i + 1}) + 60px)`;
       });
     }
     /*------------------------------------------------------*/
