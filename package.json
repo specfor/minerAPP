@@ -24,19 +24,19 @@
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
-    "electron-dl": "^3.3.0"
+    "electron-dl": "^3.3.0",
+    "extract-zip": "^2.0.1"
   },
-  "build":{
+  "build": {
     "appId": "com.minerapp.app",
     "productName": "MINER APP",
     "target": "NSIS",
-    "directories":{
+    "directories": {
       "output": "build"
     },
-    "nsis":{
+    "nsis": {
       "allowToChangeInstallationDirectory": true,
       "oneClick": false
     }
   }
-
 }

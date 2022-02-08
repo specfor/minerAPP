@@ -14,7 +14,7 @@ function downloadEngine(){
 
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
-    const progress = args[0];
+    const progress = args;
     console.log(progress);
     // set progress in progress bar
 })
@@ -39,5 +39,5 @@ window.addEventListener("load", (event) => {
     //     ipcRenderer.send("showConfigurationWindow")
     // });
 
-    // downloadEngine()
+    downloadEngine()
   });
