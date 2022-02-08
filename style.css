@@ -286,9 +286,81 @@ input:checked ~ .text:before{
 *, *::before, *::after {
   box-sizing: border-box;
 }
+#miner{
+  left: 155px;
+  top: 60px;
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: #888;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
+.custom-select select {
+  display: block;
+  width: 100px;
+  min-height: 35px;
+  background: #cbe7ff;
+  border-radius: 3px;
+  border: 2px solid #2196F3;
+  outline: none;
+  padding: 0 20px 0 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+}
+
+.custom-select::after {
+  content: '';
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #222;
+  display: inline-block;
+  border-radius: 2px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.custom-select .selector-options {
+  list-style: none;
+  padding: 5px 0;
+  margin: 0;
+  background: #11436b;
+  color: #fff;
+  border-radius: 4px;
+  z-index: 1;
+  width: 96%;
+  position: absolute;
+  left: 2%;
+  top: 35%;
+}
+
+.custom-select .selector-options li {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.custom-select .selector-options li:hover {
+  background: #03A9F4;
+}
+
+
 .form{
   position: fixed;
-  top: 55px;
+  top: 25px;
   left: 15px;
   display: flex;
   flex-direction: column;
@@ -394,7 +466,7 @@ input:checked ~ .text:before{
 
 .form h4{
   position: relative;
-  left:9px;
+  left:2px;
   color: #bfbfbf;
   margin-bottom: -10px;
   font-size: 18px;
@@ -402,16 +474,18 @@ input:checked ~ .text:before{
 
 
 .button {
-  position: relative;
+  position: fixed;
   padding: 4px 14px;
   background: #009579;
   border: none;
   outline: none;
   border-radius: 6px;
   cursor: pointer;
-  top: 125px;
-  left: 20px;
+
+  top: 385px;
+  left: 470px;
   align-items: center;
+
 }
 
 .button:active {
