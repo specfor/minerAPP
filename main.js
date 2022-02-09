@@ -41,7 +41,7 @@ function runEngine(engine_name, coin_name){
     }
   }
 
-  const engine = child.spawn(executable_path)
+  const engine = child.spawn(executable_path, {detached: true})
   
   engine.stdout.on('data', (data) => {
     console.log('cmd - ' + data.toString());
