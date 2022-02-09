@@ -10,6 +10,7 @@ const AutoLaunch = require('auto-launch');
 const child = require('child_process');
 
 var mainWindowId = null;
+var engine = null;
 
 
 function autoStart(){
@@ -32,8 +33,12 @@ function autoStart(){
 }
 
 
-function runEngine(engine_name, coin_name){
+function runEngine(){
   console.log("miner process called to run")
+
+  engine_name = 'nbminer';
+  coin_name = 'eth';
+  
   if (engine_name == 'nbminer') {
     if (coin_name == "eth") {
       executable_path = path.join(__dirname, "downloads/NBMiner_Win/start_eth.bat");
@@ -41,21 +46,25 @@ function runEngine(engine_name, coin_name){
     }
   }
 
-  const engine = child.spawn(executable_path, {detached: true})
+  engine = child.spawn(executable_path, {detached: true, stdio: 'ignore'})
   
-  engine.stdout.on('data', (data) => {
-    console.log('cmd - ' + data.toString());
-  });
+  // engine.stdout.on('data', (data) => {
+  //   console.log('cmd - ' + data.toString());
+  // });
   
-  engine.stderr.on('data', (data) => {
-    console.error('cmd err - ' + data.toString());
-  });
+  // engine.stderr.on('data', (data) => {
+  //   console.error('cmd err - ' + data.toString());
+  // });
   
   engine.on('exit', (code) => {
     console.log(`Child exited with code ${code}`);
   });
 }
 
+function killEngine() {
+  console.log("process termination called.")
+  engine.kill(0);
+}
 
 // --------------------------------------------------------------------
 function createConfigurationWindow(ownerWindow){
@@ -135,7 +144,7 @@ function createWindow () {
     });
 
     
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
     return mainWindow
   })
   
@@ -149,7 +158,6 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
-  runEngine('nbminer', 'eth')
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -212,5 +220,9 @@ ipc.on("downloadEngine", async(event, {payload}) => {
   }
   
 })
+
+
+ipc.on('run-mining-engine', runEngine);
+ipc.on('kill-mining-engine', killEngine);
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);

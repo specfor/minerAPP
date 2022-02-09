@@ -1,6 +1,7 @@
 const { ipcRenderer, BrowserWindow } = require('electron')
 const path = require('path')
 
+
 function setupAutoStart(){
     ipcRenderer.on('autoStartReply', (event, arg) => {
     console.log("auto start" + arg)
@@ -8,10 +9,21 @@ function setupAutoStart(){
     ipcRenderer.send('setAutoStart', 'ping')
 }
 
+// ------------------------- Engine --------------------------
 function downloadEngine(){
     ipcRenderer.send('downloadEngine', {payload : {properties: {}}})
 }
 
+function runMiner(checkbox){
+    console.log(checkbox.checked)
+    if (checkbox.checked) {
+        console.log("Run miner")
+        ipcRenderer.send("run-mining-engine");
+    }else{
+        console.log("Terminate miner")
+        ipcRenderer.send("kill-mining-engine")
+    }
+}
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
     const progress = args;
@@ -40,4 +52,10 @@ window.addEventListener("load", (event) => {
     // });
 
     // downloadEngine()
+
+    // ------------------ RUN MINER -----------------
+    checbox_mine = document.getElementById('check-run-engine');
+
+    checbox_mine.addEventListener('click', function(){runMiner(checbox_mine)});
+
   });
