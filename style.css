@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Google Font Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
@@ -429,3 +430,588 @@ input:checked ~ .text:before{
 }
 /*--------------     Notification icon ---------------------*/
 >>>>>>> mini icons added
+=======
+/*
+2B2E4A -main
+E84545 -second
+903749 - bg
+53354A - text or else
+*/
+
+
+
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+  text-decoration: none;
+}
+
+.body{
+  background-color: #282A35;
+}
+
+.tabs{
+  position: absolute;
+}
+
+.tabs .tab-header{
+  z-index: 2;
+  position: relative;
+  background-color:#f5f5f5;
+  display: flex;
+  padding: 6px;
+  left: 130px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.tabs .tab-header > div{
+  font-size: 15px;
+  letter-spacing: 0.6px;
+  color: #888;
+  text-align: center;
+
+  position:relative;
+  z-index: 2;
+  cursor: pointer;
+  padding: 15px;
+  padding-top: 0px;
+  padding-bottom: 6px;
+}
+
+.tabs .tab-header >div.active{
+  color: #1abc9c;
+  border-bottom: 2px solid #1abc9c;
+  
+}
+
+
+.tabs .tab-body{
+  position: relative;
+  background-color: #393D48;
+  width: 100%;
+}
+
+.tabs .tab-body >div{
+  z-index: -1;
+  width: 600px;
+  height: 450px;
+  background-color: #393D48;
+  position: fixed;
+  opacity: 0;
+  /*transform: translateY(-10px);*/
+  margin-top: -50px;
+}
+
+.tabs .tab-body >div.active{
+  z-index: 1;
+  width: 100%;
+  opacity: 1;
+  top: 30px;
+  transform: translateY(0px);
+}
+
+
+/* COMPONANT : run button */
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.checkbox{
+
+  position:relative;
+  top: 190px;
+  left: 40px;
+
+  height: 80px;
+  width: 240px;
+  padding: 10px;
+  display: flex;
+  background: #fff;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px 30px rgba(0,0,0,.2);
+  justify-content: space-between;
+
+}
+.checkbox input{
+  outline: none;
+  height: 40px;
+  width: 90px;
+  border-radius: 50px;
+  -webkit-appearance: none;
+  position: relative;
+  background: #e6e6e6;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.checkbox input:checked{
+  background: #1abc9c;
+}
+.checkbox input:before{
+  position: absolute;
+  content: "";
+  left: 0;
+  height: 100%;
+  width: 40px;
+  background: linear-gradient(#fff,#f2f2f2,#e6e6e6,#d9d9d9);
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  border-radius: 50px;
+  transform: scale(0.85);
+  transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+input:checked:before{
+  left: 50px;
+}
+.checkbox .text:before{
+  content: "idle";
+  font-size: 25px;
+  font-weight: 500;
+  color: #bfbfbf;
+  padding-right: 20px;
+}
+input:checked ~ .text:before{
+  color: #1abc9c;
+  font-size: 27px;
+  content: "Mining";
+}
+
+/*-------------------BG-DESIGN--------------------------------------*/
+.panel{
+  position: relative;
+  top: 295px;
+  padding: 10px;
+  padding-bottom: 2px;
+  margin-left: 18px;
+  width: 560px;
+  height: 130px;
+  border: 2px solid rgba(255, 255, 255, 0.452);
+  border-radius: 6px;
+}
+.dis{
+  top: 20PX;
+  left: 260PX;
+  width: 300px;
+  position: relative;
+  padding-left: 30px;
+  border-left: 2px solid rgb(255, 255, 255);
+
+}
+.dis .mini{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  color: #d9d9d98c;
+  grid-gap: 2px;
+  font-size: 10px;
+}
+.dis .mini h2{
+  font-size: 14px;
+  margin-right: 0px;
+}
+.dis .mini h1{
+  font-size: 14px;
+  margin-left: -30px;
+}
+/*--------------------------------------------------------------------------*/
+.gif {
+  position: fixed;
+  top: 80px;
+  left: 30px;
+  width: 260px; 
+  height: 210px;
+  background: url(./Coin.gif) 0 0 no-repeat;
+  background-size: 3000%;
+  animation: like-gif steps(28) 1s infinite both;
+}
+
+.right-pane{
+  color: white;
+  position: fixed;
+  top: 125px;
+  left: 270px;
+  width: 300px;
+  border-left: 2px solid white;
+  padding-left: 30px;
+}
+.right-pane .head{
+  display: flex;
+  color: rgb(243, 218, 23);
+}
+.right-pane .head h1{
+  font-size: 35px;
+  letter-spacing: 1.5px;
+  color: white;
+}
+.right-pane h3{
+  margin-top: -12px;
+  color: #1abc9c;
+  font-size: 25px;
+  justify-content: space-between;
+}
+.right-pane h5{
+  letter-spacing: .8px;
+  line-height: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+}
+/*--------------------------END RUN BOX-----------------------------*/
+
+.wallet-tab h1{
+  text-align: center;
+  position: fixed;
+  top: 240px;
+  left: 200px;
+  color: rgba(255, 255, 255, 0.398);
+  font-size: 22px;
+}
+/*--------------     Notification icon ---------------------*/
+.icon-button {
+  z-index: 2;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  right: 30px;
+  top:10px ;
+
+  color: #333333;
+  background: #dddddd;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.icon-button:active {
+  background: #cccccc;
+}
+
+.icon-button__badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  width: 15px;
+  height: 15px;
+  background: red;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+#wifi_badge{
+  right: 70px;
+}
+#wifi_badge .icon-button__badge{
+  width: 0px;
+  height: 0px;
+}
+/*--------------     Notification icon ---------------------*/
+
+/*---- Setting page : form  ------*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+#miner{
+  left: 155px;
+  top: 60px;
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: #888;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
+.custom-select select {
+  display: block;
+  width: 100px;
+  min-height: 35px;
+  background: #00957a62;
+  border-radius: 3px;
+  border: 2px solid #009579;
+  outline: none;
+  padding: 0 20px 0 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+}
+
+.custom-select::after {
+  content: '';
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #222;
+  display: inline-block;
+  border-radius: 2px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.custom-select .selector-options {
+  list-style: none;
+  padding: 5px 0;
+  margin: 0;
+  background: #009579;
+  color: #fff;
+  border-radius: 4px;
+  z-index: 1;
+  width: 96%;
+  position: absolute;
+  left: 2%;
+  top: 35%;
+}
+
+.custom-select .selector-options li {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.custom-select .selector-options li:hover {
+  background: #00000062;
+}
+
+
+.form{
+  position: fixed;
+  top: 25px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  font-size: 16px;
+  margin-top: 60px;
+  border-right: 2px solid #d9d9d98c;
+  /*border-radius: 8px;*/
+  padding: 10px;
+  padding-right: 20px;
+  
+}
+.custom-field {
+  position: relative;
+  font-size: 14px;
+  border-top: 20px solid transparent;
+  margin-bottom: 0px;
+  --field-padding: 8px;
+}
+
+.custom-field input {
+  border: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f2f2;
+  padding: var(--field-padding);
+  border-radius: 3px;
+  width: 250px;
+  outline: none;
+  font-size: 14px;
+}
+
+.custom-field .placeholder {
+  position: absolute;
+  left: var(--field-padding);
+  width: calc(100% - (var(--field-padding) * 2));
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 22px;
+  line-height: 100%;
+  transform: translateY(-50%);
+  color: #aaa;
+  transition: 
+    top 0.3s ease,
+    color 0.3s ease,
+    font-size 0.3s ease;
+}
+
+.custom-field input.dirty + .placeholder,
+.custom-field input:focus + .placeholder,
+.custom-field input:not(:placeholder-shown) + .placeholder {
+  top: -10px;
+  font-size: 10px;
+  color: #222;
+}
+
+.custom-field .error-message {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  background: #d30909;
+  color: #fff;
+  height: 24px;
+}
+
+.custom-field .error-message:empty {
+  opacity: 0;
+}
+
+/* ONE */
+.custom-field.one input {
+  background: none;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s ease;
+}
+
+.custom-field.one input + .placeholder {
+  left: 8px;
+  padding: 0 5px;
+}
+
+.custom-field.one input.dirty,
+.custom-field.one input:not(:placeholder-shown),
+.custom-field.one input:focus {
+  border-color: #222;
+  transition-delay: 0.1s
+}
+
+.custom-field.one input.dirty + .placeholder,
+.custom-field.one input:not(:placeholder-shown) + .placeholder,
+.custom-field.one input:focus + .placeholder {
+  top: 0;
+  font-size: 10px;
+  color: #222;
+  background: #fff;
+  width: auto
+}
+
+.form h4{
+  position: relative;
+  left:2px;
+  color: #bfbfbf;
+  margin-bottom: -10px;
+  font-size: 18px;
+}
+
+/*  app conig panel */
+.app-config{
+  position: fixed;
+  width: 250px;
+  left: 320px;
+  top: 130px;
+}
+.line{
+  margin-bottom:15px;
+}
+.custom-checkbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.custom-checkbox .label {
+  font-size: 12px;
+  margin: 0 10px;
+  margin-left: 40px;
+  color: #aaa;
+}
+
+.custom-checkbox .checkmark {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #222;
+  display: inline-block;
+  border-radius: 3px;
+  background: #222 url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/1200px-White_check.svg.png) center/1250% no-repeat;
+  transition: background-size 0.2s ease;
+}
+
+.custom-checkbox input:checked + .checkmark {
+  background-size: 60%;
+  transition: background-size 0.25s cubic-bezier(0.7, 0, 0.18, 1.24);
+}
+
+.custom-checkbox input {
+  display: none;
+}
+
+
+/*SAVE BUTTON*/
+
+.button {
+  position: fixed;
+  padding: 4px 14px;
+  background: #009579;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  top: 385px;
+  left: 490px;
+  align-items: center;
+
+}
+
+.button:active {
+  background: #007a63;
+}
+
+.button__text {
+  /*font: bold 20px "Quicksand", san-serif;*/
+  color: #ffffff;
+  transition: all 0.2s;
+  font: 25px;
+}
+
+.button--loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 5px;
+  left: 22px;
+  right: 0;
+  bottom: 0;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+
+
+
+/* ----- form end ---------*/
+>>>>>>> index update
