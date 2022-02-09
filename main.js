@@ -36,12 +36,12 @@ function runEngine(engine_name, coin_name){
   console.log("miner process called to run")
   if (engine_name == 'nbminer') {
     if (coin_name == "eth") {
-      executable_path = path.join(__dirname, "downloads/NBMiner_Win");
+      executable_path = path.join(__dirname, "downloads/NBMiner_Win/start_eth.bat");
       executable_file = 'start_eth.bat';
     }
   }
 
-  const engine = child.spawn('cmd.exe', [executable_path, executable_file])
+  const engine = child.spawn(executable_path)
   
   engine.stdout.on('data', (data) => {
     console.log('cmd - ' + data.toString());
