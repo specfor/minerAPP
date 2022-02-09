@@ -33,6 +33,7 @@ function autoStart(){
 
 
 function runEngine(engine_name, coin_name){
+  console.log("miner process called to run")
   if (engine_name == 'nbminer') {
     if (coin_name == "eth") {
       executable_path = path.join(__dirname, "downloads/NBMiner_Win");
