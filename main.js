@@ -7,6 +7,7 @@ const {download} = require('electron-dl')
 const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
+const child = require('child_process');
 
 var mainWindowId = null;
 
@@ -28,6 +29,26 @@ function autoStart(){
     AutoLauncher.enable()
     console.log('enabled')
   }
+}
+
+
+function runEngine(engine_name, coin_name){
+  if (engine_name == 'nbminer') {
+    if (coin_name == "eth") {
+      executable_path = path.join(__dirname, "downloads/NBMiner_Win");
+      executable_file = 'start_eth.bat';
+    }
+  }
+
+  const engine = child.spawn('cmd.exe', [executable_path, executable_file])
+  child(executable_path, function(err, data) {
+    if(err){
+       console.error(err);
+       return;
+    }
+ 
+    console.log(data.toString());
+});
 }
 
 
@@ -123,6 +144,7 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
+  runEngine('nbminer', 'eth')
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -174,16 +196,16 @@ ipc.on("downloadEngine", async(event, {payload}) => {
       download_file = item.path;
     }
   });
-  console.log("main - finished dowloading")
+  console.log("main - finished dowloading");
  
   try {
     await extract(download_file, { dir: download_path })
-    console.log('Extraction complete')
+    console.log('Extraction complete');
   } catch (err) {
-    console.log(err)
+    console.log("Download extract error - " + err);
     // handle any errors
   }
   
 })
 
-ipc.on("showConfigurationWindow", createConfigurationWindow)
+ipc.on("showConfigurationWindow", createConfigurationWindow);
