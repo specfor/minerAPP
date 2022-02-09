@@ -41,14 +41,18 @@ function runEngine(engine_name, coin_name){
   }
 
   const engine = child.spawn('cmd.exe', [executable_path, executable_file])
-  child(executable_path, function(err, data) {
-    if(err){
-       console.error(err);
-       return;
-    }
- 
-    console.log(data.toString());
-});
+  
+  engine.stdout.on('data', (data) => {
+    console.log('cmd - ' + data.toString());
+  });
+  
+  engine.stderr.on('data', (data) => {
+    console.error('cmd err - ' + data.toString());
+  });
+  
+  engine.on('exit', (code) => {
+    console.log(`Child exited with code ${code}`);
+  });
 }
 
 
