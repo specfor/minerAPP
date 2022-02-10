@@ -98,7 +98,7 @@ function createConfigurationWindow(ownerWindow){
 
 function createWindow () {
   const loadingWindow = new BrowserWindow({
-    width: 450,
+    width: 250,
     height: 300,
     resizable: false,
     minimizable: false,
