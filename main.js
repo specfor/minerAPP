@@ -8,6 +8,8 @@ const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
+const windowsKill = require('windows-kill')();
+
 
 var mainWindowId = null;
 var engine_pid = null;
@@ -64,6 +66,7 @@ function runEngine(){
 function killEngine() {
   console.log("process termination called.")
   process.kill(engine_pid, 'SIGINT')
+  process.abort()
 }
 
 // --------------------------------------------------------------------
