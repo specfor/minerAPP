@@ -8,7 +8,8 @@ const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
-import taskkill from 'taskkill';
+// import taskkill from 'taskkill';
+const taskkill = require('taskkill')
 // const windowsKill = require('windows-kill')();
 
 

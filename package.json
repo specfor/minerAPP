@@ -26,7 +26,8 @@
     "auto-launch": "^5.0.5",
     "electron-dl": "^3.3.0",
     "extract-zip": "^2.0.1",
-    "save": "^2.4.0"
+    "save": "^2.4.0",
+    "taskkill": "^4.0.0"
   },
   "build": {
     "appId": "com.minerapp.app",
@@ -34,7 +35,7 @@
     "target": "NSIS",
     "directories": {
       "output": "build"
-    }, 
+    },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
       "oneClick": false
