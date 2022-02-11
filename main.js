@@ -8,8 +8,8 @@ const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
-// import taskkill from 'taskkill';
-const taskkill = require('taskkill')
+// import taskkill from 'node_modules/taskkill';
+// const taskkill = require('taskkill')
 // const windowsKill = require('windows-kill')();
 
 
@@ -67,9 +67,10 @@ function runEngine(){
 
 function killEngine() {
   console.log("process termination called.")
-  taskkill(engine_pid, {force: true})
+  // taskkill(engine_pid, {force: true})
   // process.kill(engine_pid, 'SIGINT')
   // process.abort()
+  child.exec(`taskkill /pid ${engine_pid} /t`);
 }
 
 // --------------------------------------------------------------------
