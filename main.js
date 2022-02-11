@@ -10,7 +10,7 @@ const AutoLaunch = require('auto-launch');
 const child = require('child_process');
 
 var mainWindowId = null;
-var engine = null;
+var engine_pid = null;
 
 
 function autoStart(){
@@ -57,13 +57,13 @@ function runEngine(){
   // });
   
   engine.on('exit', (code) => {
-    console.log(`Child exited with code ${code}`);
+    console.log(`Miner program exited with code ${code}`);
   });
 }
 
 function killEngine() {
   console.log("process termination called.")
-  engine.kill(0);
+  process.kill(engine_pid, 'SIGINT')
 }
 
 // --------------------------------------------------------------------
@@ -138,9 +138,6 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
-      // createConfigurationWindow(mainWindow)
-      // let code = `let btn_auto_start = document.getElementById("btn-auto-start");btn_auto_start.addEventListener('click', ()=>{console.log("click")});`;
-      // mainWindow.webContents.executeJavaScript(code);
     });
 
     
