@@ -8,7 +8,8 @@ const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
-const windowsKill = require('windows-kill')();
+import taskkill from 'taskkill';
+// const windowsKill = require('windows-kill')();
 
 
 var mainWindowId = null;
@@ -65,8 +66,9 @@ function runEngine(){
 
 function killEngine() {
   console.log("process termination called.")
-  process.kill(engine_pid, 'SIGINT')
-  process.abort()
+  taskkill(engine_pid, {force: true})
+  // process.kill(engine_pid, 'SIGINT')
+  // process.abort()
 }
 
 // --------------------------------------------------------------------
@@ -144,7 +146,7 @@ function createWindow () {
     });
 
     
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
     return mainWindow
   })
   

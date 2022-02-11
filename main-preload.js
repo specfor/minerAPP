@@ -1,3 +1,4 @@
+const { isEmptyOrSpaces } = require('builder-util')
 const { ipcRenderer, BrowserWindow } = require('electron')
 const path = require('path')
 
@@ -54,8 +55,34 @@ window.addEventListener("load", (event) => {
     // downloadEngine()
 
     // ------------------ RUN MINER -----------------
-    checbox_mine = document.getElementById('check-run-engine');
+    let checbox_mine = document.getElementById('check-run-engine');
 
     checbox_mine.addEventListener('click', function(){runMiner(checbox_mine)});
+
+    // ------------------ SETTINGS ------------------
+    let txt_algorithm = document.getElementById('algorithm');
+    let txt_pool_address = document.getElementById('pool-address');
+    let txt_server = document.getElementById('server');
+    let txt_wallet_address = document.getElementById('wallet-address');
+    let select_engine = document.getElementById('engine-select');
+    let btn_save = document.getElementById('btn-settings-save');
+
+    btn_save.addEventListener('click', ()=> {
+        console.log(txt_algorithm.textContent);
+        console.log(txt_algorithm.textContent === '');
+        if ((txt_algorithm.textContent === "") || (txt_pool_address.textContent === "") || (txt_server.textContent === "") || (txt_wallet_address.textContent === "") || !select_engine.selected) {
+            console.log("Fill all fields");
+            alert('Complete all details.');
+        }
+
+        let algorithm = txt_algorithm.textContent;
+        let pool_address = txt_pool_address.textContent;
+        let server = txt_server.textContent;
+        let wallet_address = txt_wallet_address.textContent;
+        let engine = select_engine.value;
+
+        
+
+    })
 
   });

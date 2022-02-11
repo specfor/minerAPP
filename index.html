@@ -90,39 +90,39 @@
               <div class="form">
               <h4>Configuration</h4>
               <label class="custom-field one">
-                <input type="text" placeholder=" "/>
+                <input type="text" id="algorithm" placeholder=" "/>
                 <span class="placeholder">Algorithum</span>
               </label>
               <label class="custom-field one">
-                <input type="text" placeholder=" "/>
+                <input type="text" id="pool-address" placeholder=" "/>
                 <span class="placeholder">Pool Address</span>
               </label>
               <label class="custom-field one">
-                <input type="text" placeholder=" "/>
+                <input type="text" id="server" placeholder=" "/>
                 <span class="placeholder">Server</span>
               </label>
               <label class="custom-field one">
-                <input type="text" placeholder=" "/>
+                <input type="text" id="wallet-address" placeholder=" "/>
                 <span class="placeholder">Wallet Address</span>
               </label>
             </div>
 
 
             <label class="custom-select" id="miner">
-              <select name="sample">
-                <option value="1">NBminer</option>
-                <option value="2">T-rex</option>
-                <option value="3">Gminer</option>
+              <select id="engine-select" name="sample">
+                <option value="nbminer">NBminer</option>
+                <option value="trex">T-rex</option>
+                <option value="gminer">Gminer</option>
               </select>
             </label>
 
 
-            <button type="button" class="button" onclick="this.classList.toggle('button--loading')">
+            <button type="button" id="btn-settings-save" class="button" onclick="this.classList.toggle('button--loading')">
               <span class="button__text">Save</span>
             </button>
 
           </div>
-          </div>
+        </div>
 
           <div class="app-config">
 
