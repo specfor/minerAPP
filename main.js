@@ -46,8 +46,8 @@ function runEngine(){
     }
   }
 
-  engine = child.spawn(executable_path, {detached: true, stdio: 'ignore'})
-  
+  let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore'});
+  engine_pid = engine.pid;
   // engine.stdout.on('data', (data) => {
   //   console.log('cmd - ' + data.toString());
   // });
@@ -110,8 +110,8 @@ function createWindow () {
     }
   })
 
-  loadingWindow.loadFile('loading-window.html')
-  loadingWindow.setMenu(null)
+  loadingWindow.loadFile('loading-window.html');
+  loadingWindow.setMenu(null);
   
   loadingWindow.once('ready-to-show', () => {
   loadingWindow.show();
