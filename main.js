@@ -8,7 +8,9 @@ const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
-const fs = require('fs')
+const fs = require('fs');
+const { isEmptyOrSpaces } = require('builder-util');
+const { argv } = require('process');
 
 
 var mainWindowId = null;
@@ -69,26 +71,40 @@ function killEngine() {
 }
 
 // ----------------------------- SETTINGS ----------------------------
-function getMinerDetails() {
-  fs.readFile('engines.json', 'utf8' , (err, data) => {
-    if (err) {
-      console.error(err)
-      return false;
+function getMinerDetails(engine="") {
+  try{
+    let data = fs.readFileSync('engines.json', 'utf8');
+    if (!isEmptyOrSpaces(engine)) {
+      data = data['engine'];
     }
-    console.log(data);
     data = JSON.parse(data);
     return data;
-  })
+  }catch(err){
+    console.error(err)
+    return false;
+  }
 }
 
 function saveMinerDetails(engine, algorithm, server, pool_address, wallet_address) {
+  // console.log(engine + ' ' + algorithm + ' ' + server + ' ' +pool_address+ ' ' +wallet_address )
   let data = getMinerDetails()
-  if (data) {
-    
+  if (!data) {
+    data = {'nbminer': {'algorithm':'', 'server':'', 'pool_address':'', 'wallet_address':''},
+    'trex': {'algorithm':'', 'server':'', 'pool_address':'', 'wallet_address':''}, 
+    'gminer': {'algorithm':'', 'server':'', 'pool_address':'', 'wallet_address':''}};
   }
 
+  data[engine]['algorithm'] = algorithm;
+  data[engine]['server'] = server;
+  data[engine]['pool_address'] = pool_address;
+  data[engine]['wallet_address'] = wallet_address;
+  
   let wdata = JSON.stringify(data);
-  fs.writeFile('engines.json', wdata, {flag: 'w+'})
+  fs.writeFile('engines.json', wdata, {flag: 'w+'}, err => {
+    if (err) {
+      console.log(err);
+    }
+  })
 }
 
 
@@ -247,5 +263,8 @@ ipc.on("downloadEngine", async(event, {payload}) => {
 
 ipc.on('run-mining-engine', runEngine);
 ipc.on('kill-mining-engine', killEngine);
+ipc.on('save-engine-config', function(event, args){
+  saveMinerDetails(args['engine'], args['algorithm'], args['server'], args['pool_address'], args['wallet_address'])
+});
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);
