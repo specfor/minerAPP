@@ -85,6 +85,8 @@ window.addEventListener("load", (event) => {
             let wallet_address = txt_wallet_address.value;
             let engine = select_engine.value;
 
+            ipcRenderer.send("save-engine-config", {engine, algorithm, server, pool_address, wallet_address});
+
 
         }
 
