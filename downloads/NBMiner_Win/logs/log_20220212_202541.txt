@@ -1,0 +1,45 @@
+[20:25:41] INFO - ----------------------------------------------
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - |         NBMiner - Crypto GPU Miner         |
+[20:25:41] INFO - |                    40.1                    |
+[20:25:41] INFO - |                                            |
+[20:25:41] INFO - ----------------------------------------------
+[20:25:41] INFO - ------------------- System -------------------
+[20:25:41] INFO - OS:     Windows 10 Version 2009, 10.0.21996
+[20:25:41] INFO - CPU:    Intel(R) Core(TM) i3-10100F CPU @ 3.60GHz
+[20:25:41] INFO - RAM:    3001 MB / 8098 MB
+[20:25:41] INFO - VMEM:   1572 MB / 11077 MB
+[20:25:41] INFO - CU_DRV: 11.1, 456.71
+[20:25:41] INFO - ------------------- Config -------------------
+[20:25:41] INFO - ALGO:   ethash
+[20:25:41] INFO - URL:    stratum+tcp://asia2.ethermine.org:14444
+[20:25:41] INFO - USER:   0x4296116d44a4a7259B52B1A756e19083e675062A.default
+[20:25:41] INFO - TEMP:   limit 90C, start 85C
+[20:25:42] INFO - ------------------- Device -------------------
+[20:25:42] INFO -  |ID|PCI|  CC|Memory|CU|
+[20:25:42] INFO - *| 0|  1|  75| 4096M|20| GeForce GTX 1650 SUPER
+[20:25:42] INFO - ----------------------------------------------
+[20:25:43] INFO - ethash - Logging in to asia2.ethermine.org(172.65.239.73):14444 ...
+[20:25:44] INFO - ethash - Login succeeded.
+[20:25:44] INFO - API:  0.0.0.0:22333
+[20:25:44] INFO - API server started.
+[20:25:44] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 21d12d9e, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:45] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 0fe5f1a1, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:46] INFO - Device 0 started, Free mem = 3310 MB.
+[20:25:46] INFO - ethash - New job: asia2.ethermine.org:14444, ID: bf6b4ae0, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:49] INFO - Light cache built, 2.72 s.
+[20:25:49] INFO - ethash - New job: asia2.ethermine.org:14444, ID: bfae07ef, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:49] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 47a9c98b, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:49] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 41808cc3, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:50] INFO - ethash - New job: asia2.ethermine.org:14444, ID: ad5504a0, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:50] INFO - ethash - New job: asia2.ethermine.org:14444, ID: f4e8fa6f, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:50] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 3df1f385, HEIGHT: 14191927, DIFF: 4.295G
+[20:25:51] INFO - Device 0: DAG - Building, EPOCH 473
+[20:25:51] ERROR - CUDA Error: out of memory (err_no=2)
+[20:25:51] ERROR - Device 0 exception, exit ...
