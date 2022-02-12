@@ -699,7 +699,7 @@ input:checked ~ .text:before{
   font-size: 30px;
   color: white;
   box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-  cursor:pointer;
+
   vertical-align:middle;
   border-radius: 5px;
 }
@@ -709,6 +709,7 @@ input:checked ~ .text:before{
   background-color: #404846;
   width: 100%;
   border-radius: 5px;
+
 }
 .info-frame .left-container .update-tile h4{
   margin-top: -5px;
@@ -723,13 +724,27 @@ input:checked ~ .text:before{
 }
 .info-frame .left-container .update-tile button{
   width: 80px;
-  height: 30px;
+  height: 35px;
   padding: 5px;
   position: fixed;
   top: 370px;
   left: 175px;
-
+  padding-bottom: 15px;  
   display: block;
   text-align: center;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 2px solid #009579 ;
+  color: white;
+  
+  cursor:pointer;
+}
+
+#updater:hover{
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  color: #1abc9c;
+
+  cursor:pointer;
 }
 /**/
