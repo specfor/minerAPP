@@ -8,9 +8,7 @@ const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
-// import taskkill from 'node_modules/taskkill';
-// const taskkill = require('taskkill')
-// const windowsKill = require('windows-kill')();
+const fs = require('fs')
 
 
 var mainWindowId = null;
@@ -36,7 +34,7 @@ function autoStart(){
   }
 }
 
-
+// ------------------------- MINER PROGRAM ---------------------------
 function runEngine(){
   console.log("miner process called to run")
 
@@ -66,11 +64,19 @@ function runEngine(){
 }
 
 function killEngine() {
-  console.log("process termination called.")
-  // taskkill(engine_pid, {force: true})
-  // process.kill(engine_pid, 'SIGINT')
-  // process.abort()
+  console.log("process termination called.");
   child.exec(`taskkill /pid ${engine_pid} /t`);
+}
+
+// ----------------------------- SETTINGS ----------------------------
+function getMinerDetails(miner_name) {
+  fs.readFile('options.miner', 'utf8' , (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    console.log(data)
+  })
 }
 
 // --------------------------------------------------------------------

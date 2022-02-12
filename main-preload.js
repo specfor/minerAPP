@@ -67,20 +67,19 @@ window.addEventListener("load", (event) => {
     let select_engine = document.getElementById('engine-select');
     let btn_save = document.getElementById('btn-settings-save');
 
-    btn_save.addEventListener('click', ()=> {
-        console.log(txt_algorithm.textContent);
-        console.log(txt_algorithm.textContent === '');
-        if ((txt_algorithm.textContent === "") || (txt_pool_address.textContent === "") || (txt_server.textContent === "") || (txt_wallet_address.textContent === "") || !select_engine.selected) {
+    btn_save.addEventListener('click', ()=> {       
+        if (isEmptyOrSpaces(txt_algorithm.value) || isEmptyOrSpaces(txt_pool_address.value) || isEmptyOrSpaces(txt_server.value) || isEmptyOrSpaces(txt_wallet_address.value)) {
             console.log("Fill all fields");
             alert('Complete all details.');
+        }else{
+            let algorithm = txt_algorithm.value;
+            let pool_address = txt_pool_address.value;
+            let server = txt_server.value;
+            let wallet_address = txt_wallet_address.value;
+            let engine = select_engine.value;
+
+
         }
-
-        let algorithm = txt_algorithm.textContent;
-        let pool_address = txt_pool_address.textContent;
-        let server = txt_server.textContent;
-        let wallet_address = txt_wallet_address.textContent;
-        let engine = select_engine.value;
-
         
 
     })
