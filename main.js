@@ -69,15 +69,28 @@ function killEngine() {
 }
 
 // ----------------------------- SETTINGS ----------------------------
-function getMinerDetails(miner_name) {
-  fs.readFile('options.miner', 'utf8' , (err, data) => {
+function getMinerDetails() {
+  fs.readFile('engines.json', 'utf8' , (err, data) => {
     if (err) {
       console.error(err)
-      return
+      return false;
     }
-    console.log(data)
+    console.log(data);
+    data = JSON.parse(data);
+    return data;
   })
 }
+
+function saveMinerDetails(engine, algorithm, server, pool_address, wallet_address) {
+  let data = getMinerDetails()
+  if (data) {
+    
+  }
+
+  let wdata = JSON.stringify(data);
+  fs.writeFile('engines.json', wdata, {flag: 'w+'})
+}
+
 
 // --------------------------------------------------------------------
 function createConfigurationWindow(ownerWindow){

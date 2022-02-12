@@ -16,13 +16,20 @@ function downloadEngine(){
 }
 
 function runMiner(checkbox){
-    console.log(checkbox.checked)
+    console.log(checkbox.checked);
+    let imageMiner = document.getElementById('img-mining');
+    let imageMiner2 = document.getElementById('img-mining2');
+
     if (checkbox.checked) {
         console.log("Run miner")
         ipcRenderer.send("run-mining-engine");
+        imageMiner.style.opacity = '100%';
+        imageMiner2.style.opacity = '0%';
     }else{
         console.log("Terminate miner")
         ipcRenderer.send("kill-mining-engine")
+        imageMiner.style.opacity = '0%';
+        imageMiner2.style.opacity = '100%';
     }
 }
 
@@ -80,8 +87,8 @@ window.addEventListener("load", (event) => {
 
 
         }
-        
 
+        setTimeout(() => {btn_save.classList.toggle('button--loading')}, 1000);
     })
 
   });
