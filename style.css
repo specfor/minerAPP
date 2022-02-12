@@ -22,7 +22,8 @@ E84545 -second
 }
 
 .tabs{
-  position: absolute;
+  position: fixed;
+  top: 0px;
 }
 
 .tabs .tab-header{
@@ -238,7 +239,7 @@ input:checked ~ .text:before{
 /*--------------     Notification icon ---------------------*/
 .icon-button {
   z-index: 2;
-  position: fixed;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,7 +247,7 @@ input:checked ~ .text:before{
   height: 30px;
   right: 30px;
   top:10px ;
-
+  left: 30px;
   color: #333333;
   background: #dddddd;
   border: none;
@@ -276,12 +277,43 @@ input:checked ~ .text:before{
   border-radius: 50%;
 }
 #wifi_badge{
-  right: 70px;
+  left: 70px;
 }
 #wifi_badge .icon-button__badge{
   width: 0px;
   height: 0px;
 }
+
+/*window navigation pane*/
+.win-control{
+  background-color: #282A35;
+  width: 220px;
+  position: relative;
+  left: 490px;
+  z-index: 2; 
+  padding: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.win-control button{
+  padding: 5px;
+  border: none;
+  background-color: white;
+}
+.win-control .solve{
+  color: red;
+  margin: 0px;
+  margin-top: -20px;
+  width: 15px;
+  height: 5px;
+  font-size: 10px;
+  text-align: center;
+}
+
+
+/*window navigation pane*/
+
+
 /*--------------     Notification icon ---------------------*/
 
 /*---- Setting page : form  ------*/
