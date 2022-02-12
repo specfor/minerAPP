@@ -25,6 +25,7 @@
 [23:38:12] INFO -  |ID|PCI|  CC|Memory|CU|
 [23:38:12] INFO - *| 0|  1|  75| 4096M|20| GeForce GTX 1650 SUPER
 [23:38:12] INFO - ----------------------------------------------
+[23:38:13] INFO - ethash - Logging in to asia2.ethermine.org(172.65.239.73):14444 ...
 [23:38:13] INFO - ethash - Login succeeded.
 [23:38:13] INFO - API:  0.0.0.0:22333
 [23:38:13] INFO - API server started.
