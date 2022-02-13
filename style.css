@@ -795,6 +795,41 @@ input:checked ~ .text:before{
   line-height:15px;
   margin-bottom: 5px;
 }
+.pay{
+  text-align: center;
+  justify-content: center;
+}
+.right-container .pay-details {
+  margin-top: 5px;
+  display: flex;
+  color: rgba(255, 255, 255, 0.618);
+  text-align: center;
+  justify-content: center;
+}
+.right-container .pay-details button {
+  font-size: 10px;
+  background-color: #222;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
+  margin-top: -3px;
+  color: white;
+}
+.right-container .pay-details button:hover {
+  background-color: rgba(34, 34, 34, 0.549);
+  border-radius: 5px;
+  color: white;
+}
+.right-container .pay-details h6 {
+  font-size: 12px;
+}
+.right-container .pay-details span {
+  font-size: 10px;
+  background-color: #222;
+  padding: 5px;
+}
+
 #donate-mail{
   font-size: 15px;
   text-align: center;

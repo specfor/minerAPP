@@ -163,7 +163,7 @@ function createWindow () {
      // Create the browser window.
     const mainWindow = new BrowserWindow({
       width: 600,
-      height: 450,
+      height: 420,
       resizable: false,
       show: false,
       alwaysOnTop:true,
@@ -183,7 +183,7 @@ function createWindow () {
     });
 
     
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
     return mainWindow
   })
   
@@ -274,7 +274,3 @@ ipc.on('get-engine-config', (event, args)=>{
 })
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);
-
-ipc.on('close-app', ()=>{app.quit()});
-ipc.on('minimize-app', ()=>{BrowserWindow.getFocusedWindow().minimize()});
-ipc.on('maximize-app', ()=>{BrowserWindow.getFocusedWindow().maximize()});
