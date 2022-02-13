@@ -2,6 +2,7 @@ const { isEmptyOrSpaces } = require('builder-util')
 const { ipcRenderer, BrowserWindow } = require('electron')
 const path = require('path')
 
+var mining_status = false;
 
 function setupAutoStart(){
     ipcRenderer.on('autoStartReply', (event, arg) => {
@@ -16,20 +17,38 @@ function downloadEngine(){
 }
 
 function runMiner(checkbox){
-    console.log(checkbox.checked);
+    // console.log(checkbox.checked);
     let imageMiner = document.getElementById('img-mining');
     let imageMiner2 = document.getElementById('img-mining2');
 
     if (checkbox.checked) {
-        console.log("Run miner")
+        console.log("Starting miner program")
         ipcRenderer.send("run-mining-engine");
+        mining_status = true;
         imageMiner.style.opacity = '100%';
         imageMiner2.style.opacity = '0%';
     }else{
-        console.log("Terminate miner")
+        console.log("Terminaing miner program")
         ipcRenderer.send("kill-mining-engine")
+        mining_status = false;
         imageMiner.style.opacity = '0%';
         imageMiner2.style.opacity = '100%';
+    }
+}
+
+function change_home_status(pool_address, algorithm){
+    let txt_status_gpu_count = document.getElementById('status-gpu-count');
+    let txt_status_hahsrate = document.getElementById('status-hashrate');
+    let txt_status_algoritm = document.getElementById('status-algorithm');
+    let txt_status_server = document.getElementById('status-server');
+    let txt_status_pool_address = document.getElementById('status-pool-address');
+    if (!mining_status) {
+        // console.log("setting home screen statuses.")
+        let server = pool_address.split('.');
+        server = server[1] + '.' + server[2].split(':')[0];
+        txt_status_algoritm.textContent = algorithm;
+        txt_status_pool_address.textContent = pool_address;
+        txt_status_server.textContent = server;
     }
 }
 
@@ -66,13 +85,14 @@ window.addEventListener("load", (event) => {
 
     checbox_mine.addEventListener('click', function(){runMiner(checbox_mine)});
 
-    // ------------------ SETTINGS ------------------
+    // ------------------ SETTINGS AND MINER STATUS ------------------
     let select_engine = document.getElementById('engine-select');
     let txt_pool_address = document.getElementById('pool-address');
     let txt_wallet_address = document.getElementById('wallet-address');
     let txt_algorithm = document.getElementById('algorithm');
     let txt_extra_param = document.getElementById('extra-param');
     let btn_save = document.getElementById('btn-settings-save');
+
     
     btn_save.addEventListener('click', ()=> {       
         if (isEmptyOrSpaces(txt_algorithm.value) || isEmptyOrSpaces(txt_pool_address.value) || isEmptyOrSpaces(txt_extra_param.value) || isEmptyOrSpaces(txt_wallet_address.value)) {
@@ -99,8 +119,10 @@ window.addEventListener("load", (event) => {
         txt_wallet_address.value = data[select_engine.value]['wallet_address'];
         txt_algorithm.value = data[select_engine.value]['algorithm'];
         txt_extra_param.value = data[select_engine.value]['extra_param'];
+        change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['algorithm']);
 
         select_engine.addEventListener('change',(event) => {
+            change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['algorithm']);
             txt_pool_address.value = data[select_engine.value]['pool_address'];
             txt_wallet_address.value = data[select_engine.value]['wallet_address'];
             txt_algorithm.value = data[select_engine.value]['algorithm'];
