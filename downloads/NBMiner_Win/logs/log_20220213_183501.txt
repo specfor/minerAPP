@@ -1,0 +1,35 @@
+[18:35:01] INFO - ----------------------------------------------
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - |         NBMiner - Crypto GPU Miner         |
+[18:35:01] INFO - |                    40.1                    |
+[18:35:01] INFO - |                                            |
+[18:35:01] INFO - ----------------------------------------------
+[18:35:01] INFO - ------------------- System -------------------
+[18:35:01] INFO - OS:     Windows 10 Version 2009, 10.0.21996
+[18:35:01] INFO - CPU:    Intel(R) Core(TM) i3-10100F CPU @ 3.60GHz
+[18:35:01] INFO - RAM:    4495 MB / 8098 MB
+[18:35:01] INFO - VMEM:   3913 MB / 10018 MB
+[18:35:01] INFO - CU_DRV: 11.1, 456.71
+[18:35:01] INFO - ------------------- Config -------------------
+[18:35:01] INFO - ALGO:   ethash
+[18:35:01] INFO - URL:    stratum+tcp://asia2.ethermine.org:14444
+[18:35:01] INFO - USER:   0x4296116d44a4a7259B52B1A756e19083e675062A.default
+[18:35:01] INFO - TEMP:   limit 90C, start 85C
+[18:35:01] INFO - ------------------- Device -------------------
+[18:35:01] INFO -  |ID|PCI|  CC|Memory|CU|
+[18:35:01] INFO - *| 0|  1|  75| 4096M|20| GeForce GTX 1650 SUPER
+[18:35:01] INFO - ----------------------------------------------
+[18:35:02] INFO - ethash - Logging in to asia2.ethermine.org(172.65.239.73):14444 ...
+[18:35:02] INFO - ethash - Login succeeded.
+[18:35:02] INFO - API:  0.0.0.0:22333
+[18:35:02] INFO - API server started.
+[18:35:02] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 44a9ed40, HEIGHT: 14197941, DIFF: 4.295G
+[18:35:02] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 5dc1aeb8, HEIGHT: 14197941, DIFF: 4.295G
+[18:35:03] INFO - ethash - New job: asia2.ethermine.org:14444, ID: 276e2698, HEIGHT: 14197942, DIFF: 4.295G
+[18:35:04] INFO - Device 0 started, Free mem = 3310 MB.
