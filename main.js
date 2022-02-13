@@ -273,3 +273,7 @@ ipc.on('get-engine-config', (event, args)=>{
 })
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);
+
+ipc.on('close-app', ()=>{app.quit()});
+ipc.on('minimize-app', ()=>{BrowserWindow.getFocusedWindow().minimize()});
+ipc.on('maximize-app', ()=>{BrowserWindow.getFocusedWindow().maximize()});

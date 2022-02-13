@@ -131,4 +131,10 @@ window.addEventListener("load", (event) => {
     })
 
     ipcRenderer.send('get-engine-config');
-  });
+
+    // ------------------------------------------------------------------
+    document.getElementById('close').addEventListener('click', ()=>{ipcRenderer.send('close-app')});
+    document.getElementById('minimize').addEventListener('click', ()=>{ipcRenderer.send('minimize-app')});
+    document.getElementById('maximize').addEventListener('click', ()=>{ipcRenderer.send('maximize-app')});
+
+});
