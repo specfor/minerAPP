@@ -163,9 +163,10 @@ function createWindow () {
      // Create the browser window.
     const mainWindow = new BrowserWindow({
       width: 600,
-      height: 450,
+      height: 420,
       resizable: false,
       show: false,
+      frame:false,
 
       webPreferences: {
         preload: path.join(__dirname, 'main-preload.js')
@@ -182,7 +183,7 @@ function createWindow () {
     });
 
     
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
     return mainWindow
   })
   
