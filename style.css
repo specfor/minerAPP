@@ -848,7 +848,7 @@ width: 300px;
 
 .coin-box{
   position: fixed;
-  top: 0px;
+  top: 132px;
   left: 25px;
   z-index: 2;
 }
