@@ -438,7 +438,7 @@ width: 300px;
   margin-top: 60px;
 }
 .custom-field {
-  z-index: 1;
+
   position: relative;
   font-size: 14px;
   border-top: 20px solid transparent;
@@ -848,19 +848,20 @@ width: 300px;
 
 .coin-box{
   position: fixed;
-  top: 130px;
+  top: 0px;
   left: 25px;
+  z-index: 2;
 }
 
 .select-box {
   display: flex;
   width: 250px;
   flex-direction: column;
-  z-index: 2;
+
 }
 
 .select-box .options-container {
-  z-index: 2;
+
   background: #2f3640;
   color: #f5f6fa;
   max-height: 0;
@@ -899,7 +900,7 @@ width: 300px;
 }
 
 .select-box .options-container.active {
-  max-height: 240px;
+  max-height: 140px;
   opacity: 1;
   overflow-y: scroll;
 }
