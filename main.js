@@ -10,6 +10,15 @@ const AutoLaunch = require('auto-launch');
 const child = require('child_process');
 const fs = require('fs');
 const { isEmptyOrSpaces } = require('builder-util');
+const request = require('request');
+
+try{
+  const config = require('./config.json');
+}catch(err){
+  let content = {"version": "1.0.0"}
+  fs.writeFile("config.json", JSON.stringify(content), ()=>{console.log('App config file created.');});
+  const config = require('./config.json');
+}
 
 var mainWindowId = null;
 var engine_pid = null;
@@ -106,6 +115,23 @@ function saveMinerDetails(engine, pool_address, wallet_address, algorithm, extra
   }
 }
 
+// ------------------------------ UPDATE -----------------------------------
+let check_update_link = '';
+let options = {json: true};
+request(check_update_link, options, (error, res, body) => {
+  if (error) {
+      return  console.log(error);
+  };
+
+  if (!error && res.statusCode == 200) {
+      let version = body['version'];
+      let download_url = body['download_link'];
+
+      if (version != config['version']) {
+        
+      }
+  }
+});
 
 // --------------------------------------------------------------------
 function createConfigurationWindow(ownerWindow){
@@ -228,13 +254,20 @@ ipc.on('setAutoStart', function(event, data){
   event.sender.send('autoStartReply', 'done');
 });
 
-ipc.on("downloadEngine", async(event, {payload}) => {
+ipc.on("downloadEngine", async(event, engine_name) => {
   console.log('main - download started');
-  let properties = payload.properties ? {...payload.properties} : {};
   // download folder
-  const download_path = path.join(__dirname, "downloads")
-  // const download_url = "https://dl.nbminer.com/NBMiner_40.1_Linux.tgz"
-  const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
+  const download_path = path.join(__dirname, "downloads");
+  
+  if (engine_name == "nbminer") {
+    const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
+  }else{
+    if (engine_name == 'trex') {
+      const download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
+    }else{
+      const download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
+    }
+  }
   let download_file = "";
 
   await download(BrowserWindow.fromId(mainWindowId), download_url,
@@ -271,6 +304,6 @@ ipc.on('save-engine-config', function(event, args){
 ipc.on('get-engine-config', (event, args)=>{
   let config_data = getMinerDetails();
   event.sender.send('engine-config', config_data);
-})
+});
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);
