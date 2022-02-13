@@ -1,7 +1,7 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcRenderer } = require('electron')
 const path = require('path')
 const {download} = require('electron-dl')
 const ipc = require('electron').ipcMain;
@@ -10,8 +10,6 @@ const AutoLaunch = require('auto-launch');
 const child = require('child_process');
 const fs = require('fs');
 const { isEmptyOrSpaces } = require('builder-util');
-const { argv } = require('process');
-
 
 var mainWindowId = null;
 var engine_pid = null;
@@ -85,26 +83,27 @@ function getMinerDetails(engine="") {
   }
 }
 
-function saveMinerDetails(engine, algorithm, server, pool_address, wallet_address) {
+function saveMinerDetails(engine, pool_address, wallet_address, algorithm, extra_param ) {
   // console.log(engine + ' ' + algorithm + ' ' + server + ' ' +pool_address+ ' ' +wallet_address )
   let data = getMinerDetails()
   if (!data) {
-    data = {'nbminer': {'algorithm':'', 'server':'', 'pool_address':'', 'wallet_address':''},
-    'trex': {'algorithm':'', 'server':'', 'pool_address':'', 'wallet_address':''}, 
-    'gminer': {'algorithm':'', 'server':'', 'pool_address':'', 'wallet_address':''}};
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'algorithm':'', 'extra_param':''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'algorithm':'', 'extra_param':''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'algorithm':'', 'extra_param':''}, 'selected': ''};
   }
 
-  data[engine]['algorithm'] = algorithm;
-  data[engine]['server'] = server;
   data[engine]['pool_address'] = pool_address;
   data[engine]['wallet_address'] = wallet_address;
-  
+  data[engine]['algorithm'] = algorithm;
+  data[engine]['extra_param'] = extra_param;
+  data['selected'] = engine;
+
   let wdata = JSON.stringify(data);
-  fs.writeFile('engines.json', wdata, {flag: 'w+'}, err => {
-    if (err) {
-      console.log(err);
-    }
-  })
+  try{
+    fs.writeFileSync('engines.json', wdata, {flag: 'w+'});
+  }catch(err){
+    console.error(err);
+  }
 }
 
 
@@ -264,7 +263,13 @@ ipc.on("downloadEngine", async(event, {payload}) => {
 ipc.on('run-mining-engine', runEngine);
 ipc.on('kill-mining-engine', killEngine);
 ipc.on('save-engine-config', function(event, args){
-  saveMinerDetails(args['engine'], args['algorithm'], args['server'], args['pool_address'], args['wallet_address'])
+  saveMinerDetails(args['engine'],  args['pool_address'], args['wallet_address'], args['algorithm'], args['extra_param'])
+  let config_data = getMinerDetails();
+  event.sender.send('engine-config', config_data);
 });
+ipc.on('get-engine-config', (event, args)=>{
+  let config_data = getMinerDetails();
+  event.sender.send('engine-config', config_data);
+})
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);

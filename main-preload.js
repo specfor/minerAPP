@@ -67,30 +67,46 @@ window.addEventListener("load", (event) => {
     checbox_mine.addEventListener('click', function(){runMiner(checbox_mine)});
 
     // ------------------ SETTINGS ------------------
-    let txt_algorithm = document.getElementById('algorithm');
-    let txt_pool_address = document.getElementById('pool-address');
-    let txt_server = document.getElementById('server');
-    let txt_wallet_address = document.getElementById('wallet-address');
     let select_engine = document.getElementById('engine-select');
+    let txt_pool_address = document.getElementById('pool-address');
+    let txt_wallet_address = document.getElementById('wallet-address');
+    let txt_algorithm = document.getElementById('algorithm');
+    let txt_extra_param = document.getElementById('extra-param');
     let btn_save = document.getElementById('btn-settings-save');
-
+    
     btn_save.addEventListener('click', ()=> {       
-        if (isEmptyOrSpaces(txt_algorithm.value) || isEmptyOrSpaces(txt_pool_address.value) || isEmptyOrSpaces(txt_server.value) || isEmptyOrSpaces(txt_wallet_address.value)) {
+        if (isEmptyOrSpaces(txt_algorithm.value) || isEmptyOrSpaces(txt_pool_address.value) || isEmptyOrSpaces(txt_extra_param.value) || isEmptyOrSpaces(txt_wallet_address.value)) {
             console.log("Fill all fields");
             alert('Complete all details.');
         }else{
-            let algorithm = txt_algorithm.value;
-            let pool_address = txt_pool_address.value;
-            let server = txt_server.value;
-            let wallet_address = txt_wallet_address.value;
             let engine = select_engine.value;
+            let pool_address = txt_pool_address.value;
+            let wallet_address = txt_wallet_address.value;
+            let algorithm = txt_algorithm.value;
+            let extra_param = txt_extra_param.value;
 
-            ipcRenderer.send("save-engine-config", {engine, algorithm, server, pool_address, wallet_address});
-
+            ipcRenderer.send("save-engine-config", {engine, pool_address, wallet_address, algorithm, extra_param});
 
         }
 
         setTimeout(() => {btn_save.classList.toggle('button--loading')}, 1000);
     })
 
+    ipcRenderer.on('engine-config', (event, data) => {
+        console.log('engine configuration received.')
+        select_engine.value = data['selected'];
+        txt_pool_address.value = data[select_engine.value]['pool_address'];
+        txt_wallet_address.value = data[select_engine.value]['wallet_address'];
+        txt_algorithm.value = data[select_engine.value]['algorithm'];
+        txt_extra_param.value = data[select_engine.value]['extra_param'];
+
+        select_engine.addEventListener('change',(event) => {
+            txt_pool_address.value = data[select_engine.value]['pool_address'];
+            txt_wallet_address.value = data[select_engine.value]['wallet_address'];
+            txt_algorithm.value = data[select_engine.value]['algorithm'];
+            txt_extra_param.value = data[select_engine.value]['extra_param'];
+        })
+    })
+
+    ipcRenderer.send('get-engine-config');
   });
