@@ -166,7 +166,7 @@ function createWindow () {
       height: 420,
       resizable: false,
       show: false,
-      frame:false,
+      alwaysOnTop:true,
 
       webPreferences: {
         preload: path.join(__dirname, 'main-preload.js')
@@ -274,7 +274,3 @@ ipc.on('get-engine-config', (event, args)=>{
 })
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);
-
-ipc.on('close-app', ()=>{app.quit()});
-ipc.on('minimize-app', ()=>{BrowserWindow.getFocusedWindow().minimize()});
-ipc.on('maximize-app', ()=>{BrowserWindow.getFocusedWindow().maximize()});
