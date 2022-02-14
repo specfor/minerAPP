@@ -109,7 +109,7 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
 
   data[engine]['pool_address'] = pool_address;
   data[engine]['wallet_address'] = wallet_address;
-  data[engine]['coin'] = coin;
+  data[engine]['selected_coin'] = coin;
   data[engine]['extra_param'] = extra_param;
   data['selected'] = engine;
 
@@ -317,7 +317,7 @@ ipc.on("downloadEngine", async(event, engine_name) => {
 ipc.on('run-mining-engine', runEngine);
 ipc.on('kill-mining-engine', killEngine);
 ipc.on('save-engine-config', function(event, args){
-  saveMinerDetails(args['engine'],  args['pool_address'], args['wallet_address'], args['algorithm'], args['extra_param'])
+  saveMinerDetails(args['engine'],  args['pool_address'], args['wallet_address'], args['coin'], args['extra_param'])
   let config_data = getMinerDetails();
   event.sender.send('engine-config', config_data);
 });

@@ -287,10 +287,6 @@
     document.querySelectorAll('.custom-select').forEach(setupSelector);
 
     function setupSelector(selector) {
-      selector.addEventListener('change', e => {
-        console.log('changed', e.target.value)
-      })
-
       selector.addEventListener('mousedown', e => {
         if(window.innerWidth >= 420) {// override look for non mobile
           e.preventDefault();
