@@ -45,6 +45,14 @@ function autoStart(){
 }
 
 // ------------------------- MINER PROGRAM ---------------------------
+function checkEnginePrecence(engine_name) {
+  let miner_detail = getMinerDetails(engine_name);
+  if (miner_detail['path'] == '') {
+    
+  }
+
+}
+
 function runEngine(){
   console.log("miner process called to run")
 
@@ -88,9 +96,9 @@ function getMinerDetails(engine="") {
     data = JSON.parse(data);
     return data;
   }catch(err){
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': ''},
-    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': ''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': ''}, 'selected': 'nbminer'};
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': '', 'path':''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': '', 'path':''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': '', 'path':''}, 'selected': 'nbminer'};
     
     let wdata = JSON.stringify(data);
     try{

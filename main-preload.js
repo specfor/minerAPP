@@ -118,7 +118,7 @@ window.addEventListener("load", (event) => {
         let coins = data[select_engine.value]['supported_coins'];
         select_coins.innerHTML = '';
         coins.forEach(coin => {
-            let sel_option = '<option value="'+ coin +'">'+ coin +'</option>'
+            let sel_option = '<option class="coin-style" value="'+ coin +'">'+ coin +'</option>'
             select_coins.innerHTML = select_coins.innerHTML + sel_option;
         });
 
