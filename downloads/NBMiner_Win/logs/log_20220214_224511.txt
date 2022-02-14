@@ -1,0 +1,31 @@
+[22:45:11] INFO - ----------------------------------------------
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - |         NBMiner - Crypto GPU Miner         |
+[22:45:11] INFO - |                    40.1                    |
+[22:45:11] INFO - |                                            |
+[22:45:11] INFO - ----------------------------------------------
+[22:45:11] INFO - ------------------- System -------------------
+[22:45:11] INFO - OS:     Windows 10 Version 2009, 10.0.21996
+[22:45:11] INFO - CPU:    Intel(R) Core(TM) i3-10100F CPU @ 3.60GHz
+[22:45:11] INFO - RAM:    3314 MB / 8098 MB
+[22:45:11] INFO - VMEM:   4111 MB / 11554 MB
+[22:45:11] INFO - CU_DRV: 11.1, 456.71
+[22:45:11] INFO - ------------------- Config -------------------
+[22:45:11] INFO - ALGO:   ethash
+[22:45:11] INFO - URL:    stratum+tcp://asia2.ethermine.org:14444
+[22:45:11] INFO - USER:   0x4296116d44a4a7259B52B1A756e19083e675062A.default
+[22:45:11] INFO - TEMP:   limit 90C, start 85C
+[22:45:11] INFO - ------------------- Device -------------------
+[22:45:11] INFO -  |ID|PCI|  CC|Memory|CU|
+[22:45:11] INFO - *| 0|  1|  75| 4096M|20| GeForce GTX 1650 SUPER
+[22:45:11] INFO - ----------------------------------------------
+[22:45:11] INFO - ethash - Logging in to asia2.ethermine.org(172.65.239.73):14444 ...
+[22:45:11] INFO - ethash - Login succeeded.
+[22:45:11] INFO - API:  0.0.0.0:22333
+[22:45:11] INFO - API server started.

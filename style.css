@@ -209,10 +209,10 @@ input:checked ~ .text:before{
   color: white;
   position: fixed;
   top: 125px;
-  left: 270px;
+  left: 230px;
   width: 300px;
   border-left: 2px solid white;
-  padding-left: 30px;
+  padding-left: 10px;
 }
 .right-pane .head{
   display: flex;
@@ -234,7 +234,9 @@ input:checked ~ .text:before{
   line-height: 2px;
   padding-top: 5px;
   padding-bottom: 5px;
-
+}
+.right-pane p{
+  font-size: 15px;
 }
 /*--------------------------END RUN BOX-----------------------------*/
 
