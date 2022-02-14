@@ -116,9 +116,10 @@ window.addEventListener("load", (event) => {
         console.log('engine configuration received.');
 
         let coins = data[select_engine.value]['supported_coins'];
+        select_coins.innerHTML = '';
         coins.forEach(coin => {
-            let div = '<div class="option"><input type="radio" class="radio" id="'+ coin +'" name="category" /><label for="'+ coin +'">'+ coin +'</label></div>';
-            select_coins.innerHTML = select_coins.innerHTML + div;
+            let sel_option = '<option value="'+ coin +'">'+ coin +'</option>'
+            select_coins.innerHTML = select_coins.innerHTML + sel_option;
         });
 
         select_engine.value = data['selected'];
