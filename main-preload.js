@@ -95,7 +95,7 @@ window.addEventListener("load", (event) => {
 
     
     btn_save.addEventListener('click', ()=> {       
-        if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value) || isEmptyOrSpaces(txt_extra_param.value) || isEmptyOrSpaces(txt_wallet_address.value)) {
+        if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value)) {
             console.log("Fill all fields");
             alert('Complete all details.');
         }else{
