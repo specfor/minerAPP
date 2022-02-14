@@ -875,6 +875,10 @@ width: 300px;
   padding: 8px;
   background: #085244;
 }
+.coin-style {
+  background-color: #0d433a;
+  padding: 15px;
+}
 #select-coins{
   background: #085244;
   border: none;
