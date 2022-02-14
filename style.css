@@ -861,16 +861,26 @@ width: 300px;
   border: 2px solid #009579;
   outline: none;
   color: #888;
- 
+}
+.coin-box option:hover{
+  background: #083029;
+  color: red;
+  padding: 18px;
 }
 
 .select-box {
   display: flex;
   width: 250px;
   flex-direction: column;
-
-
+  padding: 8px;
+  background: #085244;
 }
+#select-coins{
+  background: #085244;
+  border: none;
+}
+
+
 
 .select-box .options-container {
 
