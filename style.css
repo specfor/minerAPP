@@ -296,6 +296,7 @@ input:checked ~ .text:before{
 
 /*window navigation pane*/
 .win-control{
+  opacity: 0;
   background-color: #282A35;
   width: 100px;
   height: 0px;
@@ -361,10 +362,10 @@ input:checked ~ .text:before{
   display: block;
   width: 100px;
   min-height: 35px;
-  background: #00957a62;
-  border-radius: 3px;
-  border: 2px solid #009579;
-  outline: none;
+    background: #00957a62;
+    border-radius: 3px;
+    border: 2px solid #009579;
+    outline: none;
   padding: 0 20px 0 10px;
   margin-top: 5px;
   cursor: pointer;
@@ -435,7 +436,7 @@ width: 300px;
 }*/
 
 #fit{
-  margin-top: 60px;
+  margin-top: 75px;
 }
 .custom-field {
 
@@ -846,11 +847,18 @@ width: 300px;
 }
 /**/
 
+/*coin-list box*/
 .coin-box{
   position: fixed;
   top: 132px;
   left: 25px;
   z-index: 2;
+  background: #085244;
+  border-radius: 3px;
+  border: 2px solid #009579;
+  outline: none;
+  color: #888;
+ 
 }
 
 .select-box {
@@ -858,11 +866,12 @@ width: 300px;
   width: 250px;
   flex-direction: column;
 
+
 }
 
 .select-box .options-container {
 
-  background: #2f3640;
+  /*background: #2f3640;    */
   color: #f5f6fa;
   max-height: 0;
   width: 100%;
@@ -870,14 +879,13 @@ width: 300px;
   transition: all 0.4s;
   border-radius: 8px;
   overflow: hidden;
-
   order: 1;
 }
 
 .selected {
-  background: #2f3640;
+  /*background: #2f3640;   */
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 3px;
   color: #f5f6fa;
   position: relative;
 
@@ -917,7 +925,7 @@ width: 300px;
 }
 
 .select-box .options-container::-webkit-scrollbar-thumb {
-  background: #525861;
+  background: #edede5;
   border-radius: 0 8px 8px 0;
 }
 
@@ -928,7 +936,7 @@ width: 300px;
 }
 
 .select-box .option:hover {
-  background: #414b57;
+  background: #282A35;
 }
 
 .select-box label {
