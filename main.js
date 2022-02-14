@@ -12,12 +12,13 @@ const fs = require('fs');
 const { isEmptyOrSpaces } = require('builder-util');
 const request = require('request');
 
+let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
-  const config = require('./config.json');
+  const config = require(config_file_path);
 }catch(err){
   let content = {"version": "1.0.0"}
-  fs.writeFile("config.json", JSON.stringify(content), ()=>{console.log('App config file created.');});
-  const config = require('./config.json');
+  fs.writeFileSync(config_file_path, JSON.stringify(content));
+  const config = require(config_file_path);
 }
 
 var mainWindowId = null;
@@ -80,58 +81,77 @@ function killEngine() {
 // ----------------------------- SETTINGS ----------------------------
 function getMinerDetails(engine="") {
   try{
-    let data = fs.readFileSync('engines.json', 'utf8');
+    let data = fs.readFileSync(path.join(app.getPath('userData'),'engines.json'), 'utf8');
     if (!isEmptyOrSpaces(engine)) {
       data = data['engine'];
     }
     data = JSON.parse(data);
     return data;
   }catch(err){
-    console.error(err)
-    return false;
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': ''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': ''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': ''}, 'selected': 'nbminer'};
+    
+    let wdata = JSON.stringify(data);
+    try{
+      fs.writeFileSync(path.join(app.getPath('userData'),'engines.json'), wdata, {flag: 'w+'});
+    }catch(err){
+      console.error(err);
+    }
+    // console.error(err)
+    return data;
   }
 }
 
-function saveMinerDetails(engine, pool_address, wallet_address, algorithm, extra_param ) {
+function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_param ) {
   // console.log(engine + ' ' + algorithm + ' ' + server + ' ' +pool_address+ ' ' +wallet_address )
   let data = getMinerDetails()
-  if (!data) {
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'algorithm':'', 'extra_param':''},
-    'trex': {'pool_address':'', 'wallet_address':'', 'algorithm':'', 'extra_param':''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'algorithm':'', 'extra_param':''}, 'selected': ''};
-  }
 
   data[engine]['pool_address'] = pool_address;
   data[engine]['wallet_address'] = wallet_address;
-  data[engine]['algorithm'] = algorithm;
+  data[engine]['coin'] = coin;
   data[engine]['extra_param'] = extra_param;
   data['selected'] = engine;
 
   let wdata = JSON.stringify(data);
   try{
-    fs.writeFileSync('engines.json', wdata, {flag: 'w+'});
+    fs.writeFileSync(path.join(app.getPath('userData'),'engines.json'), wdata, {flag: 'w+'});
   }catch(err){
     console.error(err);
   }
 }
 
 // ------------------------------ UPDATE -----------------------------------
-let check_update_link = '';
-let options = {json: true};
-request(check_update_link, options, (error, res, body) => {
-  if (error) {
-      return  console.log(error);
-  };
+function check_updates(){
+  let check_update_link = '';
+  let options = {json: true};
+  
+  request(check_update_link, options, (error, res, body) => {
+    if (error) {
+        return  console.log(error);
+    };
+  
+    if (!error && res.statusCode == 200) {
+        let version = body['version'];
+        let download_url = body['download_link'];
+        let download_path = app.getPath('downloads');
 
-  if (!error && res.statusCode == 200) {
-      let version = body['version'];
-      let download_url = body['download_link'];
-
-      if (version != config['version']) {
-        
-      }
-  }
-});
+        if (version != config['version']) {
+          download(BrowserWindow.fromId(mainWindowId), download_url,
+          {directory:download_path ,onProgress: (progress) => {
+            // console.log(progress.percent * 100);
+            BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
+            },
+            onCompleted: (item) => {
+              BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
+              // console.log(item.path);
+              download_file = item.path;
+            }
+          });
+        }
+    }
+  });
+}
 
 // --------------------------------------------------------------------
 function createConfigurationWindow(ownerWindow){

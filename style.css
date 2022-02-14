@@ -349,6 +349,7 @@ input:checked ~ .text:before{
 }
 
 .custom-select {
+  z-index: 2;
   position: relative;
   display: inline-block;
   font-size: 14px;
