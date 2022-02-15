@@ -45,19 +45,67 @@ function autoStart(){
 }
 
 // ------------------------- MINER PROGRAM ---------------------------
-function checkEnginePrecence(engine_name) {
+async function downloadEngine(engine_name){
+  console.log('main - download started');
+  // download folder
+  const download_path = path.join(__dirname, "downloads");
+  
+  if (engine_name == "nbminer") {
+    const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
+  }else{
+    if (engine_name == 'trex') {
+      const download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
+    }else{
+      if (engine_name == 'gminer') {
+        const download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
+      }else{
+        return false;
+      }
+    }
+  }
+  let download_file = "";
+
+  await download(BrowserWindow.fromId(mainWindowId), download_url,
+  {directory:download_path ,onProgress: (progress) => {
+    // console.log(progress.percent * 100);
+    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
+    },
+    onCompleted: (item) => {
+      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
+      // console.log(item.path);
+      download_file = item.path;
+    }
+  });
+  console.log("main - finished dowloading");
+ 
+  try {
+    await extract(download_file, { dir: download_path });
+    console.log('Extraction complete');
+  } catch (err) {
+    console.error("Download extract error - " + err);
+    // handle any errors
+  }
+
+  return true;
+}
+
+function checkEnginePresence(engine_name) {
+  console.log("Looking for the mining program.")
   let miner_detail = getMinerDetails(engine_name);
   if (miner_detail['path'] == '') {
-    
+    console.log("Need to download miner program.")
+    let down_status = downloadEngine(engine_name);
   }
 
 }
 
 function runEngine(){
-  console.log("miner process called to run")
-
   engine_name = 'nbminer';
   coin_name = 'eth';
+
+  checkEnginePresence(engine_name);
+
+  console.log("miner process called to run");
   
   if (engine_name == 'nbminer') {
     if (coin_name == "eth") {
@@ -96,9 +144,9 @@ function getMinerDetails(engine="") {
     data = JSON.parse(data);
     return data;
   }catch(err){
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': '', 'path':''},
-    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': '', 'path':''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': '', 'path':''}, 'selected': 'nbminer'};
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''}, 'selected': 'nbminer'};
     
     let wdata = JSON.stringify(data);
     try{
@@ -282,53 +330,26 @@ ipc.on('setAutoStart', function(event, data){
   event.sender.send('autoStartReply', 'done');
 });
 
-ipc.on("downloadEngine", async(event, engine_name) => {
-  console.log('main - download started');
-  // download folder
-  const download_path = path.join(__dirname, "downloads");
-  
-  if (engine_name == "nbminer") {
-    const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
-  }else{
-    if (engine_name == 'trex') {
-      const download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
-    }else{
-      const download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
-    }
-  }
-  let download_file = "";
-
-  await download(BrowserWindow.fromId(mainWindowId), download_url,
-  {directory:download_path ,onProgress: (progress) => {
-    // console.log(progress.percent * 100);
-    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
-    },
-    onCompleted: (item) => {
-      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
-      // console.log(item.path);
-      download_file = item.path;
-    }
-  });
-  console.log("main - finished dowloading");
- 
-  try {
-    await extract(download_file, { dir: download_path })
-    console.log('Extraction complete');
-  } catch (err) {
-    console.log("Download extract error - " + err);
-    // handle any errors
-  }
-  
+ipc.on("downloadEngine", (event, engine_name) => {
+  let down_status = downloadEngine(engine_name); 
 })
 
 
 ipc.on('run-mining-engine', runEngine);
 ipc.on('kill-mining-engine', killEngine);
+
+ipc.on('reset-engine-config', (event, args)=>{
+  saveMinerDetails(args['engine'], '', '', 'no_coin_selected', '');
+  let config_data = getMinerDetails();
+  event.sender.send('engine-config', config_data);
+})
+
 ipc.on('save-engine-config', function(event, args){
   saveMinerDetails(args['engine'],  args['pool_address'], args['wallet_address'], args['coin'], args['extra_param'])
   let config_data = getMinerDetails();
   event.sender.send('engine-config', config_data);
 });
+
 ipc.on('get-engine-config', (event, args)=>{
   let config_data = getMinerDetails();
   event.sender.send('engine-config', config_data);

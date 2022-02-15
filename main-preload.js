@@ -92,10 +92,20 @@ window.addEventListener("load", (event) => {
     let select_coins = document.getElementById('select-coins');
     let txt_extra_param = document.getElementById('extra-param');
     let btn_save = document.getElementById('btn-settings-save');
+    let btn_reset = document.getElementById('reset-icon');
 
+
+    btn_reset.addEventListener('click', ()=>{
+        let engine = select_engine.value;
+        txt_pool_address.value = '';
+        txt_wallet_address.value = '';
+        txt_extra_param.value = '';
+        select_coins.value = 'no_coin_selected';
+        ipcRenderer.send("reset-engine-config", {engine});
+    })
     
     btn_save.addEventListener('click', ()=> {       
-        if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value)) {
+        if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value) || select_coins.value == 'no_coin_selected') {
             console.log("Fill all fields");
             alert('Complete all details.');
         }else{
@@ -116,7 +126,7 @@ window.addEventListener("load", (event) => {
         console.log('engine configuration received.');
 
         let coins = data[select_engine.value]['supported_coins'];
-        select_coins.innerHTML = '';
+        select_coins.innerHTML = '<option class="coin-style" value="no_coin_selected">Select Coin</option>';
         coins.forEach(coin => {
             let sel_option = '<option class="coin-style" value="'+ coin +'">'+ coin +'</option>'
             select_coins.innerHTML = select_coins.innerHTML + sel_option;
