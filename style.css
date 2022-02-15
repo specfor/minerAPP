@@ -1,4 +1,10 @@
 /*
+best color for bg :#3a3a3d
+
+*/
+
+
+/*
 2B2E4A -main
 E84545 -second
 903749 - bg
@@ -439,7 +445,7 @@ width: 300px;
 }*/
 
 #fit{
-  margin-top: 75px;
+  margin-top: 55px;
 }
 .custom-field {
 
@@ -752,7 +758,27 @@ width: 300px;
   
   cursor:pointer;
 }
-
+#reset-icon{
+  position: fixed;
+  top: 377px;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  left: 446px;
+  background: transparent;
+}
+#reset-icon span{
+  border-radius: 8px;
+  background-color: #282A35;
+  color: #009579;
+  padding: 3px;
+}
+#reset-icon span:hover{
+  border-radius: 8px;
+  background-color: #1a1a1d;
+  color: rgb(20, 232, 91);
+  padding: 3px;
+}
 #updater:hover{
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
@@ -769,7 +795,20 @@ width: 300px;
   border-radius: 5px;
   /*background-color: #00957a62; */
 }
-
+.update-box{
+  position: relative;
+  border-radius: 5px;
+  top: 15px;
+  background-color: #282A35;
+  padding: 15px;
+  height: 180px;
+}
+.update-box h3{
+  position: relative;
+  top: 55px;
+  color: rgba(255, 255, 255, 0.556);
+  text-align: center;
+}
 .right-container .up-box {
   display: flex;
   color: white;
