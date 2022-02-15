@@ -102,7 +102,7 @@ function checkEnginePresence(engine_name) {
 }
 
 function runEngine(){
-  engine_name = 'nbminer';
+  engine_name = 'trex';
   coin_name = 'eth';
 
   checkEnginePresence(engine_name);
@@ -113,6 +113,16 @@ function runEngine(){
     if (coin_name == "eth") {
       executable_path = path.join(__dirname, "downloads/NBMiner_Win/start_eth.bat");
       executable_file = 'start_eth.bat';
+    }
+  }else{
+    if (engine_name == 'trex') {
+      executable_path = path.join(__dirname, "downloads/trex/start_eth.bat");
+      executable_file = 'ETH-ethermine.bat';
+    }else{
+      if (engine_name == 'gminer') {
+        executable_path = path.join(__dirname, "downloads/gminer/start_eth.bat");
+        executable_file = 'start_eth.bat';
+      }
     }
   }
 
