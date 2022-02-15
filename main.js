@@ -47,19 +47,21 @@ function autoStart(){
 // ------------------------- MINER PROGRAM ---------------------------
 async function downloadEngine(engine_name){
   console.log('main - download started');
-  
+  let download_url = '';
+  let download_path = '';
+
   if (engine_name == "nbminer") {
-    const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
-    const download_path = path.join(__dirname, "downloads");
+    download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
+    download_path = path.join(__dirname, "downloads");
   }else{
     if (engine_name == 'trex') {
-      const download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
-      const download_path = path.join(__dirname, "downloads/trex");
+      download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
+      download_path = path.join(__dirname, "downloads/trex");
 
     }else{
       if (engine_name == 'gminer') {
-        const download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
-        const download_path = path.join(__dirname, "downloads/gminer");
+        download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
+        download_path = path.join(__dirname, "downloads/gminer");
       }else{
         return false;
       }
@@ -91,21 +93,21 @@ async function downloadEngine(engine_name){
   return true;
 }
 
-function checkEnginePresence(engine_name) {
+async function checkEnginePresence(engine_name) {
   console.log("Looking for the mining program.")
   let miner_detail = getMinerDetails(engine_name);
   if (miner_detail['path'] == '') {
     console.log("Need to download miner program.")
-    let down_status = downloadEngine(engine_name);
+    let down_status = await downloadEngine(engine_name);
   }
 
 }
 
-function runEngine(){
+async function runEngine(){
   engine_name = 'trex';
   coin_name = 'eth';
 
-  checkEnginePresence(engine_name);
+  await checkEnginePresence(engine_name);
 
   console.log("miner process called to run");
   
@@ -116,7 +118,7 @@ function runEngine(){
     }
   }else{
     if (engine_name == 'trex') {
-      executable_path = path.join(__dirname, "downloads/trex/start_eth.bat");
+      executable_path = path.join(__dirname, "downloads/trex/ETH-ethermine.bat");
       executable_file = 'ETH-ethermine.bat';
     }else{
       if (engine_name == 'gminer') {
@@ -150,10 +152,11 @@ function killEngine() {
 function getMinerDetails(engine="") {
   try{
     let data = fs.readFileSync(path.join(app.getPath('userData'),'engines.json'), 'utf8');
-    if (!isEmptyOrSpaces(engine)) {
-      data = data['engine'];
-    }
     data = JSON.parse(data);
+
+    if (!isEmptyOrSpaces(engine)) {
+      data = data[engine];
+    }
     return data;
   }catch(err){
     data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''},
