@@ -85,6 +85,12 @@ async function downloadEngine(engine_name){
   try {
     await extract(download_file, { dir: download_path });
     console.log('Extraction complete');
+    if (engine_name == 'nbminer') {
+      download_path = path.join(download_path, 'NBMiner_Win');
+    }
+    let miner_detail = getMinerDetails(engine_name);
+    saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['coin'], miner_detail['extra_param'], download_path);
+
   } catch (err) {
     console.error("Download extract error - " + err);
     // handle any errors
@@ -103,27 +109,26 @@ async function checkEnginePresence(engine_name) {
 
 }
 
-async function runEngine(){
-  engine_name = 'trex';
-  coin_name = 'eth';
+async function runEngine(engine_name, coin_name){
+  // engine_name = 'trex';
+  // coin_name = 'eth';
 
   await checkEnginePresence(engine_name);
 
   console.log("miner process called to run");
+  console.log('plugin - ' + engine_name + ' & coin - ' + coin_name);
   
   if (engine_name == 'nbminer') {
-    if (coin_name == "eth") {
-      executable_path = path.join(__dirname, "downloads/NBMiner_Win/start_eth.bat");
-      executable_file = 'start_eth.bat';
-    }
+    executable_file = 'start_'+ coin_name +'.bat';
+    executable_path = path.join(__dirname, "downloads/NBMiner_Win/" + executable_file);
   }else{
     if (engine_name == 'trex') {
-      executable_path = path.join(__dirname, "downloads/trex/ETH-ethermine.bat");
       executable_file = 'ETH-ethermine.bat';
+      executable_path = path.join(__dirname, "downloads/trex/" + executable_file);
     }else{
       if (engine_name == 'gminer') {
-        executable_path = path.join(__dirname, "downloads/gminer/start_eth.bat");
-        executable_file = 'start_eth.bat';
+        executable_file = 'mine_'+ coin_name +'.bat';
+        executable_path = path.join(__dirname, "downloads/gminer/" + executable_file);
       }
     }
   }
@@ -159,9 +164,9 @@ function getMinerDetails(engine="") {
     }
     return data;
   }catch(err){
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''},
-    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ETH', 'RVN', 'BEAM', 'CFX', 'ZIL', 'ERGO', 'AE'], 'selected_coin': 'no_coin_selected', 'path':''}, 'selected': 'nbminer'};
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'config', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':''}, 'selected': 'nbminer'};
     
     let wdata = JSON.stringify(data);
     try{
@@ -174,7 +179,7 @@ function getMinerDetails(engine="") {
   }
 }
 
-function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_param ) {
+function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_param, engine_path='' ) {
   // console.log(engine + ' ' + algorithm + ' ' + server + ' ' +pool_address+ ' ' +wallet_address )
   let data = getMinerDetails()
 
@@ -183,6 +188,10 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
   data[engine]['selected_coin'] = coin;
   data[engine]['extra_param'] = extra_param;
   data['selected'] = engine;
+
+  if (!isEmptyOrSpaces(engine_path)) {
+    data[engine]['path'] = engine_path;
+  }
 
   let wdata = JSON.stringify(data);
   try{
@@ -203,23 +212,24 @@ function check_updates(){
     };
   
     if (!error && res.statusCode == 200) {
-        let version = body['version'];
-        let download_url = body['download_link'];
-        let download_path = app.getPath('downloads');
+      let version = body['version'];
+      let download_url = body['download_link'];
+      let download_path = app.getPath('downloads');
 
-        if (version != config['version']) {
-          download(BrowserWindow.fromId(mainWindowId), download_url,
-          {directory:download_path ,onProgress: (progress) => {
-            // console.log(progress.percent * 100);
-            BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
-            },
-            onCompleted: (item) => {
-              BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
-              // console.log(item.path);
-              download_file = item.path;
-            }
-          });
-        }
+      if (version != config['version']) {
+        download(BrowserWindow.fromId(mainWindowId), download_url,
+        {directory:download_path ,onProgress: (progress) => {
+          // console.log(progress.percent * 100);
+          BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
+          },
+          onCompleted: (item) => {
+            BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
+            // console.log(item.path);
+            // download_file = item.path;
+            alert('Update downloaded to - ' + download_path + '\nYOU NEED TO MANUALLY INSTALL BY RUNNING SETUP\n' + item.path)
+          }
+        });
+      }
     }
   });
 }
@@ -350,7 +360,9 @@ ipc.on("downloadEngine", (event, engine_name) => {
 })
 
 
-ipc.on('run-mining-engine', runEngine);
+ipc.on('run-mining-engine', (event,args)=>{
+  runEngine(args['plugin'], args['coin'])
+});
 ipc.on('kill-mining-engine', killEngine);
 
 ipc.on('reset-engine-config', (event, args)=>{

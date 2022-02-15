@@ -18,12 +18,17 @@ function downloadEngine(){
 
 function runMiner(checkbox){
     // console.log(checkbox.checked);
+    let txt_status_pool_address = document.getElementById('status-pool-address');
+    let coin = document.getElementById('run-coin').value;
+    console.log(coin + ' coin ');
+    let plugin = document.getElementById('run-plugin').value;
+
     let imageMiner = document.getElementById('img-mining');
     let imageMiner2 = document.getElementById('img-mining2');
 
     if (checkbox.checked) {
         console.log("Starting miner program")
-        ipcRenderer.send("run-mining-engine");
+        ipcRenderer.send("run-mining-engine", {plugin, coin});
         mining_status = true;
         imageMiner.style.opacity = '100%';
         imageMiner2.style.opacity = '0%';
@@ -36,7 +41,10 @@ function runMiner(checkbox){
     }
 }
 
-function change_home_status(pool_address, algorithm){
+function change_home_status(pool_address, algorithm, plugin_used){
+    let coin = document.getElementById('run-coin');
+    let plugin = document.getElementById('run-plugin');
+
     let txt_status_gpu_count = document.getElementById('status-gpu-count');
     let txt_status_hahsrate = document.getElementById('status-hashrate');
     let txt_status_algoritm = document.getElementById('status-algorithm');
@@ -46,7 +54,9 @@ function change_home_status(pool_address, algorithm){
         // console.log("setting home screen statuses.")
         let server = pool_address.split('.');
         server = server[1] + '.' + server[2].split(':')[0];
-        txt_status_algoritm.textContent = algorithm;
+        coin.value = algorithm;
+        plugin.value = plugin_used;
+        txt_status_algoritm.textContent = algorithm.toUpperCase();
         txt_status_pool_address.textContent = pool_address;
         txt_status_server.textContent = server;
     }
@@ -128,7 +138,7 @@ window.addEventListener("load", (event) => {
         let coins = data[select_engine.value]['supported_coins'];
         select_coins.innerHTML = '<option class="coin-style" value="no_coin_selected">Select Coin</option>';
         coins.forEach(coin => {
-            let sel_option = '<option class="coin-style" value="'+ coin +'">'+ coin +'</option>'
+            let sel_option = '<option class="coin-style" value="'+ coin +'">'+ coin.toUpperCase() +'</option>'
             select_coins.innerHTML = select_coins.innerHTML + sel_option;
         });
 
@@ -137,10 +147,16 @@ window.addEventListener("load", (event) => {
         txt_wallet_address.value = data[select_engine.value]['wallet_address'];
         select_coins.value = data[select_engine.value]['selected_coin'];
         txt_extra_param.value = data[select_engine.value]['extra_param'];
-        change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['selected_coin']);
+        change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['selected_coin'], data['selected']);
 
         select_engine.addEventListener('change',(event) => {
-            change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['selected_coin']);
+            let coins = data[select_engine.value]['supported_coins'];
+            select_coins.innerHTML = '<option class="coin-style" value="no_coin_selected">Select Coin</option>';
+            coins.forEach(coin => {
+                let sel_option = '<option class="coin-style" value="'+ coin +'">'+ coin.toUpperCase() +'</option>'
+                select_coins.innerHTML = select_coins.innerHTML + sel_option;
+            });
+            change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['selected_coin'], data['selected']);
             txt_pool_address.value = data[select_engine.value]['pool_address'];
             txt_wallet_address.value = data[select_engine.value]['wallet_address'];
             select_coins.value = data[select_engine.value]['selected_coin'];
