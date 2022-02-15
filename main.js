@@ -47,17 +47,19 @@ function autoStart(){
 // ------------------------- MINER PROGRAM ---------------------------
 async function downloadEngine(engine_name){
   console.log('main - download started');
-  // download folder
-  const download_path = path.join(__dirname, "downloads");
   
   if (engine_name == "nbminer") {
     const download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
+    const download_path = path.join(__dirname, "downloads");
   }else{
     if (engine_name == 'trex') {
       const download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
+      const download_path = path.join(__dirname, "downloads/trex");
+
     }else{
       if (engine_name == 'gminer') {
         const download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
+        const download_path = path.join(__dirname, "downloads/gminer");
       }else{
         return false;
       }
