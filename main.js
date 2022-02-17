@@ -13,6 +13,7 @@ const { isEmptyOrSpaces } = require('builder-util');
 const request = require('request');
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
+// console.log(config_file_path);
 try{
   const config = require(config_file_path);
 }catch(err){
@@ -112,18 +113,20 @@ async function checkEnginePresence(engine_name) {
 async function runEngine(engine_name, coin_name){
   // engine_name = 'trex';
   // coin_name = 'eth';
+  let engine_details = getMinerDetails(engine_name);
 
   await checkEnginePresence(engine_name);
 
   console.log("miner process called to run");
   console.log('plugin - ' + engine_name + ' & coin - ' + coin_name);
-  
+
   if (engine_name == 'nbminer') {
     executable_file = 'start_'+ coin_name +'.bat';
     executable_path = path.join(__dirname, "downloads/NBMiner_Win/" + executable_file);
   }else{
     if (engine_name == 'trex') {
-      executable_file = 'ETH-ethermine.bat';
+      let server_name = engine_details['pool_address'].split('.')[1];
+      executable_file = coin_name + '-' + server_name + '.bat';
       executable_path = path.join(__dirname, "downloads/trex/" + executable_file);
     }else{
       if (engine_name == 'gminer') {
@@ -133,6 +136,7 @@ async function runEngine(engine_name, coin_name){
     }
   }
 
+  console.log('Starting program - ' + executable_file);
   let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore'});
   engine_pid = engine.pid;
   // engine.stdout.on('data', (data) => {
