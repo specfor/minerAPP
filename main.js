@@ -1,9 +1,10 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcRenderer } = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const {download} = require('electron-dl')
+const ipcRend =  require('electron').ipcRenderer;
 const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
@@ -104,7 +105,9 @@ async function checkEnginePresence(engine_name) {
   console.log("Looking for the mining program.")
   let miner_detail = getMinerDetails(engine_name);
   if (miner_detail['path'] == '') {
-    console.log("Need to download miner program.")
+    console.log("Need to download miner program.");
+    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-started');
+
     let down_status = await downloadEngine(engine_name);
   }
 
