@@ -36,13 +36,13 @@ function autoStart(){
   AutoLauncher.enable()
   console.log(AutoLauncher.isEnabled())
 
-  if (AutoLauncher.isEnabled()) {
-    AutoLauncher.disable()
-    console.log('disabled')
-  }else{
-    AutoLauncher.enable()
-    console.log('enabled')
-  }
+  // if (AutoLauncher.isEnabled()) {
+  //   AutoLauncher.disable()
+  //   console.log('disabled')
+  // }else{
+  //   AutoLauncher.enable()
+  //   console.log('enabled')
+  // }
 }
 
 // ------------------------- MINER PROGRAM ---------------------------
@@ -130,7 +130,6 @@ async function runEngine(engine_name, coin_name){
       let bat_data = fs.readFileSync(executable_path, 'utf8');
       tmp_bat = bat_data.split('-o ');
       save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -log\r\npause';
-      console.log(save_bat);
     }catch{
       console.error('Error while editing coin bat file.')
     }
@@ -145,7 +144,6 @@ async function runEngine(engine_name, coin_name){
         tmp_bat = bat_data.split('-o ');
         tmp_bat2 = tmp_bat[1].split('.default');
         save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -p x\r\npause';
-        console.log(save_bat);
       }catch{
         console.error('Error while editing coin bat file.')
       }
@@ -159,7 +157,6 @@ async function runEngine(engine_name, coin_name){
           tmp_bat = bat_data.split('--server ');
           tmp_bat2 = tmp_bat[1].split('.default');
           save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + tmp_bat2[1];
-          console.log(save_bat);
         }catch{
           console.error('Error while editing coin bat file.')
         }
