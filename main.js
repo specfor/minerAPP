@@ -27,23 +27,22 @@ var mainWindowId = null;
 var engine_pid = null;
 
 
-function autoStart(){
+function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
-    name: 'Minersupp',
-    path: path.join(__dirname, 'minerapp'),
+    name: 'MineHASH'
   });
   
-  console.log(AutoLauncher.isEnabled())
-  AutoLauncher.enable()
-  console.log(AutoLauncher.isEnabled())
+  // console.log(AutoLauncher.isEnabled())
+  // AutoLauncher.enable()
+  // console.log(AutoLauncher.isEnabled())
 
-  // if (AutoLauncher.isEnabled()) {
-  //   AutoLauncher.disable()
-  //   console.log('disabled')
-  // }else{
-  //   AutoLauncher.enable()
-  //   console.log('enabled')
-  // }
+  if (enable) {
+    AutoLauncher.enable()
+    console.log('Program set to run on start.')
+  }else{
+    AutoLauncher.disable()
+    console.log('Program removed from running at start.')
+  }
 }
 
 // ------------------------- MINER PROGRAM ---------------------------

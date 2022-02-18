@@ -164,7 +164,7 @@ window.addEventListener("load", (event) => {
                 let sel_option = '<option class="coin-style" value="'+ coin +'">'+ coin.toUpperCase() +'</option>'
                 select_coins.innerHTML = select_coins.innerHTML + sel_option;
             });
-            change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['selected_coin'], data['selected']);
+            change_home_status(data[select_engine.value]['pool_address'], data[select_engine.value]['selected_coin'], select_engine.value);
             txt_pool_address.value = data[select_engine.value]['pool_address'];
             txt_wallet_address.value = data[select_engine.value]['wallet_address'];
             select_coins.value = data[select_engine.value]['selected_coin'];
