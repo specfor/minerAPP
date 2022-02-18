@@ -13,6 +13,9 @@ function setupAutoStart(){
 
 // ------------------------- Engine --------------------------
 function downloadEngine(){
+    let down_bar = document.getElementById('down-bar');
+    down_bar.style.opacity = '100%';
+
     ipcRenderer.send('downloadEngine', {payload : {properties: {}}})
 }
 
@@ -63,13 +66,14 @@ function change_home_status(pool_address, algorithm, plugin_used){
 }
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
-    const progress = args;
-    console.log(progress);
-    // set progress in progress bar
+    let down_bar_text = document.getElementById('down-bar-txt');
+    down_bar_text.textContent = 'Download' + args + '% completed.';
 })
 
-ipcRenderer.on("engine-download-complete", (event, args) => {
-    const progress = args[0];
+ipcRenderer.on("engine-download-complete", (event) => {
+    let down_bar = document.getElementById('down-bar');
+    down_bar.style.opacity = '0%';
+
     console.log('done donwloading');
 })
 

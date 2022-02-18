@@ -76,7 +76,7 @@ async function downloadEngine(engine_name){
     BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
     },
     onCompleted: (item) => {
-      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
+      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
       // console.log(item.path);
       download_file = item.path;
     }
