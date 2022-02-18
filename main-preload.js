@@ -54,7 +54,7 @@ function change_home_status(pool_address, algorithm, plugin_used){
         // console.log("setting home screen statuses.")
         let server = pool_address.split('.');
         server = server[1] + '.' + server[2].split(':')[0];
-        coin.value = algorithm;
+        coin.value = plugin_used.toUpperCase() + ' - ' + algorithm;
         plugin.value = plugin_used;
         txt_status_algoritm.textContent = algorithm.toUpperCase();
         txt_status_pool_address.textContent = pool_address;
