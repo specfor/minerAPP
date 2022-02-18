@@ -115,25 +115,63 @@ async function runEngine(engine_name, coin_name){
   // coin_name = 'eth';
   let engine_details = getMinerDetails(engine_name);
 
-  await checkEnginePresence(engine_name);
+  await checkEnginePresence(engine_name);  
 
   console.log("miner process called to run");
   console.log('plugin - ' + engine_name + ' & coin - ' + coin_name);
 
+  let save_bat = '';
+
   if (engine_name == 'nbminer') {
     executable_file = 'start_'+ coin_name +'.bat';
     executable_path = path.join(__dirname, "downloads/NBMiner_Win/" + executable_file);
+    
+    try{
+      let bat_data = fs.readFileSync(executable_path, 'utf8');
+      tmp_bat = bat_data.split('-o ');
+      save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -log\r\npause';
+      console.log(save_bat);
+    }catch{
+      console.error('Error while editing coin bat file.')
+    }
   }else{
     if (engine_name == 'trex') {
-      let server_name = engine_details['pool_address'].split('.')[1];
-      executable_file = coin_name + '-' + server_name + '.bat';
+      let pool_name = engine_details['pool_address'].split('.')[1];
+      executable_file = coin_name + '-' + pool_name + '.bat';
       executable_path = path.join(__dirname, "downloads/trex/" + executable_file);
+
+      try{
+        let bat_data = fs.readFileSync(executable_path, 'utf8');
+        tmp_bat = bat_data.split('-o ');
+        tmp_bat2 = tmp_bat[1].split('.default');
+        save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -p x\r\npause';
+        console.log(save_bat);
+      }catch{
+        console.error('Error while editing coin bat file.')
+      }
     }else{
       if (engine_name == 'gminer') {
         executable_file = 'mine_'+ coin_name +'.bat';
         executable_path = path.join(__dirname, "downloads/gminer/" + executable_file);
+
+        try{
+          let bat_data = fs.readFileSync(executable_path, 'utf8');
+          tmp_bat = bat_data.split('--server ');
+          tmp_bat2 = tmp_bat[1].split('.default');
+          save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + tmp_bat2[1];
+          console.log(save_bat);
+        }catch{
+          console.error('Error while editing coin bat file.')
+        }
       }
     }
+  }
+
+  // make changes in bat file
+  try{
+    fs.writeFileSync(executable_path, save_bat, {flag: 'w+'});
+  }catch(err){
+    console.error(err);
   }
 
   console.log('Starting program - ' + executable_file);
