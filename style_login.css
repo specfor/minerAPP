@@ -61,6 +61,19 @@
     display: flex;
     justify-content: space-between;
 }
+.down .brandlogo{
+    position: fixed;
+    top: 55px;
+    left: 26px;
+    width: 100px;
+    height: 40px;
+}
+.down .brandlogo img{
+    width: 200px;
+    height: 80px;
+    text-align: center;
+}
+
 .down .ver{
     color: rgba(155, 155, 155, 0.8);
     margin-left: 60px;
@@ -80,6 +93,7 @@
 
 }
 .tile .head_dis{
+    opacity: 0%;
     text-align: center;
     color: rgb(66, 216, 166);
     margin-top: 70px;
