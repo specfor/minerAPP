@@ -20,7 +20,7 @@ function runMiner(checkbox){
     // console.log(checkbox.checked);
     let txt_status_pool_address = document.getElementById('status-pool-address');
     let coin = document.getElementById('run-coin').value;
-    console.log(coin + ' coin ');
+    // console.log(coin + ' coin ');
     let plugin = document.getElementById('run-plugin').value;
 
     let imageMiner = document.getElementById('img-mining');
@@ -54,9 +54,9 @@ function change_home_status(pool_address, algorithm, plugin_used){
         // console.log("setting home screen statuses.")
         let server = pool_address.split('.');
         server = server[1] + '.' + server[2].split(':')[0];
-        coin.value = plugin_used.toUpperCase() + ' - ' + algorithm;
+        coin.value = algorithm;
         plugin.value = plugin_used;
-        txt_status_algoritm.textContent = algorithm.toUpperCase();
+        txt_status_algoritm.textContent = plugin_used.toUpperCase() + ' - ' + algorithm.toUpperCase();
         txt_status_pool_address.textContent = pool_address;
         txt_status_server.textContent = server;
     }
