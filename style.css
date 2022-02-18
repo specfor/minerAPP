@@ -93,6 +93,45 @@ E84545 -second
 /* COMPONANT : run button */
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
+/* animation line start */
+.loding{
+  opacity: 0%;
+  position: fixed;
+  top: 350px; 
+  left: 330px; /*  >>>>   adjest loading bar height*/
+  width: 200px;
+  height: 100%;
+  padding: 0px;
+}
+#down-bar-txt{
+  color: #d9d9d98c;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 15px;
+}
+.loding .line-box{
+  bottom: 0px;
+  width: 100%;
+  height: 10px;
+}
+.loding .line-box .line{
+  width: 100%;
+  height: 10px;
+  border-radius: 20px;
+  background-color: #67D295;
+  animation:  loading 2s forwards cubic-bezier(0,0,0,0);
+}
+@keyframes loading{
+  0%{
+      width: 0%;
+  }
+  100%{
+      width: 100%;
+  }
+}
+/* animation line end */
+
+
 .checkbox{
 
   position:relative;
@@ -154,7 +193,45 @@ input:checked ~ .text:before{
 }
 
 /*-------------------BG-DESIGN--------------------------------------*/
+.update-label{
+  opacity: 0%;
+  position: fixed;
+  top: 60px;
+  left: 475px;
+  width: 120px;
+  height: 50px;
+  cursor: pointer;
+  justify-content: center;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.update-label img{
+  margin-top:-2px;
+  margin-left:-2px;
+  width: 120px;
+  height: 50px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.update-label:hover{
+  position: fixed;
+  top: 60px;
+  left: 473px;
+}
+
+.update-label img:hover{
+  margin-top:-2px;
+  margin-left:-2px;
+  width: 125px;
+  height: 55px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+
 .panel{
+
   position: relative;
   top: 295px;
   padding: 10px;
@@ -166,6 +243,7 @@ input:checked ~ .text:before{
   border-radius: 6px;
 }
 .dis{
+  opacity: 100%;
   top: 20PX;
   left: 260PX;
   width: 300px;
