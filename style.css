@@ -194,7 +194,7 @@ input:checked ~ .text:before{
 
 /*-------------------BG-DESIGN--------------------------------------*/
 .update-label{
-  opacity: 0%;
+  opacity: 100%;
   position: fixed;
   top: 60px;
   left: 475px;
