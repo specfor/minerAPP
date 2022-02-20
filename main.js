@@ -18,6 +18,7 @@ let config_file = '';
 // console.log(config_file_path);
 try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
+  console.log('Runnig version - ' + config_file['version'])
 }catch(err){
   let content = {"version": "1.0.0"}
   fs.writeFileSync(config_file_path, JSON.stringify(content));
@@ -246,36 +247,39 @@ function check_updates(do_download=false){
   }
   let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
   let options = {json: true};
+  try{
+    request(check_update_link, options, (error, res, body) => {
+      if (error) {
+          return  console.log(error);
+      };
+    
+      if (!error && res.statusCode == 200) {
+        let version = body['version'];
+        let download_url = body['download_link'];
+        let download_path = app.getPath('downloads');
   
-  request(check_update_link, options, (error, res, body) => {
-    if (error) {
-        return  console.log(error);
-    };
+        if (version != config_file['version']) {
+          if (do_download) {
+            console.log("Downloading updates")
   
-    if (!error && res.statusCode == 200) {
-      let version = body['version'];
-      let download_url = body['download_link'];
-      let download_path = app.getPath('downloads');
-
-      if (version != config_file['version']) {
-        if (do_download) {
-          console.log("Downloading updates")
-
-          download(BrowserWindow.fromId(mainWindowId), download_url,
-          {directory:download_path ,onProgress: (progress) => {
-            // console.log(progress.percent * 100);
-            BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
-            },
-            onCompleted: (item) => {
-              BrowserWindow.fromId(mainWindowId).webContents.send('update-download-complete', item.path);
-            }
-          }); 
-        }else{
-          BrowserWindow.fromId(mainWindowId).webContents.send("updates-available")
+            download(BrowserWindow.fromId(mainWindowId), download_url,
+            {directory:download_path ,onProgress: (progress) => {
+              // console.log(progress.percent * 100);
+              BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
+              },
+              onCompleted: (item) => {
+                BrowserWindow.fromId(mainWindowId).webContents.send('update-download-complete', item.path);
+              }
+            }); 
+          }else{
+            BrowserWindow.fromId(mainWindowId).webContents.send("updates-available")
+          }
         }
       }
-    }
-  });
+    });
+  }catch(err){
+    console.error('Check for update failed', err)
+  }
 }
 
 // --------------------------------------------------------------------
@@ -316,6 +320,7 @@ function createWindow () {
     minimizable: false,
     frame: false,
     show: false,
+    icon: 'icon.png',
 
     webPreferences: {
       preload: path.join(__dirname, 'loading.js')
@@ -337,6 +342,7 @@ function createWindow () {
       height: 450,
       resizable: false,
       show: false,
+      icon: 'icon.png',
       alwaysOnTop:true,
 
       webPreferences: {
