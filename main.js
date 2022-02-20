@@ -157,8 +157,8 @@ async function runEngine(engine_name, coin_name){
         try{
           let bat_data = fs.readFileSync(executable_path, 'utf8');
           tmp_bat = bat_data.split('--server ');
-          tmp_bat2 = tmp_bat[1].split('.default');
-          save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + tmp_bat2[1];
+          // tmp_bat2 = tmp_bat[1].split('.default');
+          save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + '\r\npause';
         }catch{
           console.error('Error while editing coin bat file.')
         }
@@ -168,6 +168,7 @@ async function runEngine(engine_name, coin_name){
 
   // make changes in bat file
   try{
+    console.log(save_bat)
     fs.writeFileSync(executable_path, save_bat, {flag: 'w+'});
   }catch(err){
     console.error(err);
@@ -176,13 +177,6 @@ async function runEngine(engine_name, coin_name){
   console.log('Starting program - ' + executable_file);
   let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore'});
   engine_pid = engine.pid;
-  // engine.stdout.on('data', (data) => {
-  //   console.log('cmd - ' + data.toString());
-  // });
-  
-  // engine.stderr.on('data', (data) => {
-  //   console.error('cmd err - ' + data.toString());
-  // });
   
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
