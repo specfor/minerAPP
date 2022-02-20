@@ -1,7 +1,7 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Notification } = require('electron')
 const path = require('path')
 const {download} = require('electron-dl')
 const ipcRend =  require('electron').ipcRenderer;
@@ -20,18 +20,19 @@ try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
   console.log('Runnig version - ' + config_file['version'])
 }catch(err){
-  let content = {"version": "1.0.0", "app_path": path.__dirname}
+  let content = {"version": "1.0.0", "app_path": __dirname}
   fs.writeFileSync(config_file_path, JSON.stringify(content));
   config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
-
+console.log(process.execPath + ' 9999 ' + process.execArgv)
 var mainWindowId = null;
 var engine_pid = null;
 
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
-    name: 'minehash'
+    name: 'minehash',
+    path: process.execArgv + ' ' + config_file['app_path']
   });
   
   // console.log(AutoLauncher.isEnabled())
@@ -91,6 +92,13 @@ async function downloadEngine(engine_name){
     if (engine_name == 'nbminer') {
       download_path = path.join(download_path, 'NBMiner_Win');
     }
+
+    const notification = {
+      title: 'Plugin Downloaded,',
+      body: 'Plugin successfully downloaded and installed.',
+    }
+    new Notification(notification).show()
+
     let miner_detail = getMinerDetails(engine_name);
     saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['coin'], miner_detail['extra_param'], download_path);
 
@@ -284,6 +292,11 @@ function check_updates(do_download=false){
               },
               onCompleted: (item) => {
                 BrowserWindow.fromId(mainWindowId).webContents.send('update-download-complete', item.path);
+                const notification = {
+                  title: 'Update Downloaded,',
+                  body: 'You need to manually run and install the setup located at ' + item.path
+                }
+                new Notification(notification).show()
               }
             }); 
           }else{

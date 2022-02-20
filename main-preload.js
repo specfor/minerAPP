@@ -87,7 +87,6 @@ ipcRenderer.on("update-download-complete", (event, path) => {
 
     let down_bar = document.getElementById('down-bar');
     down_bar.style.opacity = '0%';
-    alert('Update downloaded to ' + path + '\nYOU NEED TO EXTRACT AND INSTALL THE SETUP.')
     console.log('done donwloading update');
 })
 
@@ -215,7 +214,6 @@ window.addEventListener("load", (event) => {
     })
 
     ipcRenderer.on('app-config', (event, args)=>{
-        console.log(args)
         document.getElementById('checkbox-auto-update').checked = args['auto_update'];
         document.getElementById('checkbox-auto-run').checked = args['auto_run'];
         document.getElementById('checkbox-gpu-fail-check').checked = args['gpu_check'];
