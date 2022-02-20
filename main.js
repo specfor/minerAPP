@@ -175,6 +175,8 @@ async function runEngine(engine_name, coin_name){
   }
 
   console.log('Starting program - ' + executable_file);
+  // console.log('Starting program - ' + executable_path);
+
   let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore'});
   engine_pid = engine.pid;
   
@@ -199,9 +201,9 @@ function getMinerDetails(engine="") {
     }
     return data;
   }catch(err){
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'config', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':''},
-    'trex': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'coin':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':''}, 'selected': 'nbminer'};
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'config', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':''}, 'selected': 'nbminer'};
     
     let wdata = JSON.stringify(data);
     try{
@@ -237,8 +239,9 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
 }
 
 // ------------------------------ UPDATE -----------------------------------
-function check_updates(){
-  let check_update_link = '';
+function check_updates(download=false){
+  console.log("Checking for updates")
+  let check_update_link = 'https://pahe.ph/';
   let options = {json: true};
   
   request(check_update_link, options, (error, res, body) => {
@@ -252,18 +255,24 @@ function check_updates(){
       let download_path = app.getPath('downloads');
 
       if (version != config['version']) {
-        download(BrowserWindow.fromId(mainWindowId), download_url,
-        {directory:download_path ,onProgress: (progress) => {
-          // console.log(progress.percent * 100);
-          BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
-          },
-          onCompleted: (item) => {
-            BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete', item);
-            // console.log(item.path);
-            // download_file = item.path;
-            alert('Update downloaded to - ' + download_path + '\nYOU NEED TO MANUALLY INSTALL BY RUNNING SETUP\n' + item.path)
-          }
-        });
+        if (download) {
+          console.log("Downloading updates")
+
+          download(BrowserWindow.fromId(mainWindowId), download_url,
+          {directory:download_path ,onProgress: (progress) => {
+            // console.log(progress.percent * 100);
+            BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
+            },
+            onCompleted: (item) => {
+              BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
+              // console.log(item.path);
+              // download_file = item.path;
+              alert('Update downloaded to - ' + download_path + '\nYOU NEED TO MANUALLY INSTALL BY RUNNING SETUP\n' + item.path)
+            }
+          }); 
+        }else{
+          BrowserWindow.fromId(mainWindowId).webContents.send("updates-available")
+        }
       }
     }
   });
@@ -344,6 +353,7 @@ function createWindow () {
       mainWindow.show();
     });
 
+    check_updates()
     
     mainWindow.webContents.openDevTools()
     return mainWindow
@@ -359,13 +369,13 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
-  autoStart()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0){
-        mainWindowret = createWindow()
+      createWindow()
+      check_updates()
     } 
   })
 })
@@ -417,5 +427,10 @@ ipc.on('get-engine-config', (event, args)=>{
   let config_data = getMinerDetails();
   event.sender.send('engine-config', config_data);
 });
+
+ipc.on("check-for-updates", check_updates);
+
+ipc.on("download-updates", ()=>{check_updates(true)});
+
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);

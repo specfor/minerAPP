@@ -81,6 +81,27 @@ ipcRenderer.on("engine-download-complete", (event) => {
     console.log('done donwloading');
 })
 
+ipcRenderer.on('updates-available', ()=>{
+    console.log("Updates available")
+    let btn_update_available = document.getElementById('show-update');
+    let info_update = document.getElementById('info-update');
+    btn_update_available.style.opacity = '100%';
+    info_update.style.opacity = '100%';
+
+    let btn_info_update = document.getElementById('updater');
+    btn_info_update.addEventListener('click', ()=>{
+        ipcRenderer.send('download-updates');
+    })
+
+    let btn_main_update = document.getElementById("show-update");
+    btn_main_update.addEventListener('click', ()=>{
+        let tab_info = document.getElementById('tab-info');
+        tab_info.click();
+    })
+
+})
+
+
 window.addEventListener("load", (event) => {
     // ------------------ AUTO START -------------------
     // let btn_auto_start = document.getElementById('click')
