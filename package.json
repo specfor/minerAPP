@@ -1,6 +1,6 @@
 {
   "name": "minehash",
-  "icon": "icon.png",
+  "icon": "icon2.png",
   "version": "1.0.0",
   "description": "electron app",
   "main": "main.js",

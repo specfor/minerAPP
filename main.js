@@ -320,7 +320,7 @@ function createWindow () {
     minimizable: false,
     frame: false,
     show: false,
-    icon: 'icon.png',
+    icon: 'icon2.png',
 
     webPreferences: {
       preload: path.join(__dirname, 'loading.js')
@@ -342,7 +342,7 @@ function createWindow () {
       height: 450,
       resizable: false,
       show: false,
-      icon: 'icon.png',
+      icon: 'icon2.png',
       alwaysOnTop:true,
 
       webPreferences: {
