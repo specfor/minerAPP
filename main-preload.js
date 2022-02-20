@@ -81,6 +81,16 @@ ipcRenderer.on("engine-download-complete", (event) => {
     console.log('done donwloading');
 })
 
+ipcRenderer.on("update-download-complete", (event, path) => {
+    let status_bar = document.getElementById('status-panel');
+    status_bar.style.opacity = '100%';
+
+    let down_bar = document.getElementById('down-bar');
+    down_bar.style.opacity = '0%';
+    alert('Update downloaded to ' + path + '\nYOU NEED TO EXTRACT AND INSTALL THE SETUP.')
+    console.log('done donwloading update');
+})
+
 ipcRenderer.on('updates-available', ()=>{
     console.log("Updates available")
     let btn_update_available = document.getElementById('show-update');

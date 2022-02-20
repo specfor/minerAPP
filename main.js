@@ -14,13 +14,14 @@ const { isEmptyOrSpaces } = require('builder-util');
 const request = require('request');
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
+let config_file = '';
 // console.log(config_file_path);
 try{
-  const config = require(config_file_path);
+  config_file = JSON.parse(fs.readFileSync(config_file_path));
 }catch(err){
   let content = {"version": "1.0.0"}
   fs.writeFileSync(config_file_path, JSON.stringify(content));
-  const config = require(config_file_path);
+  config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
 
 var mainWindowId = null;
@@ -239,9 +240,11 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
 }
 
 // ------------------------------ UPDATE -----------------------------------
-function check_updates(download=false){
-  console.log("Checking for updates")
-  let check_update_link = 'https://pahe.ph/';
+function check_updates(do_download=false){
+  if (!do_download) {
+    console.log("Checking for updates")
+  }
+  let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
   let options = {json: true};
   
   request(check_update_link, options, (error, res, body) => {
@@ -254,8 +257,8 @@ function check_updates(download=false){
       let download_url = body['download_link'];
       let download_path = app.getPath('downloads');
 
-      if (version != config['version']) {
-        if (download) {
+      if (version != config_file['version']) {
+        if (do_download) {
           console.log("Downloading updates")
 
           download(BrowserWindow.fromId(mainWindowId), download_url,
@@ -264,10 +267,7 @@ function check_updates(download=false){
             BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
             },
             onCompleted: (item) => {
-              BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
-              // console.log(item.path);
-              // download_file = item.path;
-              alert('Update downloaded to - ' + download_path + '\nYOU NEED TO MANUALLY INSTALL BY RUNNING SETUP\n' + item.path)
+              BrowserWindow.fromId(mainWindowId).webContents.send('update-download-complete', item.path);
             }
           }); 
         }else{
