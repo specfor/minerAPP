@@ -320,7 +320,7 @@ function createWindow () {
     }
   })
 
-  loadingWindow.loadFile('loading-window.html');
+  loadingWindow.loadFile( path.join(__dirname, 'loading-window.html'));
   loadingWindow.setMenu(null);
   
   loadingWindow.once('ready-to-show', () => {
@@ -344,7 +344,7 @@ function createWindow () {
 
     mainWindowId = mainWindow.id;
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile(path.join(__dirname, 'index.html'))
     mainWindow.setMenu(null)
     
     mainWindow.once('ready-to-show', () => {
