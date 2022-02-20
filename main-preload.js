@@ -140,9 +140,11 @@ window.addEventListener("load", (event) => {
     let txt_wallet_address = document.getElementById('wallet-address');
     let select_coins = document.getElementById('select-coins');
     let txt_extra_param = document.getElementById('extra-param');
+    
     let btn_save = document.getElementById('btn-settings-save');
     let btn_reset = document.getElementById('reset-icon');
 
+    
 
     btn_reset.addEventListener('click', ()=>{
         let engine = select_engine.value;
@@ -153,7 +155,16 @@ window.addEventListener("load", (event) => {
         ipcRenderer.send("reset-engine-config", {engine});
     })
     
-    btn_save.addEventListener('click', ()=> {       
+    btn_save.addEventListener('click', ()=> {
+        let check_auto_update = document.getElementById('checkbox-auto-update').checked;
+        let check_auto_run = document.getElementById('checkbox-auto-run').checked;
+        let check_gpu_check = document.getElementById('checkbox-gpu-fail-check').checked;
+        let check_server_connect = document.getElementById('checkbox-minerhouse-server-connect').checked;
+        let check_resolve_internet = document.getElementById('checkbox-resolve-internet').checked;
+        let check_fix_common_err = document.getElementById('checkbox-fix-common-errors').checked;
+    
+        ipcRenderer.send("save-app-config", {check_auto_update, check_auto_run, check_gpu_check, check_server_connect, check_resolve_internet, check_fix_common_err});
+           
         if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value) || select_coins.value == 'no_coin_selected') {
             console.log("Fill all fields");
             alert('Complete all details.');
@@ -203,7 +214,18 @@ window.addEventListener("load", (event) => {
         })
     })
 
+    ipcRenderer.on('app-config', (event, args)=>{
+        console.log(args)
+        document.getElementById('checkbox-auto-update').checked = args['auto_update'];
+        document.getElementById('checkbox-auto-run').checked = args['auto_run'];
+        document.getElementById('checkbox-gpu-fail-check').checked = args['gpu_check'];
+        document.getElementById('checkbox-minerhouse-server-connect').checked = args['server_connect'];
+        document.getElementById('checkbox-resolve-internet').checked = args['resolve_internet'];
+        document.getElementById('checkbox-fix-common-errors').checked = args['resolve_common_err'];
+    })
+
     ipcRenderer.send('get-engine-config');
+    ipcRenderer.send('get-app-config')
 
     // ------------------------------------------------------------------
    
