@@ -20,7 +20,7 @@ try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
   console.log('Runnig version - ' + config_file['version'])
 }catch(err){
-  let content = {"version": "1.0.0"}
+  let content = {"version": "1.0.0", "app_path": path.__dirname}
   fs.writeFileSync(config_file_path, JSON.stringify(content));
   config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
@@ -31,8 +31,7 @@ var engine_pid = null;
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
-    name: 'MineHASH',
-    path: path.__dirname
+    name: 'MineHASH'
   });
   
   // console.log(AutoLauncher.isEnabled())
