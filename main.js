@@ -358,7 +358,7 @@ function createWindow () {
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
     });
-
+    autoStart()
     check_updates()
     
     mainWindow.webContents.openDevTools()
