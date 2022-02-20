@@ -31,7 +31,7 @@ var engine_pid = null;
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
-    name: 'MineHASH'
+    name: 'minehash'
   });
   
   // console.log(AutoLauncher.isEnabled())
