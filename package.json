@@ -31,8 +31,8 @@
     "taskkill": "^4.0.0"
   },
   "build": {
-    "appId": "com.minerapp.app",
-    "productName": "MINER APP",
+    "appId": "com.minehahs.app",
+    "productName": "MINE HASH",
     "target": "NSIS",
     "directories": {
       "output": "build"
