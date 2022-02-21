@@ -49,6 +49,14 @@ function autoStart(enable = true){
 }
 
 // ------------------------- MINER PROGRAM ---------------------------
+function AutoMine() {
+  if (config_file['auto_mine']) {
+    console.log("Automatically running miner plugin at power on.")
+    let details = getMinerDetails()
+    runEngine(details['selected'], details[details['selected']]['selected_coin'])
+  }
+}
+
 async function downloadEngine(engine_name){
   console.log('main - download started');
   let download_url = '';
@@ -249,6 +257,12 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
 
 function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_internet, resolve_common_err){
   try{
+    if (auto_run) {
+      autoStart()
+    }else{
+      autoStart(false);
+    }
+
     config_file['auto_update'] = auto_update;
     config_file['auto_run'] = auto_run;
     config_file['gpu_check'] = gpu_check;
@@ -386,8 +400,8 @@ function createWindow () {
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
     });
-    autoStart()
     check_updates()
+    AutoMine()
     
     mainWindow.webContents.openDevTools()
     return mainWindow
@@ -409,7 +423,6 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0){
       createWindow()
-      check_updates()
     } 
   })
 })

@@ -143,7 +143,21 @@ window.addEventListener("load", (event) => {
     let btn_save = document.getElementById('btn-settings-save');
     let btn_reset = document.getElementById('reset-icon');
 
-    
+    let check_auto_run_ = document.getElementById('checkbox-auto-run');
+    let check_auto_mine_ = document.getElementById('checkbox-auto-mine');
+
+    check_auto_mine_.addEventListener('change', ()=>{
+        if (check_auto_mine_.checked) {
+            check_auto_run_.checked = true;
+        }
+    })
+
+    check_auto_run_.addEventListener('change', ()=>{
+        if (check_auto_mine_.checked) {
+            alert('You can\'t uncheck "Run on statup" when set to "Auto run mining program with configured settings at computer power up" option checked')
+            check_auto_run_.checked = true;
+        }
+    })
 
     btn_reset.addEventListener('click', ()=>{
         let engine = select_engine.value;
@@ -185,7 +199,7 @@ window.addEventListener("load", (event) => {
         console.log('plugin configuration received.');
 
         select_engine.value = data['selected'];
-        
+
         let coins = data[select_engine.value]['supported_coins'];
         select_coins.innerHTML = '<option class="coin-style" value="no_coin_selected">Select Coin</option>';
         coins.forEach(coin => {
