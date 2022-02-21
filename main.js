@@ -13,9 +13,11 @@ const fs = require('fs');
 const { isEmptyOrSpaces } = require('builder-util');
 const request = require('request');
 
-let config_file_path = path.join(app.getPath('userData'), 'config.json');
+var mainWindowId = null;
+var engine_pid = null;
 let config_file = '';
-// console.log(config_file_path);
+
+let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
   console.log('Runnig version - ' + config_file['version'])
@@ -25,8 +27,7 @@ try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
 console.log(process.execPath + ' 9999 ' + process.execArgv)
-var mainWindowId = null;
-var engine_pid = null;
+
 
 
 function autoStart(enable = true){
