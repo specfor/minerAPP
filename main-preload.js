@@ -158,11 +158,11 @@ window.addEventListener("load", (event) => {
         let check_auto_update = document.getElementById('checkbox-auto-update').checked;
         let check_auto_run = document.getElementById('checkbox-auto-run').checked;
         let check_gpu_check = document.getElementById('checkbox-gpu-fail-check').checked;
-        let check_server_connect = document.getElementById('checkbox-minerhouse-server-connect').checked;
+        let check_auto_mine = document.getElementById('checkbox-auto-mine').checked;
         let check_resolve_internet = document.getElementById('checkbox-resolve-internet').checked;
         let check_fix_common_err = document.getElementById('checkbox-fix-common-errors').checked;
     
-        ipcRenderer.send("save-app-config", {check_auto_update, check_auto_run, check_gpu_check, check_server_connect, check_resolve_internet, check_fix_common_err});
+        ipcRenderer.send("save-app-config", {check_auto_update, check_auto_run, check_gpu_check, check_auto_mine, check_resolve_internet, check_fix_common_err});
            
         if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value) || select_coins.value == 'no_coin_selected') {
             console.log("Fill all fields");
@@ -182,8 +182,10 @@ window.addEventListener("load", (event) => {
     })
 
     ipcRenderer.on('engine-config', (event, data) => {
-        console.log('engine configuration received.');
+        console.log('plugin configuration received.');
 
+        select_engine.value = data['selected'];
+        
         let coins = data[select_engine.value]['supported_coins'];
         select_coins.innerHTML = '<option class="coin-style" value="no_coin_selected">Select Coin</option>';
         coins.forEach(coin => {
@@ -191,7 +193,6 @@ window.addEventListener("load", (event) => {
             select_coins.innerHTML = select_coins.innerHTML + sel_option;
         });
 
-        select_engine.value = data['selected'];
         txt_pool_address.value = data[select_engine.value]['pool_address'];
         txt_wallet_address.value = data[select_engine.value]['wallet_address'];
         select_coins.value = data[select_engine.value]['selected_coin'];
@@ -217,7 +218,7 @@ window.addEventListener("load", (event) => {
         document.getElementById('checkbox-auto-update').checked = args['auto_update'];
         document.getElementById('checkbox-auto-run').checked = args['auto_run'];
         document.getElementById('checkbox-gpu-fail-check').checked = args['gpu_check'];
-        document.getElementById('checkbox-minerhouse-server-connect').checked = args['server_connect'];
+        document.getElementById('checkbox-auto-mine').checked = args['auto_mine'];
         document.getElementById('checkbox-resolve-internet').checked = args['resolve_internet'];
         document.getElementById('checkbox-fix-common-errors').checked = args['resolve_common_err'];
     })

@@ -32,7 +32,7 @@ var engine_pid = null;
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
     name: 'minehash',
-    path: process.execArgv + ' ' + config_file['app_path']
+    // path: process.execArgv + ' ' + config_file['app_path']
   });
   
   // console.log(AutoLauncher.isEnabled())
@@ -247,12 +247,12 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
   }
 }
 
-function saveAppDetails(auto_update, auto_run, gpu_check, server_connect, resolve_internet, resolve_common_err){
+function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_internet, resolve_common_err){
   try{
     config_file['auto_update'] = auto_update;
     config_file['auto_run'] = auto_run;
     config_file['gpu_check'] = gpu_check;
-    config_file['server_connect'] = server_connect;
+    config_file['auto_mine'] = auto_mine;
     config_file['resolve_internet'] = resolve_internet;
     config_file['resolve_common_err'] = resolve_common_err;
 
@@ -464,7 +464,7 @@ ipc.on('get-engine-config', (event, args)=>{
 });
 
 ipc.on("save-app-config", (event, args)=>{
-  saveAppDetails(args['check_auto_update'], args['check_auto_run'], args['check_gpu_check'], args['check_server_connect'], args['check_resolve_internet'], args['check_fix_common_err'])
+  saveAppDetails(args['check_auto_update'], args['check_auto_run'], args['check_gpu_check'], args['check_auto_mine'], args['check_resolve_internet'], args['check_fix_common_err'])
   event.sender.send("app-config", config_file);
 })
 
