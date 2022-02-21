@@ -85,7 +85,7 @@ async function downloadEngine(engine_name){
   let download_file = "";
 
   await download(BrowserWindow.fromId(mainWindowId), download_url,
-  {directory:download_path, onProgress: (progress) => {
+  {directory:download_path, overwrite: true, onProgress: (progress) => {
     // console.log(progress.percent * 100);
     BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
     },
