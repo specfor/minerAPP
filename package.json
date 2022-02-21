@@ -1,6 +1,5 @@
 {
   "name": "minehash",
-  "icon": "icon.png",
   "version": "1.0.0",
   "description": "App for running all your mining plugins at one place.",
   "main": "main.js",

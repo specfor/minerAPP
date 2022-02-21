@@ -49,6 +49,11 @@ function autoStart(enable = true){
   }
 }
 
+function getGPUCount() {
+  let info = app.getGPUInfo('complete');
+  console.log(info);
+}
+
 // ------------------------- MINER PROGRAM ---------------------------
 function AutoMine() {
   if (config_file['auto_mine']) {
@@ -363,7 +368,7 @@ function createWindow () {
     minimizable: false,
     frame: false,
     show: false,
-    icon: 'icon.png',
+    icon: 'icon5.png',
 
     webPreferences: {
       preload: path.join(__dirname, 'loading.js')
@@ -385,7 +390,7 @@ function createWindow () {
       height: 450,
       resizable: false,
       show: false,
-      icon: 'icon.png',
+      icon: 'icon5.png',
       alwaysOnTop:true,
 
       webPreferences: {
