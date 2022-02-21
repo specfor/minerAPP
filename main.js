@@ -26,19 +26,13 @@ try{
   fs.writeFileSync(config_file_path, JSON.stringify(content));
   config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
-console.log(process.execPath + ' 9999 ' + process.execArgv)
 
 
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
-    name: 'minehash',
-    // path: process.execArgv + ' ' + config_file['app_path']
+    name: 'minehash'
   });
-  
-  // console.log(AutoLauncher.isEnabled())
-  // AutoLauncher.enable()
-  // console.log(AutoLauncher.isEnabled())
 
   if (enable) {
     AutoLauncher.enable()
@@ -408,6 +402,7 @@ function createWindow () {
     });
     check_updates()
     AutoMine()
+    getGPUCount()
     
     mainWindow.webContents.openDevTools()
     return mainWindow
