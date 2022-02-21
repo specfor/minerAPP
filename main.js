@@ -44,8 +44,10 @@ function autoStart(enable = true){
 }
 
 function getGPUCount() {
-  let info = app.getGPUInfo('complete');
-  console.log(info);
+  app.getGPUInfo('complete').then(info => {
+    console.log(info['gpuDevice']);
+
+  })
 }
 
 // ------------------------- MINER PROGRAM ---------------------------
@@ -79,6 +81,7 @@ async function downloadEngine(engine_name){
       }
     }
   }
+  console.log('File downloading to ' + download_path)
   let download_file = "";
 
   await download(BrowserWindow.fromId(mainWindowId), download_url,
