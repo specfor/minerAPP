@@ -66,16 +66,16 @@ async function downloadEngine(engine_name){
 
   if (engine_name == "nbminer") {
     download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
-    download_path = path.join(__dirname, "downloads");
+    download_path = path.join(app.getPath('downloads'), "minehash-downloads");
   }else{
     if (engine_name == 'trex') {
       download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
-      download_path = path.join(__dirname, "downloads/trex");
+      download_path = path.join(app.getPath('downloads'), "minehash-downloads/trex");
 
     }else{
       if (engine_name == 'gminer') {
         download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
-        download_path = path.join(__dirname, "downloads/gminer");
+        download_path = path.join(app.getPath('downloads'), "minehash-downloads/gminer");
       }else{
         return false;
       }
@@ -85,7 +85,7 @@ async function downloadEngine(engine_name){
   let download_file = "";
 
   await download(BrowserWindow.fromId(mainWindowId), download_url,
-  {directory:download_path ,onProgress: (progress) => {
+  {directory:download_path, onProgress: (progress) => {
     // console.log(progress.percent * 100);
     BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
     },
