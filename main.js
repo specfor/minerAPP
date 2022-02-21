@@ -31,7 +31,7 @@ var engine_pid = null;
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
-    name: 'MineHASH'
+    name: 'minehash'
   });
   
   // console.log(AutoLauncher.isEnabled())
@@ -239,6 +239,22 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
   }
 }
 
+function saveAppDetails(auto_update, auto_run, gpu_check, server_connect, resolve_internet, resolve_common_err){
+  try{
+    config_file['auto_update'] = auto_update;
+    config_file['auto_run'] = auto_run;
+    config_file['gpu_check'] = gpu_check;
+    config_file['server_connect'] = server_connect;
+    config_file['resolve_internet'] = resolve_internet;
+    config_file['resolve_common_err'] = resolve_common_err;
+
+    fs.writeFileSync(config_file_path, JSON.stringify(config_file));
+  }catch(err){
+    console.error('Error saving app config settings')
+  }
+  
+}
+
 // ------------------------------ UPDATE -----------------------------------
 function check_updates(do_download=false){
   if (!do_download) {
@@ -414,6 +430,7 @@ ipc.on("downloadEngine", (event, engine_name) => {
 ipc.on('run-mining-engine', (event,args)=>{
   runEngine(args['plugin'], args['coin'])
 });
+
 ipc.on('kill-mining-engine', killEngine);
 
 ipc.on('reset-engine-config', (event, args)=>{
@@ -431,6 +448,15 @@ ipc.on('save-engine-config', function(event, args){
 ipc.on('get-engine-config', (event, args)=>{
   let config_data = getMinerDetails();
   event.sender.send('engine-config', config_data);
+});
+
+ipc.on("save-app-config", (event, args)=>{
+  saveAppDetails(args['check_auto_update'], args['check_auto_run'], args['check_gpu_check'], args['check_server_connect'], args['check_resolve_internet'], args['check_fix_common_err'])
+  event.sender.send("app-config", config_file);
+})
+
+ipc.on('get-app-config', (event, args)=>{
+  event.sender.send('app-config', config_file);
 });
 
 ipc.on("check-for-updates", check_updates);
