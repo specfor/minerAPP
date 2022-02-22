@@ -254,7 +254,7 @@ input:checked ~ .text:before{
 }
 
 .dis{
-  opacity: 0%;
+  opacity: 100%;
   top: 20PX;
   left: 260PX;
   width: 300px;
