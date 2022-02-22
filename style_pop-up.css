@@ -114,3 +114,55 @@ body {
         width: 100px;
     }
 }
+
+/**/
+
+/*SAVE BUTTON*/
+
+.button {
+    position: fixed;
+    padding: 4px 14px;
+    background: #009579;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+  
+    top: 385px;
+    left: 490px;
+    align-items: center;
+  
+  }
+  
+  .button:active {
+    background: #007a63;
+  }
+  
+  .button__text {
+    /*font: bold 20px "Quicksand", san-serif;*/
+    color: #ffffff;
+    transition: all 0.2s;
+    font: 25px;
+  }
+  
+  .button--loading .button__text {
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+  .button--loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 5px;
+    left: 22px;
+    right: 0;
+    bottom: 0;
+    border: 4px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+  }
+
+  /*------------*/
