@@ -16,16 +16,21 @@ function runMiner(){
     
     let imageMiner = document.getElementById('img-mining');
     let imageMiner2 = document.getElementById('img-mining2');
+    let mining_mining_stats_box = document.getElementById('mining-status-box');
     
     if (checkbox.checked) {
         console.log("Starting miner program")
         ipcRenderer.send("run-mining-engine", {plugin, coin});
+        mining_mining_stats_box.textContent = 'Mining in progress....'
         mining_status = true;
+
         imageMiner.style.opacity = '100%';
         imageMiner2.style.opacity = '0%';
     }else{
+        mining_mining_stats_box.textContent = 'Click to start mining.'
         console.log("Terminaing miner program")
         ipcRenderer.send("kill-mining-engine")
+        
         mining_status = false;
         imageMiner.style.opacity = '0%';
         imageMiner2.style.opacity = '100%';
@@ -64,6 +69,9 @@ ipcRenderer.on('run-miner', ()=>{
     document.getElementById('check-run-engine').checked = true;
     mining_status = true;
 
+    let mining_mining_stats_box = document.getElementById('mining-status-box');
+    mining_mining_stats_box.textContent = 'Mining in progress....'
+
     let imageMiner = document.getElementById('img-mining');
     let imageMiner2 = document.getElementById('img-mining2');
     imageMiner.style.opacity = '100%';
@@ -74,6 +82,9 @@ ipcRenderer.on('miner-stopped', ()=>{
     document.getElementById('check-run-engine').checked = false;
     mining_status = false;
     
+    let mining_mining_stats_box = document.getElementById('mining-status-box');
+    mining_mining_stats_box.textContent = 'Click to start mining.'
+
     let imageMiner = document.getElementById('img-mining');
     let imageMiner2 = document.getElementById('img-mining2');
     imageMiner.style.opacity = '0%';
