@@ -151,6 +151,8 @@ async function runEngine(engine_name, coin_name){
     executable_file = 'start_'+ coin_name +'.bat';
     executable_path = path.join(engine_details['path'], executable_file);
     
+    console.log('Updating file - ' + executable_path)
+
     try{
       let bat_data = fs.readFileSync(executable_path, 'utf8');
       tmp_bat = bat_data.split('-o ');
@@ -164,6 +166,8 @@ async function runEngine(engine_name, coin_name){
       executable_file = coin_name + '-' + pool_name + '.bat';
       executable_path = path.join(engine_details['path'], executable_file);
 
+      console.log('Updating file - ' + executable_path)
+
       try{
         let bat_data = fs.readFileSync(executable_path, 'utf8');
         tmp_bat = bat_data.split('-o ');
@@ -176,13 +180,15 @@ async function runEngine(engine_name, coin_name){
         executable_file = 'mine_'+ coin_name +'.bat';
         executable_path = path.join(engine_details['path'], executable_file);
 
+        console.log('Updating file - ' + executable_path)
+
         try{
           let bat_data = fs.readFileSync(executable_path, 'utf8');
           tmp_bat = bat_data.split('--server ');
           // tmp_bat2 = tmp_bat[1].split('.default');
           save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + '\r\npause';
         }catch(err){
-          console.error('Error while editing coin bat file.'+ err.message)
+          console.error('Error while editing coin bat file. - '+ err.message)
         }
       }
     }
@@ -190,7 +196,7 @@ async function runEngine(engine_name, coin_name){
 
   // make changes in bat file
   try{
-    console.log(save_bat)
+    // console.log(save_bat)
     fs.writeFileSync(executable_path, save_bat, {flag: 'w+'});
   }catch(err){
     console.error(err.message);
@@ -313,7 +319,7 @@ function check_updates(do_download=false){
               onCompleted: (item) => {
                 BrowserWindow.fromId(mainWindowId).webContents.send('update-download-complete', item.path);
                 const notification = {
-                  title: 'Update Downloaded,',
+                  title: 'Update Downloaded.',
                   body: 'You need to manually run and install the setup located at ' + item.path
                 }
                 new Notification(notification).show()
