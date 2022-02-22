@@ -231,15 +231,16 @@ input:checked ~ .text:before{
 
 .until-update{
   top: 320PX;
-  left: 290PX;
+  left: 285PX;
   width: 300px;
   position: fixed;
   padding-left: 30px;
   padding-top: 20px;
   border-left: 2px solid rgb(255, 255, 255);
-  font-size: 15px;
+  font-size: 18px;
   height: 80px;
   text-transform: uppercase;
+  margin-left: 10px;
 }
 .panel{
   position: relative;
@@ -813,13 +814,22 @@ width: 300px;
   border-radius: 5px;
 }
 .info-frame .left-container .update-tile .txt{
-  margin-left: 10px;
+
   padding: 10px;
   background-color: #404846;
   width: 100%;
   border-radius: 5px;
-
 }
+.info-frame .left-container .update-tile .txt h6{
+  margin-left: 5px;
+  padding: 10px;
+  padding-left: 0px;
+  background-color: #404846;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
 .info-frame .left-container .update-tile h4{
   margin-top: -5px;
   font-size: 10px;
@@ -832,12 +842,12 @@ width: 300px;
   margin-top: 20px;
 }
 .info-frame .left-container .update-tile button{
-  width: 80px;
+  width: 110px;
   height: 35px;
   padding: 5px;
   position: fixed;
   top: 370px;
-  left: 175px;
+  left: 165px;
   padding-bottom: 15px;  
   display: block;
   text-align: center;
@@ -873,9 +883,9 @@ width: 300px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   color: #1abc9c;
-
   cursor:pointer;
 }
+
 .right-container{
   position: fixed;
   left: 320px;
