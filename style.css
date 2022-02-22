@@ -229,9 +229,19 @@ input:checked ~ .text:before{
   border-bottom-left-radius: 8px;
 }
 
-
+.until-update{
+  top: 320PX;
+  left: 290PX;
+  width: 300px;
+  position: fixed;
+  padding-left: 30px;
+  padding-top: 20px;
+  border-left: 2px solid rgb(255, 255, 255);
+  font-size: 15px;
+  height: 80px;
+  text-transform: uppercase;
+}
 .panel{
-
   position: relative;
   top: 295px;
   padding: 10px;
@@ -242,8 +252,9 @@ input:checked ~ .text:before{
   border: 2px solid rgba(255, 255, 255, 0.452);
   border-radius: 6px;
 }
+
 .dis{
-  opacity: 100%;
+  opacity: 0%;
   top: 20PX;
   left: 260PX;
   width: 300px;
