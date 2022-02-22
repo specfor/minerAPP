@@ -520,3 +520,11 @@ ipc.on("download-updates", ()=>{check_updates(true)});
 
 
 ipc.on("showConfigurationWindow", createConfigurationWindow);
+
+ipc.on('send-notification', (event, args)=>{
+  const notification = {
+    title: args['title'],
+    body: args['message'],
+  }
+  new Notification(notification).show()
+})
