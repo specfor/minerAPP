@@ -43,7 +43,6 @@ function change_home_status(pool_address, algorithm, plugin_used){
     let coin = document.getElementById('run-coin');
     let plugin = document.getElementById('run-plugin');
 
-    let txt_status_gpu_count = document.getElementById('status-gpu-count');
     let txt_status_hahsrate = document.getElementById('status-hashrate');
     let txt_status_algoritm = document.getElementById('status-algorithm');
     let txt_status_server = document.getElementById('status-server');
@@ -227,8 +226,14 @@ window.addEventListener("load", (event) => {
         document.getElementById('checkbox-fix-common-errors').checked = args['resolve_common_err'];
     })
 
+    ipcRenderer.on('gpu-count', (event, args)=>{
+        let txt_status_gpu_count = document.getElementById('status-gpu-count');
+        txt_status_gpu_count.textContent = args['count'];
+    })
+
+    ipcRenderer.send('get-gpu-count');
     ipcRenderer.send('get-engine-config');
-    ipcRenderer.send('get-app-config')
+    ipcRenderer.send('get-app-config');
 
     // ------------------------------------------------------------------
    
