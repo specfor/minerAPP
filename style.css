@@ -877,16 +877,34 @@ width: 300px;
 .update-box{
   position: relative;
   border-radius: 5px;
-  top: 15px;
+  top: 5px;
   background-color: #282A35;
-  padding: 15px;
+  padding-top: 0px;
   height: 180px;
 }
 .update-box h3{
   position: relative;
-  top: 55px;
-  color: rgba(255, 255, 255, 0.556);
+  top: 15px;
+  color: #0d141f;
   text-align: center;
+}
+.update-box h3 a{
+  position: relative;
+  top: -12px;
+  font-size: 12px;
+  color: #0d141f;
+  text-align: center;
+  border-bottom: 2px solid #0d141f;
+}
+.update-box .contacts{
+  position: fixed;
+  padding: 15px;
+  top: 330px;
+  text-align: center;
+  left: 340px;
+}
+.update-box .contacts h5,h6{
+  color: #0d141f;
 }
 .right-container .up-box {
   display: flex;
