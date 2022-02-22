@@ -47,7 +47,13 @@ function getGPUCount() {
   app.getGPUInfo('complete').then(info => {
     // console.log(info['gpuDevice']);
     
-    let count = Object.keys(info['gpuDevice']).length
+    let count = 0;
+
+    info['gpuDevice'].forEach(gpu => {
+      if (gpu['driverVendor'] == 'NVIDIA') {
+        count += 1;
+      }
+    });
 
     console.log('GPU count - ' + count)
     return count
@@ -60,6 +66,7 @@ function AutoMine() {
     console.log("Automatically running miner plugin at power on.")
     let details = getMinerDetails()
     runEngine(details['selected'], details[details['selected']]['selected_coin'])
+    BrowserWindow.fromId(mainWindowId).webContents.send('run-miner')
   }
 }
 

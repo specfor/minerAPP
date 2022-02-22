@@ -12,24 +12,18 @@ function setupAutoStart(){
 }
 
 // ------------------------- Engine --------------------------
-ipcRenderer.on('engine-download-started', () => {
-    let down_bar = document.getElementById('down-bar');
-    down_bar.style.opacity = '100%';
 
-    let status_bar = document.getElementById('status-panel');
-    status_bar.style.opacity = '0%';
-})
-
-function runMiner(checkbox){
+function runMiner(){
+    let checkbox = document.getElementById('check-run-engine');
     // console.log(checkbox.checked);
     let txt_status_pool_address = document.getElementById('status-pool-address');
     let coin = document.getElementById('run-coin').value;
     // console.log(coin + ' coin ');
     let plugin = document.getElementById('run-plugin').value;
-
+    
     let imageMiner = document.getElementById('img-mining');
     let imageMiner2 = document.getElementById('img-mining2');
-
+    
     if (checkbox.checked) {
         console.log("Starting miner program")
         ipcRenderer.send("run-mining-engine", {plugin, coin});
@@ -65,6 +59,19 @@ function change_home_status(pool_address, algorithm, plugin_used){
         txt_status_server.textContent = server;
     }
 }
+
+ipcRenderer.on('engine-download-started', () => {
+    let down_bar = document.getElementById('down-bar');
+    down_bar.style.opacity = '100%';
+
+    let status_bar = document.getElementById('status-panel');
+    status_bar.style.opacity = '0%';
+})
+
+ipcRenderer.on('run-miner', ()=>{
+    document.getElementById('check-run-engine').checked = true;
+    runMiner()
+})
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
     let down_bar_text = document.getElementById('down-bar-txt');
@@ -112,26 +119,9 @@ ipcRenderer.on('updates-available', ()=>{
 
 
 window.addEventListener("load", (event) => {
-    // ------------------ AUTO START -------------------
-    // let btn_auto_start = document.getElementById('click')
-
-    // btn_auto_start.addEventListener("click", ()=>{
-    //     setupAutoStart()
-    // });
-
-    // ------------------ CONFIGURATION WINDOW ------------------
-    // let btn_configuration = document.getElementById('btn-configuration')
-
-    // btn_configuration.addEventListener("click", ()=>{
-    //     ipcRenderer.send("showConfigurationWindow")
-    // });
-
-    // downloadEngine()
-
     // ------------------ RUN MINER -----------------
     let checbox_mine = document.getElementById('check-run-engine');
-
-    checbox_mine.addEventListener('click', function(){runMiner(checbox_mine)});
+    checbox_mine.addEventListener('click', function(){runMiner()});
 
     // ------------------ SETTINGS AND MINER STATUS ------------------
     let select_engine = document.getElementById('engine-select');
