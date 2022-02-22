@@ -66,16 +66,16 @@ async function downloadEngine(engine_name){
 
   if (engine_name == "nbminer") {
     download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
-    download_path = path.join(app.getPath('downloads'), "minehash-downloads");
+    download_path = path.join(app.getPath('userData'), "minehash-downloads");
   }else{
     if (engine_name == 'trex') {
       download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
-      download_path = path.join(app.getPath('downloads'), "minehash-downloads/trex");
+      download_path = path.join(app.getPath('userData'), "minehash-downloads/trex");
 
     }else{
       if (engine_name == 'gminer') {
         download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
-        download_path = path.join(app.getPath('downloads'), "minehash-downloads/gminer");
+        download_path = path.join(app.getPath('userData'), "minehash-downloads/gminer");
       }else{
         return false;
       }
@@ -147,40 +147,40 @@ async function runEngine(engine_name, coin_name){
 
   if (engine_name == 'nbminer') {
     executable_file = 'start_'+ coin_name +'.bat';
-    executable_path = path.join(__dirname, "downloads/NBMiner_Win/" + executable_file);
+    executable_path = path.join(engine_details['path'], executable_file);
     
     try{
       let bat_data = fs.readFileSync(executable_path, 'utf8');
       tmp_bat = bat_data.split('-o ');
       save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -log\r\npause';
-    }catch{
-      console.error('Error while editing coin bat file.')
+    }catch(err){
+      console.error('Error while editing coin bat file.'+ err.message)
     }
   }else{
     if (engine_name == 'trex') {
       let pool_name = engine_details['pool_address'].split('.')[1];
       executable_file = coin_name + '-' + pool_name + '.bat';
-      executable_path = path.join(__dirname, "downloads/trex/" + executable_file);
+      executable_path = path.join(engine_details['path'], executable_file);
 
       try{
         let bat_data = fs.readFileSync(executable_path, 'utf8');
         tmp_bat = bat_data.split('-o ');
         save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -p x\r\npause';
       }catch(err){
-        console.error('Error while editing coin bat file.' + err)
+        console.error('Error while editing coin bat file.' + err.message)
       }
     }else{
       if (engine_name == 'gminer') {
         executable_file = 'mine_'+ coin_name +'.bat';
-        executable_path = path.join(__dirname, "downloads/gminer/" + executable_file);
+        executable_path = path.join(engine_details['path'], executable_file);
 
         try{
           let bat_data = fs.readFileSync(executable_path, 'utf8');
           tmp_bat = bat_data.split('--server ');
           // tmp_bat2 = tmp_bat[1].split('.default');
           save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + '\r\npause';
-        }catch{
-          console.error('Error while editing coin bat file.')
+        }catch(err){
+          console.error('Error while editing coin bat file.'+ err.message)
         }
       }
     }
@@ -191,7 +191,7 @@ async function runEngine(engine_name, coin_name){
     console.log(save_bat)
     fs.writeFileSync(executable_path, save_bat, {flag: 'w+'});
   }catch(err){
-    console.error(err);
+    console.error(err.message);
   }
 
   console.log('Starting program - ' + executable_file);
@@ -252,6 +252,7 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
 
   let wdata = JSON.stringify(data);
   try{
+    console.log('Plugin details save to '+path.join(app.getPath('userData'),'engines.json'))
     fs.writeFileSync(path.join(app.getPath('userData'),'engines.json'), wdata, {flag: 'w+'});
   }catch(err){
     console.error(err);
