@@ -204,6 +204,7 @@ async function runEngine(engine_name, coin_name){
 
   let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
   engine_pid = engine.pid;
+  mining = true;
 
   setInterval(() => {
     if (!mining && engine_pid != 0) {

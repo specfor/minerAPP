@@ -62,11 +62,22 @@ ipcRenderer.on('engine-download-started', () => {
 
 ipcRenderer.on('run-miner', ()=>{
     document.getElementById('check-run-engine').checked = true;
-    runMiner()
+    mining_status = true;
+
+    let imageMiner = document.getElementById('img-mining');
+    let imageMiner2 = document.getElementById('img-mining2');
+    imageMiner.style.opacity = '100%';
+    imageMiner2.style.opacity = '0%';
 })
 
 ipcRenderer.on('miner-stopped', ()=>{
     document.getElementById('check-run-engine').checked = false;
+    mining_status = false;
+    
+    let imageMiner = document.getElementById('img-mining');
+    let imageMiner2 = document.getElementById('img-mining2');
+    imageMiner.style.opacity = '0%';
+    imageMiner2.style.opacity = '100%';
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
