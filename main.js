@@ -209,7 +209,7 @@ async function runEngine(engine_name, coin_name){
 
   let engine = child.exec(executable_path);
   engine_pid = engine.pid;
-  
+  console.log(engine_pid)
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
   });
@@ -348,8 +348,8 @@ function createConfigurationWindow(ownerWindow){
       // parent: ownerWindow, 
       // modal: true,
       // frame: false,
-      width: 450,
-      height: 338,
+      width: 800,
+      height: 650,
       resizable: false,
       // minimizable: false,
       frame: false,
