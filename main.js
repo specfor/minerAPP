@@ -46,8 +46,10 @@ function autoStart(enable = true){
 function getGPUCount() {
   app.getGPUInfo('complete').then(info => {
     // console.log(info['gpuDevice']);
-    let count = (info['gpuDevice'])
     
+    let count = Object.keys(info['gpuDevice']).length
+
+    console.log('GPU count - ' + count)
     return count
   })
 }
