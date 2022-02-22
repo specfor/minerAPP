@@ -207,7 +207,7 @@ async function runEngine(engine_name, coin_name){
   console.log('Starting program - ' + executable_file);
   // console.log('Starting program - ' + executable_path);
 
-  let engine = child.execFile(executable_path);
+  let engine = child.exec(executable_path);
   engine_pid = engine.pid;
   
   engine.on('exit', (code) => {
