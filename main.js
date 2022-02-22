@@ -207,8 +207,9 @@ async function runEngine(engine_name, coin_name){
   console.log('Starting program - ' + executable_file);
   // console.log('Starting program - ' + executable_path);
 
-  let engine = child.exec(executable_path);
+  let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
   engine_pid = engine.pid;
+  // console.log(engine_pid)
   
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
