@@ -293,7 +293,7 @@ function check_updates(do_download=false){
   try{
     request(check_update_link, options, (error, res, body) => {
       if (error) {
-          return  console.log(error);
+        return  
       };
     
       if (!error && res.statusCode == 200) {
@@ -326,7 +326,7 @@ function check_updates(do_download=false){
       }
     });
   }catch(err){
-    console.error('Check for update failed', err)
+    console.error('Check for update failed', err.message)
   }
 }
 
