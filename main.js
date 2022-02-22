@@ -498,7 +498,7 @@ ipc.on('get-gpu-count', (event) => {
     let count = 0;
 
     info['gpuDevice'].forEach(gpu => {
-      if (gpu['driverVendor'] == 'NVIDIA') {
+      if (gpu['driverVendor'] == 'NVIDIA' || gpu['driverVendor'] == 'AMD') {
         count += 1;
       }
     });
