@@ -406,7 +406,6 @@ function createWindow () {
     });
     check_updates()
     AutoMine()
-    getGPUCount()
     createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
     
     mainWindow.webContents.openDevTools()
