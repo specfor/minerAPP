@@ -352,7 +352,7 @@ function createConfigurationWindow(ownerWindow){
       height: 338,
       resizable: false,
       // minimizable: false,
-      // frame: false,
+      frame: false,
       show: false,
 
       // webPreferences: {
