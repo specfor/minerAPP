@@ -45,8 +45,10 @@ function autoStart(enable = true){
 
 function getGPUCount() {
   app.getGPUInfo('complete').then(info => {
-    console.log(info['gpuDevice']);
-
+    // console.log(info['gpuDevice']);
+    let count = (info['gpuDevice'])
+    
+    return count
   })
 }
 
@@ -335,8 +337,8 @@ function createConfigurationWindow(ownerWindow){
       // modal: true,
       width: 450,
       height: 400,
-      parent: ownerWindow, 
-      modal: true,
+      // parent: ownerWindow, 
+      // modal: true,
       // frame: false,
       width: 450,
       height: 338,
@@ -407,6 +409,7 @@ function createWindow () {
     check_updates()
     AutoMine()
     getGPUCount()
+    createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
     
     mainWindow.webContents.openDevTools()
     return mainWindow
