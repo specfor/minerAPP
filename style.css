@@ -115,11 +115,11 @@ E84545 -second
   height: 10px;
 }
 .loding .line-box .line{
-  width: 100%;
+  width: 0%;
   height: 10px;
   border-radius: 20px;
   background-color: #67D295;
-  animation:  loading 2s forwards cubic-bezier(0,0,0,0);
+  /* animation:  loading 2s forwards cubic-bezier(0,0,0,0); */
 }
 @keyframes loading{
   0%{

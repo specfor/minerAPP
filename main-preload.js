@@ -73,6 +73,9 @@ ipcRenderer.on('run-miner', ()=>{
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
+    let down_progress = document.getElementById('download-progress');
+    down_progress.style.width = args + '%';
+
     let down_bar_text = document.getElementById('down-bar-txt');
     down_bar_text.textContent = 'Download ' + args + '% completed.';
 })

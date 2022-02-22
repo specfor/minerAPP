@@ -17,17 +17,18 @@ const { setTimeout } = require('timers');
 var mainWindowId = null;
 var engine_pid = null;
 let config_file = '';
+var first_run = false;
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
   console.log('Runnig version - ' + config_file['version'])
 }catch(err){
+  first_run = true;
   let content = {"version": "1.0.0", "app_path": __dirname}
   fs.writeFileSync(config_file_path, JSON.stringify(content));
   config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
-
 
 
 function autoStart(enable = true){
@@ -338,13 +339,10 @@ function check_updates(do_download=false){
 // --------------------------------------------------------------------
 function createConfigurationWindow(ownerWindow){
   const configuration_window = new BrowserWindow({
-      // parent: top, 
-      // modal: true,
       width: 450,
       height: 400,
-      // parent: ownerWindow, 
-      // modal: true,
-      // frame: false,
+      parent: ownerWindow, 
+      modal: true,
       width: 500,
       height: 450,
       resizable: false,
@@ -413,7 +411,9 @@ function createWindow () {
     });
     check_updates()
     AutoMine()
-    createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
+    if (first_run) {
+      createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
+    }
     
     mainWindow.webContents.openDevTools()
     return mainWindow
