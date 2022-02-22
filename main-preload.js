@@ -4,13 +4,6 @@ const path = require('path')
 
 var mining_status = false;
 
-function setupAutoStart(){
-    ipcRenderer.on('autoStartReply', (event, arg) => {
-    console.log("auto start" + arg)
-    })
-    ipcRenderer.send('setAutoStart', 'ping')
-}
-
 // ------------------------- Engine --------------------------
 
 function runMiner(){
@@ -43,7 +36,7 @@ function change_home_status(pool_address, algorithm, plugin_used){
     let coin = document.getElementById('run-coin');
     let plugin = document.getElementById('run-plugin');
 
-    let txt_status_hahsrate = document.getElementById('status-hashrate');
+    // let txt_status_hahsrate = document.getElementById('status-hashrate');
     let txt_status_algoritm = document.getElementById('status-algorithm');
     let txt_status_server = document.getElementById('status-server');
     let txt_status_pool_address = document.getElementById('status-pool-address');
@@ -91,6 +84,9 @@ ipcRenderer.on("engine-download-complete", (event) => {
 })
 
 ipcRenderer.on("update-download-complete", (event, path) => {
+    let btn_info_update = document.getElementById('updater');
+    btn_info_update.textContent = 'Download';
+
     let status_bar = document.getElementById('status-panel');
     status_bar.style.opacity = '100%';
 
@@ -109,6 +105,7 @@ ipcRenderer.on('updates-available', ()=>{
     let btn_info_update = document.getElementById('updater');
     btn_info_update.addEventListener('click', ()=>{
         ipcRenderer.send('download-updates');
+        btn_info_update.textContent = 'Downloading';
     })
 
     let btn_main_update = document.getElementById("show-update");
