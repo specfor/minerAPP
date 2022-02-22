@@ -12,6 +12,7 @@ const child = require('child_process');
 const fs = require('fs');
 const { isEmptyOrSpaces } = require('builder-util');
 const request = require('request');
+const { setTimeout } = require('timers');
 
 var mainWindowId = null;
 var engine_pid = null;
@@ -199,7 +200,13 @@ async function runEngine(engine_name, coin_name){
 
   let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
   engine_pid = engine.pid;
-  console.log(engine_pid)
+
+  setInterval(() => {
+    // if (engine. {
+      
+    // }
+  }, 3000);
+
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
   });

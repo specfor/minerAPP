@@ -236,5 +236,10 @@ window.addEventListener("load", (event) => {
     ipcRenderer.send('get-app-config');
 
     // ------------------------------------------------------------------
-   
+    let mail = document.getElementById('btn-copy-mail');
+    let btc_addr = document.getElementById('btn-copy-btc-address');
+
+    mail.addEventListener('click', ()=>{navigator.clipboard.writeText('wenujasl@gmail.com');})
+    btc_addr.addEventListener('click', ()=>{navigator.clipboard.writeText('1Dv39qrJu6wtvEzAZkNLoeFdzLkfVJZtPp');})
+    
 });
