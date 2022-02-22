@@ -11,5 +11,67 @@
 </head>
 <body>
 
+    <div class="container">
+        <div class="count">
+            <div id="one">1</div>
+            <div id="two">2</div>
+            <div id="three">3</div>
+        </div>
+        <div class="content first">
+            <h1>Go to Setting Tab </h1>
+
+        </div>
+        <div class="content second">
+            <h1>fill all feilds and save it</h1>
+
+        </div>
+        <div class="content third">
+            <h1>Back to Home Tab and click Mining button</h1>
+
+        </div>
+    </div>
+
+            <button type="button" id="btn-settings-save" class="button" onclick="this.classList.toggle('button--loading')">
+              <span class="button__text">Save</span>
+            </button>
+
+
+
+
+
+    <script>
+        //Get All Value
+const one = document.querySelector('#one');
+const two = document.querySelector('#two');
+const three = document.querySelector('#three');
+
+//Now Work
+one.addEventListener('click', () => {
+    document.querySelector('.first').style.display = "block";
+    document.querySelector('.second').style.display = "none";
+    document.querySelector('.third').style.display = "none";
+    one.classList.add('active');
+    two.classList.remove('active');
+    three.classList.remove('active');
+});
+
+two.addEventListener('click', () => {
+    document.querySelector('.second').style.display = "block";
+    document.querySelector('.first').style.display = "none";
+    document.querySelector('.third').style.display = "none";
+    two.classList.add('active');
+    one.classList.remove('active');
+    three.classList.remove('active');
+});
+
+three.addEventListener('click', () => {
+    document.querySelector('.second').style.display = "none";
+    document.querySelector('.first').style.display = "none";
+    document.querySelector('.third').style.display = "block";
+    one.classList.remove('active');
+    two.classList.remove('active');
+    three.classList.add('active');
+});
+    </script>
 </body>
 </html>

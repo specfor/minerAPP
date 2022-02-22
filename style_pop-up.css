@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+
+    background: #222;
+}
+
+.container {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    height: 400px;
+    width: 700px;
+    background: #eceff8;
+    padding: 10px;
+    text-align: center;
+}
+
+.container .count {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.container .count div {
+    height: 50px;
+    width: 50px;
+    background: #f0f2f7;
+    border: 2px solid #7a90fd;
+    border-radius: 50%;
+    padding: 15px;
+    font-weight: bold;
+    color: #ccc;
+    position: relative;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.count div:hover {
+    background: #7a90fd;
+    color: #fff;
+}
+
+.count div.active {
+    background: #7a90fd;
+    color: #fff;
+}
+
+.count div::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    height: 2px;
+    width: 150px;
+    background: #ccc;
+}
+
+.count div:last-child::before {
+    display: none;
+}
+
+.content{
+    width: 450px;
+}
+.content h1 {
+    margin: 10px 0px;
+    font-family: sans-serif;
+}
+
+.content p {
+    margin: 10px 0px;
+    text-align: center;
+    font-size: 18px;
+    color: #7c7aa1;
+}
+
+.content button {
+    padding: 15px 80px;
+    margin-top: 20px;
+    background: #7a90fd;
+    color: #fff;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.content.second,
+.content.third {
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .container {
+        width: auto;
+        margin: 0px;
+    }
+    .count div::before {
+        width: 150px;
+    }
+}
+
+@media (max-width: 700px) {
+    .count div::before {
+        width: 100px;
+    }
+}
