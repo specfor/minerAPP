@@ -239,7 +239,14 @@ window.addEventListener("load", (event) => {
     let mail = document.getElementById('btn-copy-mail');
     let btc_addr = document.getElementById('btn-copy-btc-address');
 
-    mail.addEventListener('click', ()=>{navigator.clipboard.writeText('wenujasl@gmail.com');})
-    btc_addr.addEventListener('click', ()=>{navigator.clipboard.writeText('1Dv39qrJu6wtvEzAZkNLoeFdzLkfVJZtPp');})
+    mail.addEventListener('click', ()=>{
+        navigator.clipboard.writeText('wenujasl@gmail.com');
+        ipcRenderer.send('send-notification', {"title": "Email copied", "message": "Email copied to clipboard."})
+    })
+
+    btc_addr.addEventListener('click', ()=>{
+        navigator.clipboard.writeText('1Dv39qrJu6wtvEzAZkNLoeFdzLkfVJZtPp');
+        ipcRenderer.send('send-notification', {"title": "BTC wallet address copied", "message": "BTC wallet address copied to clipboard."})
+    })
     
 });
