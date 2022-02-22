@@ -966,9 +966,9 @@ width: 300px;
   color: white;
 }
 .right-container .pay-details button:hover {
-  background-color: rgba(34, 34, 34, 0.549);
+  background-color: rgba(179, 179, 179, 0.549);
   border-radius: 5px;
-  color: white;
+  color: black;
 }
 .right-container .pay-details h6 {
   font-size: 12px;
@@ -978,7 +978,12 @@ width: 300px;
   background-color: #222;
   padding: 5px;
 }
-
+.right-container .pay-details span:hover{
+  font-size: 10px;
+  background-color: rgba(179, 179, 179, 0.549);
+  color: black;
+  padding: 5px;
+}
 #donate-mail{
   font-size: 15px;
   text-align: center;
