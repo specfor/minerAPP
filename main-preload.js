@@ -65,6 +65,10 @@ ipcRenderer.on('run-miner', ()=>{
     runMiner()
 })
 
+ipcRenderer.on('miner-stopped', ()=>{
+    document.getElementById('check-run-engine').checked = false;
+})
+
 ipcRenderer.on("engine-download-progress", (event, args) => {
     let down_progress = document.getElementById('download-progress');
     down_progress.style.width = args + '%';

@@ -15,9 +15,10 @@ const request = require('request');
 const { setTimeout } = require('timers');
 
 var mainWindowId = null;
-var engine_pid = null;
+var engine_pid = 0;
 let config_file = '';
 var first_run = false;
+var mining = false;
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -136,6 +137,8 @@ async function runEngine(engine_name, coin_name){
 
   await checkEnginePresence(engine_name);  
 
+  engine_details = getMinerDetails(engine_name);
+
   console.log("miner process called to run");
   console.log('plugin - ' + engine_name + ' & coin - ' + coin_name);
 
@@ -203,13 +206,15 @@ async function runEngine(engine_name, coin_name){
   engine_pid = engine.pid;
 
   setInterval(() => {
-    // if (engine. {
-      
-    // }
+    if (!mining && engine_pid != 0) {
+      engine_pid = 0;
+      BrowserWindow.fromId(mainWindowId).webContents.send('miner-stopped');
+    }
   }, 3000);
 
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
+    mining = false;
   });
 }
 
