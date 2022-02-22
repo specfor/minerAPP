@@ -43,23 +43,6 @@ function autoStart(enable = true){
   }
 }
 
-function getGPUCount() {
-  app.getGPUInfo('complete').then(info => {
-    // console.log(info['gpuDevice']);
-    
-    let count = 0;
-
-    info['gpuDevice'].forEach(gpu => {
-      if (gpu['driverVendor'] == 'NVIDIA') {
-        count += 1;
-      }
-    });
-
-    console.log('GPU count - ' + count)
-    return count
-  })
-}
-
 // ------------------------- MINER PROGRAM ---------------------------
 function AutoMine() {
   if (config_file['auto_mine']) {
@@ -507,6 +490,23 @@ ipc.on("save-app-config", (event, args)=>{
 ipc.on('get-app-config', (event, args)=>{
   event.sender.send('app-config', config_file);
 });
+
+ipc.on('get-gpu-count', (event) => {
+  app.getGPUInfo('complete').then(info => {
+    // console.log(info['gpuDevice']);
+    
+    let count = 0;
+
+    info['gpuDevice'].forEach(gpu => {
+      if (gpu['driverVendor'] == 'NVIDIA') {
+        count += 1;
+      }
+    });
+
+    event.sender.send('gpu-count', count)
+    console.log('GPU count - ' + count)
+  })
+})
 
 ipc.on("check-for-updates", check_updates);
 
