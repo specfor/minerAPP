@@ -256,7 +256,7 @@ input:checked ~ .text:before{
 
 .dis{
   opacity: 100%;
-  top: 20PX;
+  top: 25PX;
   left: 260PX;
   width: 300px;
   position: relative;
@@ -265,6 +265,7 @@ input:checked ~ .text:before{
 
 }
 .dis .mini{
+  /*background-color: #007a63;*/
   display: grid;
   grid-template-columns: 2fr 1fr;
   color: #d9d9d98c;
@@ -273,11 +274,15 @@ input:checked ~ .text:before{
 }
 .dis .mini h2{
   font-size: 14px;
-  margin-right: 0px;
+  margin-left: -90px;
+  letter-spacing: .6px;
 }
 .dis .mini h1{
+  text-align: center;
+  color: #d9d9d9ad;
+  /*background-color: #0d141f; */
   font-size: 14px;
-  margin-left: -30px;
+  margin-left: -80px;
 }
 /*--------------------------------------------------------------------------*/
 .gif {
