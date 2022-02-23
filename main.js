@@ -19,7 +19,7 @@ var engine_pid = 0;
 let config_file = '';
 var first_run = false;
 var mining = false;
-var active_engine_name = '';
+var active_engine_name, start_time = '';
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -228,6 +228,7 @@ async function runEngine(engine_name, coin_name){
   active_engine_name = engine_name;
   engine_pid = engine.pid;
   mining = true;
+  start_time = Date.now()
 
 
   engine.on('exit', (code) => {
@@ -250,7 +251,7 @@ async function sendMiningStatus(){
         }
         let hashrate = body['miner']['total_hashrate'].split(' ')[0];
         let power = body['miner']['total_power_consume'];
-        let uptime = '';
+        let uptime = msToTime(Date.now() - start_time);
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 
