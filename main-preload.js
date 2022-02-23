@@ -88,6 +88,10 @@ ipcRenderer.on('run-miner', ()=>{
 ipcRenderer.on('miner-stopped', ()=>{
     document.getElementById('check-run-engine').checked = false;
     setGUIState(false);
+
+    let txt_status_hashrate = document.getElementById('status-hashrate');
+    txt_status_hashrate.textContent = '- MH/s';
+
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
@@ -153,13 +157,13 @@ ipcRenderer.on('updates-available', ()=>{
 
 ipcRenderer.on('plugin-status', (event, args)=>{
     console.log(args)
-    let txt_mini_hahsrate = document.getElementById('status-mini-hashrate');
+    let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
-    let txt_status_hahsrate = document.getElementById('status-hashrate');
-    let txt_mini_uptime = document.getElementById('status-mini-hashrate');
+    let txt_status_hashrate = document.getElementById('status-hashrate');
+    let txt_mini_uptime = document.getElementById('status-mini-uptime');
 
-    txt_status_hahsrate.textContent = args['hashrate'] + 'MH/s';
-    txt_mini_hahsrate.textContent = args['hashrate'] + 'MH/s';
+    txt_status_hashrate.textContent = args['hashrate'] + 'MH/s';
+    txt_mini_hashrate.textContent = args['hashrate'] + 'MH/s';
     txt_mini_power.textContent = args['power'] + 'W';
     txt_mini_uptime.textContent = args['uptime'];
 })
