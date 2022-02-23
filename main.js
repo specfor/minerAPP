@@ -229,6 +229,8 @@ function killEngine() {
 }
 
 async function sendMiningStatus(){
+  console.log('Sending plugin status')
+  
   if (active_engine_name == 'nbminer') {
     try{
       request('/api/v1/status', {json: true}, (error, res, body) => {
@@ -237,8 +239,9 @@ async function sendMiningStatus(){
         }
         let hashrate = body['miner']['total_hashrate'].split(' ')[0];
         let power = body['miner']['total_power_consume'];
+        let uptime = '';
 
-        let payload = {'hashrate': hashrate, 'power': power}
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       })
@@ -253,8 +256,9 @@ async function sendMiningStatus(){
         }
         let hashrate = body['miner']['total_hashrate'];
         let power = body['miner']['total_power_consume'];
+        let uptime = '';
 
-        let payload = {'hashrate': hashrate, 'power': power}
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       })
@@ -272,8 +276,9 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu, ()=>{
           power += gpu['power'];
         })
+        let uptime = '';
 
-        let payload = {'hashrate': hashrate, 'power': power}
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       })

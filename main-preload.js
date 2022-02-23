@@ -5,35 +5,46 @@ const path = require('path')
 var mining_status = false;
 
 // ------------------------- Engine --------------------------
+function setGUIState(mining) {
+    let imageMiner = document.getElementById('img-mining');
+    let imageMiner2 = document.getElementById('img-mining2');
+    let status_mini = document.getElementById('status-mini');
+    let status_mini_not = document.getElementById('stutus-mini-not-running');
+    
+    if (mining) {
+        mining_status = true;
+        imageMiner.style.opacity = '100%';
+        imageMiner2.style.opacity = '0%';
+
+        status_mini.style.opacity = '100%';
+        status_mini_not.style.opacity = '0%';
+    }else{
+        mining_status = false;
+        imageMiner.style.opacity = '0%';
+        imageMiner2.style.opacity = '100%';
+
+        status_mini.style.opacity = '0%';
+        status_mini_not.style.opacity = '100%';
+
+    }
+}
 
 function runMiner(){
     let checkbox = document.getElementById('check-run-engine');
-    // console.log(checkbox.checked);
-    let txt_status_pool_address = document.getElementById('status-pool-address');
+    // let txt_status_pool_address = document.getElementById('status-pool-address');
     let coin = document.getElementById('run-coin').value;
     // console.log(coin + ' coin ');
     let plugin = document.getElementById('run-plugin').value;
     
-    let imageMiner = document.getElementById('img-mining');
-    let imageMiner2 = document.getElementById('img-mining2');
-    let mining_mining_stats_box = document.getElementById('mining-status-box');
     
     if (checkbox.checked) {
-        console.log("Starting miner program")
+        console.log("Starting miner program");
         ipcRenderer.send("run-mining-engine", {plugin, coin});
-        mining_mining_stats_box.textContent = 'Mining in progress....'
-        mining_status = true;
-
-        imageMiner.style.opacity = '100%';
-        imageMiner2.style.opacity = '0%';
+        setGUIState(true);
     }else{
-        mining_mining_stats_box.textContent = 'Click to start mining.'
-        console.log("Terminaing miner program")
-        ipcRenderer.send("kill-mining-engine")
-        
-        mining_status = false;
-        imageMiner.style.opacity = '0%';
-        imageMiner2.style.opacity = '100%';
+        console.log("Terminaing miner program");
+        ipcRenderer.send("kill-mining-engine");
+        setGUIState(false);
     }
 }
 
@@ -60,34 +71,18 @@ ipcRenderer.on('engine-download-started', () => {
     let down_bar = document.getElementById('down-bar');
     down_bar.style.opacity = '100%';
 
-    let status_bar = document.getElementById('status-panel');
+    let status_bar = document.getElementById('stutus-mini-not-running');
     status_bar.style.opacity = '0%';
 })
 
 ipcRenderer.on('run-miner', ()=>{
     document.getElementById('check-run-engine').checked = true;
-    mining_status = true;
-
-    let mining_mining_stats_box = document.getElementById('mining-status-box');
-    mining_mining_stats_box.textContent = 'Mining in progress....'
-
-    let imageMiner = document.getElementById('img-mining');
-    let imageMiner2 = document.getElementById('img-mining2');
-    imageMiner.style.opacity = '100%';
-    imageMiner2.style.opacity = '0%';
+    setGUIState(true)
 })
 
 ipcRenderer.on('miner-stopped', ()=>{
     document.getElementById('check-run-engine').checked = false;
-    mining_status = false;
-    
-    let mining_mining_stats_box = document.getElementById('mining-status-box');
-    mining_mining_stats_box.textContent = 'Click to start mining.'
-
-    let imageMiner = document.getElementById('img-mining');
-    let imageMiner2 = document.getElementById('img-mining2');
-    imageMiner.style.opacity = '0%';
-    imageMiner2.style.opacity = '100%';
+    setGUIState(false);
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
@@ -99,7 +94,7 @@ ipcRenderer.on("engine-download-progress", (event, args) => {
 })
 
 ipcRenderer.on("engine-download-complete", (event) => {
-    let status_bar = document.getElementById('status-panel');
+    let status_bar = document.getElementById('stutus-mini-not-running');
     status_bar.style.opacity = '100%';
 
     let down_bar = document.getElementById('down-bar');
@@ -112,7 +107,7 @@ ipcRenderer.on("update-download-complete", (event, path) => {
     let btn_info_update = document.getElementById('updater');
     btn_info_update.textContent = 'Download';
 
-    let status_bar = document.getElementById('status-panel');
+    let status_bar = document.getElementById('stutus-mini-not-running');
     status_bar.style.opacity = '100%';
 
     let down_bar = document.getElementById('down-bar');
@@ -142,13 +137,16 @@ ipcRenderer.on('updates-available', ()=>{
 })
 
 ipcRenderer.on('plugin-status', (event, args)=>{
+    console.log(args)
     let txt_mini_hahsrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
     let txt_status_hahsrate = document.getElementById('status-hashrate');
+    let txt_mini_uptime = document.getElementById('status-mini-hashrate');
 
-    txt_mini_hahsrate.textContent = args['hashrate'] + 'MH/s';
+    txt_status_hahsrate.textContent = args['hashrate'] + 'MH/s';
     txt_mini_hahsrate.textContent = args['hashrate'] + 'MH/s';
     txt_mini_power.textContent = args['power'] + 'W';
+    txt_mini_uptime.textContent = args['uptime'];
 })
 
 window.addEventListener("load", (event) => {
