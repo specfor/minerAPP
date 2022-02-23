@@ -254,6 +254,32 @@ input:checked ~ .text:before{
   border-radius: 6px;
 }
 
+/*==New theme-icons==*/
+.panel .box{
+  position: fixed;
+  top: 310px;
+  left: 290px;
+  border-left: 2px solid white;
+  padding-left: 5px;
+  width: 290px;
+}
+.panel .box .item{
+  display: inline-block;
+  text-align: center;
+  padding: 10px;
+  padding-right: 4px;
+}
+.panel .box .item img{
+  box-shadow: #083029;
+}
+.panel .box .item h2{
+  font-size: 12px;
+  color: #222;
+  background-color: rgba(255, 255, 255, 0.171);
+  border-radius: 5px;
+  padding: 4px;
+}
+
 .dis{
   opacity: 100%;
   top: 25PX;
@@ -264,6 +290,7 @@ input:checked ~ .text:before{
   border-left: 2px solid rgb(255, 255, 255);
 
 }
+
 .dis .mini{
   /*background-color: #007a63;*/
   display: grid;
