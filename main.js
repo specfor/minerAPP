@@ -274,7 +274,7 @@ async function sendMiningStatus(){
         let uptime = msToTime(body['uptime']*1000);
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
-        console.
+   
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
         console.error('Error getting plugin status - ' + err.message)
