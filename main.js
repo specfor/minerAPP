@@ -260,22 +260,22 @@ async function sendMiningStatus(){
       console.error('Error getting plugin status - ' + err.message)
     }
   }else if (active_engine_name == 'trex'){
-    try{
-      request('http://127.0.0.1:20002/config', {json: true}, (error, res, body) => {
-        if (error) {
-          return
-        }
-        let hashrate = body['hashrate'];
-        let power = body['miner']['total_power_consume'];
-        let uptime = msToTime(body['uptime']*1000);
+    // try{
+    //   request('http://127.0.0.1:20002/config', {json: true}, (error, res, body) => {
+    //     if (error) {
+    //       return
+    //     }
+    //     let hashrate = body['hashrate'];
+    //     let power = body['miner']['total_power_consume'];
+    //     let uptime = msToTime(body['uptime']*1000);
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
+    //     let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 
-        BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
-      })
-    }catch(err){
-      console.error('Error getting plugin status - ' + err.message)
-    }
+    //     BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
+    //   })
+    // }catch(err){
+    //   console.error('Error getting plugin status - ' + err.message)
+    // }
   }else if (active_engine_name == 'gminer') {
     try{
       request('http://127.0.0.1:20003/api/v1/status', {json: true}, (error, res, body) => {
