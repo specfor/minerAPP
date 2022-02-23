@@ -45,6 +45,18 @@ setInterval(() => {
   }
 }, 500);
 
+function msToTime(duration) {
+  var milliseconds = parseInt((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return hours + ":" + minutes + ":" + seconds;
+}
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
@@ -230,8 +242,6 @@ function killEngine() {
 }
 
 async function sendMiningStatus(){
-  console.log('Sending plugin status')
-  
   if (active_engine_name == 'nbminer') {
     try{
       request('http://127.0.0.1:20001/api/v1/status', {json: true}, (error, res, body) => {
@@ -255,9 +265,9 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = body['miner']['total_hashrate'];
+        let hashrate = body['hashrate'];
         let power = body['miner']['total_power_consume'];
-        let uptime = '';
+        let uptime = msToTime(body['uptime']*1000);
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 
@@ -277,7 +287,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu, ()=>{
           power += gpu['power'];
         })
-        let uptime = '';
+        let uptime = msToTime(body['uptime']*1000);
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
 

@@ -156,7 +156,6 @@ ipcRenderer.on('updates-available', ()=>{
 })
 
 ipcRenderer.on('plugin-status', (event, args)=>{
-    console.log(args)
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
     let txt_status_hashrate = document.getElementById('status-hashrate');
