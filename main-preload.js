@@ -89,8 +89,15 @@ ipcRenderer.on('miner-stopped', ()=>{
     document.getElementById('check-run-engine').checked = false;
     setGUIState(false);
 
+    let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
+    let txt_mini_power = document.getElementById('status-mini-power');
     let txt_status_hashrate = document.getElementById('status-hashrate');
+    let txt_mini_uptime = document.getElementById('status-mini-uptime');
+
     txt_status_hashrate.textContent = '- MH/s';
+    txt_mini_hashrate.textContent = '- MH/s';
+    txt_mini_power.textContent =  '- W';
+    txt_mini_uptime.textContent = '00:00:00';
 
 })
 
