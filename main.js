@@ -249,7 +249,7 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = body['miner']['total_hashrate'].split(' ')[0];
+        let hashrate = body['miner']['total_hashrate'].split(' ')[0] / 1000000;
         let power = body['miner']['total_power_consume'];
         let uptime = msToTime(Date.now() - start_time);
 
