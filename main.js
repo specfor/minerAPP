@@ -238,7 +238,7 @@ async function runEngine(engine_name, coin_name){
 
 function killEngine() {
   console.log("process termination called.");
-  child.exec(`taskkill /pid ${engine_pid} /t`);
+  child.exec(`taskkill /f /pid ${engine_pid} /t`);
 }
 
 async function sendMiningStatus(){
