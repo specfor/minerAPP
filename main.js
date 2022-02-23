@@ -266,7 +266,7 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = body['hashrate'] / 1000000;
+        let hashrate = Math.round(body['hashrate'] / 1000000);
         let power = 0;
         body['gpus'].forEach(gpu=>{
           power += gpu['power']
@@ -287,7 +287,7 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = body['miner']['devices']['total_hashrate'] / 1000000;
+        let hashrate = Math.round(body['miner']['devices']['total_hashrate'] / 1000000);
         let power = 0;
         body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
