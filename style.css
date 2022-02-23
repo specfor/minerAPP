@@ -267,8 +267,24 @@ input:checked ~ .text:before{
   padding-left: 5px;
   width: 290px;
   opacity: 0%;
+  justify-content:space-between;
+  align-content: center;
+  align-items: center;
+}
+#fix-1{
+  position: relative;
+  left: 10px;
+}
+#fix-2{
+  position: relative;
+  left: 20px;
+}
+#fix-3{
+  position: relative;
+  left: 35px;
 }
 .panel .box .item{
+  position: relative;
   display: inline-block;
   text-align: center;
   padding: 10px;
