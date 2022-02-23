@@ -32,6 +32,19 @@ try{
   config_file = JSON.parse(fs.readFileSync(config_file_path));
 }
 
+setInterval(() => {
+  if (!mining && engine_pid != 0) {
+    engine_pid = 0;
+    BrowserWindow.fromId(mainWindowId).webContents.send('miner-stopped');
+  }
+}, 3000);
+
+setInterval(() => {
+  if (mining) {
+    sendMiningStatus()
+  }
+}, 500);
+
 
 function autoStart(enable = true){
   var AutoLauncher = new AutoLaunch({
@@ -204,18 +217,6 @@ async function runEngine(engine_name, coin_name){
   engine_pid = engine.pid;
   mining = true;
 
-  setInterval(() => {
-    if (!mining && engine_pid != 0) {
-      engine_pid = 0;
-      BrowserWindow.fromId(mainWindowId).webContents.send('miner-stopped');
-    }
-  }, 3000);
-
-  setInterval(() => {
-    if (mining) {
-      sendMiningStatus()
-    }
-  }, 500);
 
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
@@ -233,7 +234,7 @@ async function sendMiningStatus(){
   
   if (active_engine_name == 'nbminer') {
     try{
-      request('/api/v1/status', {json: true}, (error, res, body) => {
+      request('http://127.0.0.1:20001/api/v1/status', {json: true}, (error, res, body) => {
         if (error) {
           return
         }
@@ -250,7 +251,7 @@ async function sendMiningStatus(){
     }
   }else if (active_engine_name == 'trex'){
     try{
-      request('', {json: true}, (error, res, body) => {
+      request('http://127.0.0.1:20002/config', {json: true}, (error, res, body) => {
         if (error) {
           return
         }
@@ -267,7 +268,7 @@ async function sendMiningStatus(){
     }
   }else if (active_engine_name == 'gminer') {
     try{
-      request('/api/v1/status', {json: true}, (error, res, body) => {
+      request('http://127.0.0.1:20003/api/v1/status', {json: true}, (error, res, body) => {
         if (error) {
           return
         }
