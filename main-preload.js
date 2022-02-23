@@ -41,7 +41,6 @@ function change_home_status(pool_address, algorithm, plugin_used){
     let coin = document.getElementById('run-coin');
     let plugin = document.getElementById('run-plugin');
 
-    // let txt_status_hahsrate = document.getElementById('status-hashrate');
     let txt_status_algoritm = document.getElementById('status-algorithm');
     let txt_status_server = document.getElementById('status-server');
     let txt_status_pool_address = document.getElementById('status-pool-address');
@@ -142,6 +141,15 @@ ipcRenderer.on('updates-available', ()=>{
 
 })
 
+ipcRenderer.on('plugin-status', (event, args)=>{
+    let txt_mini_hahsrate = document.getElementById('status-mini-hashrate');
+    let txt_mini_power = document.getElementById('status-mini-power');
+    let txt_status_hahsrate = document.getElementById('status-hashrate');
+
+    txt_mini_hahsrate.textContent = args['hashrate'] + 'MH/s';
+    txt_mini_hahsrate.textContent = args['hashrate'] + 'MH/s';
+    txt_mini_power.textContent = args['power'] + 'W';
+})
 
 window.addEventListener("load", (event) => {
     // ------------------ RUN MINER -----------------

@@ -19,6 +19,7 @@ var engine_pid = 0;
 let config_file = '';
 var first_run = false;
 var mining = false;
+var active_engine_name = '';
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -157,37 +158,33 @@ async function runEngine(engine_name, coin_name){
     }catch(err){
       console.error('Error while editing coin bat file.'+ err.message)
     }
-  }else{
-    if (engine_name == 'trex') {
-      let pool_name = engine_details['pool_address'].split('.')[1];
-      executable_file = coin_name + '-' + pool_name + '.bat';
-      executable_path = path.join(engine_details['path'], executable_file);
+  }else if (engine_name == 'trex') {
+    let pool_name = engine_details['pool_address'].split('.')[1];
+    executable_file = coin_name + '-' + pool_name + '.bat';
+    executable_path = path.join(engine_details['path'], executable_file);
 
-      console.log('Updating file - ' + executable_path)
+    console.log('Updating file - ' + executable_path)
 
-      try{
-        let bat_data = fs.readFileSync(executable_path, 'utf8');
-        tmp_bat = bat_data.split('-o ');
-        save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -p x\r\npause';
-      }catch(err){
-        console.error('Error while editing coin bat file.' + err.message)
-      }
-    }else{
-      if (engine_name == 'gminer') {
-        executable_file = 'mine_'+ coin_name +'.bat';
-        executable_path = path.join(engine_details['path'], executable_file);
+    try{
+      let bat_data = fs.readFileSync(executable_path, 'utf8');
+      tmp_bat = bat_data.split('-o ');
+      save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows -p x\r\npause';
+    }catch(err){
+      console.error('Error while editing coin bat file.' + err.message)
+    }
+  }else if (engine_name == 'gminer') {
+    executable_file = 'mine_'+ coin_name +'.bat';
+    executable_path = path.join(engine_details['path'], executable_file);
 
-        console.log('Updating file - ' + executable_path)
+    console.log('Updating file - ' + executable_path)
 
-        try{
-          let bat_data = fs.readFileSync(executable_path, 'utf8');
-          tmp_bat = bat_data.split('--server ');
-          // tmp_bat2 = tmp_bat[1].split('.default');
-          save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + '\r\npause';
-        }catch(err){
-          console.error('Error while editing coin bat file. - '+ err.message)
-        }
-      }
+    try{
+      let bat_data = fs.readFileSync(executable_path, 'utf8');
+      tmp_bat = bat_data.split('--server ');
+      // tmp_bat2 = tmp_bat[1].split('.default');
+      save_bat = tmp_bat[0] + '--server ' + engine_details['pool_address'] + ' --user ' + engine_details['wallet_address'] + '\r\npause';
+    }catch(err){
+      console.error('Error while editing coin bat file. - '+ err.message)
     }
   }
 
@@ -203,6 +200,7 @@ async function runEngine(engine_name, coin_name){
   // console.log('Starting program - ' + executable_path);
 
   let engine = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
+  active_engine_name = engine_name;
   engine_pid = engine.pid;
   mining = true;
 
@@ -213,6 +211,12 @@ async function runEngine(engine_name, coin_name){
     }
   }, 3000);
 
+  setInterval(() => {
+    if (mining) {
+      sendMiningStatus()
+    }
+  }, 500);
+
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
     mining = false;
@@ -222,6 +226,61 @@ async function runEngine(engine_name, coin_name){
 function killEngine() {
   console.log("process termination called.");
   child.exec(`taskkill /pid ${engine_pid} /t`);
+}
+
+async function sendMiningStatus(){
+  if (active_engine_name == 'nbminer') {
+    try{
+      request('/api/v1/status', {json: true}, (error, res, body) => {
+        if (error) {
+          return
+        }
+        let hashrate = body['miner']['total_hashrate'].split(' ')[0];
+        let power = body['miner']['total_power_consume'];
+
+        let payload = {'hashrate': hashrate, 'power': power}
+
+        BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
+      })
+    }catch(err){
+      console.error('Error getting plugin status - ' + err.message)
+    }
+  }else if (active_engine_name == 'trex'){
+    try{
+      request('', {json: true}, (error, res, body) => {
+        if (error) {
+          return
+        }
+        let hashrate = body['miner']['total_hashrate'];
+        let power = body['miner']['total_power_consume'];
+
+        let payload = {'hashrate': hashrate, 'power': power}
+
+        BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
+      })
+    }catch(err){
+      console.error('Error getting plugin status - ' + err.message)
+    }
+  }else if (active_engine_name == 'gminer') {
+    try{
+      request('/api/v1/status', {json: true}, (error, res, body) => {
+        if (error) {
+          return
+        }
+        let hashrate = body['miner']['devices']['total_hashrate'] / 1000000;
+        let power = 0;
+        body['miner']['devices'].forEach(gpu, ()=>{
+          power += gpu['power'];
+        })
+
+        let payload = {'hashrate': hashrate, 'power': power}
+
+        BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
+      })
+    }catch(err){
+      console.error('Error getting plugin status - ' + err.message)
+    }
+  }
 }
 
 // ----------------------------- SETTINGS ----------------------------
