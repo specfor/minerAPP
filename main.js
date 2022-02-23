@@ -268,7 +268,7 @@ async function sendMiningStatus(){
         }
         let hashrate = body['hashrate'];
         let power = 0;
-        body['gpus'].forEach((gpu)=>{
+        body['gpus'].forEach(gpu=>{
           power += gpu['power']
         })
         let uptime = msToTime(body['uptime']*1000);
@@ -289,7 +289,7 @@ async function sendMiningStatus(){
         }
         let hashrate = body['miner']['devices']['total_hashrate'] / 1000000;
         let power = 0;
-        body['miner']['devices'].forEach((gpu)=>{
+        body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
         })
         let uptime = msToTime(body['uptime']*1000);
