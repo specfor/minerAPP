@@ -154,7 +154,7 @@ async function runEngine(engine_name, coin_name){
     try{
       let bat_data = fs.readFileSync(executable_path, 'utf8');
       tmp_bat = bat_data.split('-o ');
-      save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows --api <127.0.0.1:20001> -log\r\npause';
+      save_bat = tmp_bat[0] + '-o ' + engine_details['pool_address'] + ' -u ' + engine_details['wallet_address'] + '.rig_windows --api 127.0.0.1:20001 -log\r\npause';
     }catch(err){
       console.error('Error while editing coin bat file.'+ err.message)
     }

@@ -71,8 +71,13 @@ ipcRenderer.on('engine-download-started', () => {
     let down_bar = document.getElementById('down-bar');
     down_bar.style.opacity = '100%';
 
+    let status_mini = document.getElementById('status-mini');
     let status_bar = document.getElementById('stutus-mini-not-running');
-    status_bar.style.opacity = '0%';
+    if (mining_status) {
+        status_mini.style.opacity = '0%';
+    }else{
+        status_bar.style.opacity = '0%';
+    }
 })
 
 ipcRenderer.on('run-miner', ()=>{
@@ -94,8 +99,13 @@ ipcRenderer.on("engine-download-progress", (event, args) => {
 })
 
 ipcRenderer.on("engine-download-complete", (event) => {
+    let status_mini = document.getElementById('status-mini');
     let status_bar = document.getElementById('stutus-mini-not-running');
-    status_bar.style.opacity = '100%';
+    if (mining_status) {
+        status_mini.style.opacity = '100%';
+    }else{
+        status_bar.style.opacity = '100%';
+    }
 
     let down_bar = document.getElementById('down-bar');
     down_bar.style.opacity = '0%';
@@ -107,8 +117,13 @@ ipcRenderer.on("update-download-complete", (event, path) => {
     let btn_info_update = document.getElementById('updater');
     btn_info_update.textContent = 'Download';
 
+    let status_mini = document.getElementById('status-mini');
     let status_bar = document.getElementById('stutus-mini-not-running');
-    status_bar.style.opacity = '100%';
+    if (mining_status) {
+        status_mini.style.opacity = '100%';
+    }else{
+        status_bar.style.opacity = '100%';
+    }
 
     let down_bar = document.getElementById('down-bar');
     down_bar.style.opacity = '0%';
