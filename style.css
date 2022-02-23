@@ -254,7 +254,11 @@ input:checked ~ .text:before{
   border-radius: 6px;
 }
 
-/*==New theme-icons==*/
+
+
+
+/*==START-New theme-icons==*/
+
 .panel .box{
   position: fixed;
   top: 310px;
@@ -262,6 +266,7 @@ input:checked ~ .text:before{
   border-left: 2px solid white;
   padding-left: 5px;
   width: 290px;
+  opacity: 0%;
 }
 .panel .box .item{
   display: inline-block;
@@ -279,6 +284,38 @@ input:checked ~ .text:before{
   border-radius: 5px;
   padding: 4px;
 }
+/*==END-New theme-icons==*/
+/*--NOT-RUNNING--*/
+.panel .box-c{
+  position: fixed;
+  top: 310px;
+  left: 290px;
+  border-left: 2px solid white;
+  padding-left: 5px;
+  width: 290px;
+  height: 100px;
+
+}
+.panel .box-c img{
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  text-align: center;
+  margin-left: 120px;
+  opacity: 50%;
+  margin-top: 5px;
+}
+.panel .box-c h3{
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.356);
+}
+
+/*--NOT-RUNNING--*/
+
+
+
 
 .dis{
   opacity: 100%;
