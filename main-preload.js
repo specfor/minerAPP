@@ -227,6 +227,9 @@ window.addEventListener("load", (event) => {
         if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value) || select_coins.value == 'no_coin_selected') {
             console.log("Fill all fields");
             alert('Complete all details.');
+            txt_pool_address.disabled = false;
+            txt_wallet_address.disabled = false;
+            txt_extra_param.disabled = false;
         }else{
             let engine = select_engine.value;
             let pool_address = txt_pool_address.value;
