@@ -77,7 +77,7 @@ async function AutoMine() {
   // if (config_file['auto_mine']) {
   let details = getMinerDetails()
   await checkEnginePresence(details['selected']);
-  if (!isEmptyOrSpaces(details[details['selected']]['selected_coin'] && !isEmptyOrSpaces(details[details['selected']]['pool_address']) && !isEmptyOrSpaces(details[details['selected']]['wallet_address']))) {
+  if (!isEmptyOrSpaces(details[details['selected']]['selected_coin']) && !isEmptyOrSpaces(details[details['selected']]['pool_address']) && !isEmptyOrSpaces(details[details['selected']]['wallet_address']) && !isEmptyOrSpaces(details[details['selected']]['path'])) {
     console.log("Automatically running miner plugin at power on.")
     runEngine(details['selected'], details[details['selected']]['selected_coin'])
     BrowserWindow.fromId(mainWindowId).webContents.send('run-miner')
@@ -380,7 +380,7 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
 
 // ------------------------------ UPDATE -----------------------------------
 function check_updates(do_download=false){
-  if (!do_download) {
+  if (!do_download && config_file['auto_update']) {
     console.log("Checking for updates")
   }
   let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';

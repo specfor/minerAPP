@@ -3,6 +3,7 @@ const { ipcRenderer, BrowserWindow } = require('electron')
 const path = require('path')
 
 var mining_status = false;
+var just_started = true;
 
 // ------------------------- Engine --------------------------
 function setGUIState(mining) {
@@ -55,8 +56,9 @@ function change_home_status(pool_address, algorithm, plugin_used){
     let txt_status_algoritm = document.getElementById('status-algorithm');
     let txt_status_server = document.getElementById('status-server');
     let txt_status_pool_address = document.getElementById('status-pool-address');
-    if (!mining_status && !isEmptyOrSpaces(pool_address)) {
+    if ((!mining_status || just_started) && !isEmptyOrSpaces(pool_address)) {
         // console.log("setting home screen statuses.")
+        just_started = false;
         let server = pool_address.split('.');
         server = server[1] + '.' + server[2].split(':')[0];
         coin.value = algorithm;
@@ -227,10 +229,6 @@ window.addEventListener("load", (event) => {
         if (isEmptyOrSpaces(select_coins.value) || isEmptyOrSpaces(txt_pool_address.value)  || isEmptyOrSpaces(txt_wallet_address.value) || select_coins.value == 'no_coin_selected') {
             console.log("Fill all fields");
             ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Input Error', 'message': 'Fill all required fields.'})
-            
-            txt_pool_address.disabled = false;
-            txt_wallet_address.disabled = false;
-            txt_extra_param.disabled = false;
         }else{
             let engine = select_engine.value;
             let pool_address = txt_pool_address.value;
@@ -238,8 +236,12 @@ window.addEventListener("load", (event) => {
             let coin = select_coins.value;
             let extra_param = txt_extra_param.value;
 
-            ipcRenderer.send("save-engine-config", {engine, pool_address, wallet_address, coin, extra_param});
-
+            if (pool_address.split('.').length > 2) {
+                ipcRenderer.send("save-engine-config", {engine, pool_address, wallet_address, coin, extra_param});
+            }else{
+            ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Input Error', 'message': 'Pool address is invalid.'})
+                
+            }
         }
 
         setTimeout(() => {btn_save.classList.toggle('button--loading')}, 1000);
