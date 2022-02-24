@@ -75,10 +75,12 @@ function autoStart(enable = true){
 // ------------------------- MINER PROGRAM ---------------------------
 function AutoMine() {
   if (config_file['auto_mine']) {
-    console.log("Automatically running miner plugin at power on.")
     let details = getMinerDetails()
-    runEngine(details['selected'], details[details['selected']]['selected_coin'])
-    BrowserWindow.fromId(mainWindowId).webContents.send('run-miner')
+    if (!isEmptyOrSpaces(details[details['selected']]['selected_coin'] && !isEmptyOrSpaces(details[details['selected']]['pool_address']) && !isEmptyOrSpaces(details[details['selected']]['wallet_address']))) {
+      console.log("Automatically running miner plugin at power on.")
+      runEngine(details['selected'], details[details['selected']]['selected_coin'])
+      BrowserWindow.fromId(mainWindowId).webContents.send('run-miner')
+    }
   }
 }
 
