@@ -1,5 +1,5 @@
 const { isEmptyOrSpaces } = require('builder-util')
-const { ipcRenderer, BrowserWindow } = require('electron')
+const { ipcRenderer, BrowserWindow, webContents } = require('electron')
 const path = require('path')
 
 var mining_status = false;
@@ -323,4 +323,12 @@ window.addEventListener("load", (event) => {
         ipcRenderer.send('send-notification', {"title": "BTC wallet address copied", "message": "BTC wallet address copied to clipboard."})
     })
     
+    setInterval(()=>{
+        let internet = document.getElementById('wifi_badge');
+        if (navigator.onLine) {
+            internet.style.color = '#333333';
+        }else{
+            internet.style.color = 'red';
+        }
+    }, 2000)
 });

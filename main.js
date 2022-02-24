@@ -72,6 +72,23 @@ function autoStart(enable = true){
   }
 }
 
+async function pluginFileMissing(engine_name) {
+  const notification = {
+    title: 'Plugin File Missing,',
+    body: 'A plugin file is missing. This can be because an anti-virus program deleting the file.Plugin will be downloaded again.',
+  }
+  new Notification(notification).show();
+
+  BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-started');
+  await downloadEngine(engine_name);
+}
+
+function checkFilePresence(file_path) {
+  if (fs.existsSync(file_path)) {
+    return true
+  }
+  return false;
+}
 // ------------------------- MINER PROGRAM ---------------------------
 async function AutoMine() {
   // if (config_file['auto_mine']) {
@@ -168,8 +185,8 @@ async function runEngine(engine_name, coin_name){
 
   engine_details = getMinerDetails(engine_name);
 
-  console.log("miner process called to run");
-  console.log('plugin - ' + engine_name + ' & coin - ' + coin_name);
+  console.log("Miner process called to run");
+  console.log('Plugin - ' + engine_name + ' & coin - ' + coin_name);
 
   let save_bat = '';
 
@@ -177,6 +194,11 @@ async function runEngine(engine_name, coin_name){
     executable_file = 'start_'+ coin_name +'.bat';
     executable_path = path.join(engine_details['path'], executable_file);
     
+    let present = checkFilePresence(executable_path)
+    if (!present) {     
+      await pluginFileMissing(engine_name);
+    }
+
     console.log('Updating file - ' + executable_path)
 
     try{
@@ -190,7 +212,11 @@ async function runEngine(engine_name, coin_name){
     let pool_name = engine_details['pool_address'].split('.')[1];
     executable_file = coin_name + '-' + pool_name + '.bat';
     executable_path = path.join(engine_details['path'], executable_file);
-
+    
+    let present = checkFilePresence(executable_path)
+    if (!present) {
+      await pluginFileMissing(engine_name);
+    }
     console.log('Updating file - ' + executable_path)
 
     try{
@@ -204,6 +230,10 @@ async function runEngine(engine_name, coin_name){
     executable_file = 'mine_'+ coin_name +'.bat';
     executable_path = path.join(engine_details['path'], executable_file);
 
+    let present = checkFilePresence(executable_path)
+    if (!present) {
+      await pluginFileMissing(engine_name);
+    }
     console.log('Updating file - ' + executable_path)
 
     try{
@@ -233,6 +263,12 @@ async function runEngine(engine_name, coin_name){
   mining = true;
   start_time = Date.now()
 
+  engine.on('error', (err)=>{
+    let present_ = checkFilePresence(executable_path);
+    if (!present_) {
+      await pluginFileMissing(engine_name);
+    }
+  })
 
   engine.on('exit', (code) => {
     console.log(`Miner program exited with code ${code}`);
