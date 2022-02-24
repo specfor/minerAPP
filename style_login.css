@@ -19,8 +19,9 @@ body{
 /* animation line start */
 .loding{
     position: fixed;
+    left: -10px;
     margin-top: 80px;  /*  >>>>   adjest loading bar height*/
-    width: 100%;
+    width:300px;
     height: 100%;
     padding: 0px;
 }
