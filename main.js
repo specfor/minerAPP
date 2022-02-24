@@ -264,6 +264,7 @@ async function runEngine(engine_name, coin_name){
   start_time = Date.now()
 
   engine.on('error', (err)=>{
+    console.error('Error running plugin - ' + err.message);
     let present_ = checkFilePresence(executable_path);
     if (!present_) {
       pluginFileMissing(engine_name);

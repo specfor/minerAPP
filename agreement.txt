@@ -1,1 +1,7 @@
-This application, "Minehash" is a propriatary
+This application, "Minehash" is a proprietary software owned by minerhouse.lk.
+
+You are not allowed to sell this software to any third party without our prior authorization.
+
+
+
+By using this software you agree to above terms and conditions.
