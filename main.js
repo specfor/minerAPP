@@ -1,7 +1,7 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Notification } = require('electron')
+const { app, BrowserWindow, Notification, dialog } = require('electron')
 const path = require('path')
 const {download} = require('electron-dl')
 const ipcRend =  require('electron').ipcRenderer;
@@ -73,15 +73,16 @@ function autoStart(enable = true){
 }
 
 // ------------------------- MINER PROGRAM ---------------------------
-function AutoMine() {
-  if (config_file['auto_mine']) {
-    let details = getMinerDetails()
-    if (!isEmptyOrSpaces(details[details['selected']]['selected_coin'] && !isEmptyOrSpaces(details[details['selected']]['pool_address']) && !isEmptyOrSpaces(details[details['selected']]['wallet_address']))) {
-      console.log("Automatically running miner plugin at power on.")
-      runEngine(details['selected'], details[details['selected']]['selected_coin'])
-      BrowserWindow.fromId(mainWindowId).webContents.send('run-miner')
-    }
+async function AutoMine() {
+  // if (config_file['auto_mine']) {
+  let details = getMinerDetails()
+  await checkEnginePresence(details['selected']);
+  if (!isEmptyOrSpaces(details[details['selected']]['selected_coin'] && !isEmptyOrSpaces(details[details['selected']]['pool_address']) && !isEmptyOrSpaces(details[details['selected']]['wallet_address']))) {
+    console.log("Automatically running miner plugin at power on.")
+    runEngine(details['selected'], details[details['selected']]['selected_coin'])
+    BrowserWindow.fromId(mainWindowId).webContents.send('run-miner')
   }
+  
 }
 
 async function downloadEngine(engine_name){
@@ -605,6 +606,16 @@ ipc.on('get-gpu-count', (event) => {
     event.sender.send('gpu-count', count)
     console.log('GPU count - ' + count)
   })
+})
+
+ipc.on('show-notification', (event, args)=>{
+  let mainWindow = BrowserWindow.fromId(mainWindowId);
+
+  if (args['type'] == 'error') {
+    dialog.showMessageBox(mainWindow, {'type': 'error', 'title': args['title'], 'message': args['message']});
+  }else if (args['type'] == 'info') {
+    dialog.showMessageBox(mainWindow, {'type': 'info', 'title': args['title'], 'message': args['message']});
+  }
 })
 
 ipc.on("check-for-updates", check_updates);
