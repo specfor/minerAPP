@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "App for running all your mining plugins at one place.",
   "main": "main.js",
+  "icon": "icon.png",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder"
