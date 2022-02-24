@@ -5,8 +5,9 @@
     margin: 0;
     font-family: "Poppins" , sans-serif;
     color: rgb(255, 255, 255);
-
- 
+}
+body{
+    border-radius: 8px;
 }
 
 .tile{
@@ -18,7 +19,7 @@
 /* animation line start */
 .loding{
     position: fixed;
-    margin-top: 70px;  /*  >>>>   adjest loading bar height*/
+    margin-top: 80px;  /*  >>>>   adjest loading bar height*/
     width: 100%;
     height: 100%;
     padding: 0px;
@@ -55,9 +56,8 @@
 .down{
     background-color: #393D48;
     position: absolute;
-
     color: rgba(155, 155, 155, 0.8);
-    margin-top: 40px;     /*  >>>>   adjest status bar height*/
+    margin-top: 50px;     /*  >>>>   adjest status bar height*/
     display: flex;
     justify-content: space-between;
 }
