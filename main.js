@@ -75,7 +75,7 @@ function autoStart(enable = true){
 async function pluginFileMissing(engine_name) {
   const notification = {
     title: 'Plugin File Missing,',
-    body: 'A plugin file is missing. This can be because an anti-virus program deleting the file.Plugin will be downloaded again.',
+    body: 'A plugin file is missing. This can be because an anti-virus program deleting the file.Plugin will be downloaded again.Try disabling any anit-virus if unabled.',
   }
   new Notification(notification).show();
 
@@ -154,7 +154,7 @@ async function downloadEngine(engine_name){
     new Notification(notification).show()
 
     let miner_detail = getMinerDetails(engine_name);
-    saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['coin'], miner_detail['extra_param'], download_path);
+    saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['selected_coin'], miner_detail['extra_param'], download_path);
 
   } catch (err) {
     console.error("Download extract error - " + err);
@@ -644,6 +644,7 @@ ipc.on('get-gpu-count', (event) => {
     console.log('GPU count - ' + count)
   })
 })
+
 
 ipc.on('show-notification', (event, args)=>{
   let mainWindow = BrowserWindow.fromId(mainWindowId);

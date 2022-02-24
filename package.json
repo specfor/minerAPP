@@ -39,7 +39,9 @@
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
-      "oneClick": false
+      "oneClick": false,
+      "license": "license.txt",
+      "deleteAppDataOnUninstall": true
     }
   }
 }
