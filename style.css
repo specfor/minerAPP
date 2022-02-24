@@ -1234,4 +1234,10 @@ width: 300px;
 .update-tile-no h4{
   color: #1a1a1d;
   text-align: center;
+  margin-top: -70px;
+}
+.update-tile-no h6{
+  color: #1a1a1d;
+  text-align: center;
+  /*margin-top: 0px;*/
 }
