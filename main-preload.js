@@ -185,6 +185,11 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 })
 
 window.addEventListener("load", (event) => {
+    let info_update = document.getElementById('info-update');
+    info_update.style.opacity = '0%';
+    let info_no_update = document.getElementById('info-update-no');
+    info_no_update.style.opacity = '100%';
+
     // ------------------ RUN MINER -----------------
     let checbox_mine = document.getElementById('check-run-engine');
     checbox_mine.addEventListener('click', (event)=>{
