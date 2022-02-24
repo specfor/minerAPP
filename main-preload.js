@@ -4,6 +4,7 @@ const path = require('path')
 
 var mining_status = false;
 var just_started = true;
+var downloading = false;
 
 // ------------------------- Engine --------------------------
 function setGUIState(mining) {
@@ -70,6 +71,8 @@ function change_home_status(pool_address, algorithm, plugin_used){
 }
 
 ipcRenderer.on('engine-download-started', () => {
+    downloading = true;
+
     let down_bar = document.getElementById('down-bar');
     down_bar.style.opacity = '100%';
 
@@ -112,6 +115,8 @@ ipcRenderer.on("engine-download-progress", (event, args) => {
 })
 
 ipcRenderer.on("engine-download-complete", (event) => {
+    downloading = false;
+    
     let status_mini = document.getElementById('status-mini');
     let status_bar = document.getElementById('stutus-mini-not-running');
     if (mining_status) {
@@ -179,7 +184,13 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 window.addEventListener("load", (event) => {
     // ------------------ RUN MINER -----------------
     let checbox_mine = document.getElementById('check-run-engine');
-    checbox_mine.addEventListener('click', function(){runMiner()});
+    checbox_mine.addEventListener('click', (event)=>{
+        if (!downloading) {
+            runMiner()
+        }else{
+            event.preventDefault()
+        }
+    });
 
     // ------------------ SETTINGS AND MINER STATUS ------------------
     let select_engine = document.getElementById('engine-select');
