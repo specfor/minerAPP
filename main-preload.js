@@ -1,4 +1,5 @@
-const { isEmptyOrSpaces } = require('builder-util')
+const { isEmptyOrSpaces } = require('builder-util');
+const { info } = require('console');
 const { ipcRenderer, BrowserWindow, webContents } = require('electron')
 const path = require('path')
 
@@ -151,9 +152,11 @@ ipcRenderer.on("update-download-complete", (event, path) => {
 ipcRenderer.on('updates-available', ()=>{
     console.log("Updates available")
     let btn_update_available = document.getElementById('show-update');
+    let info_no_update = document.getElementById('info-update-no');
     let info_update = document.getElementById('info-update');
     btn_update_available.style.opacity = '100%';
     info_update.style.opacity = '100%';
+    info_no_update.style.opacity = '0%';
 
     let btn_info_update = document.getElementById('updater');
     btn_info_update.addEventListener('click', ()=>{
