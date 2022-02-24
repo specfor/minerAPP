@@ -1228,3 +1228,11 @@ width: 300px;
 .select-box .option .radio {
   display: none;
 }
+
+.hider{
+  opacity: 0%;
+}
+.update-tile-no h4{
+  color: #1a1a1d;
+  text-align: center;
+}
