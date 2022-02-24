@@ -417,7 +417,10 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
 
 // ------------------------------ UPDATE -----------------------------------
 function check_updates(do_download=false){
-  if (!do_download && config_file['auto_update']) {
+  if (!config_file['auto_update']) {
+    return
+  }
+  if (!do_download) {
     console.log("Checking for updates")
   }
   let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
