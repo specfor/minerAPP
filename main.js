@@ -266,7 +266,7 @@ async function runEngine(engine_name, coin_name){
   engine.on('error', (err)=>{
     let present_ = checkFilePresence(executable_path);
     if (!present_) {
-      await pluginFileMissing(engine_name);
+      pluginFileMissing(engine_name);
     }
   })
 
