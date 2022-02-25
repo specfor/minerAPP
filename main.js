@@ -544,7 +544,7 @@ function createWindow () {
     //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
     // }
     
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
     return mainWindow
   })
   
