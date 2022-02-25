@@ -540,9 +540,9 @@ function createWindow () {
     });
     check_updates()
     AutoMine()
-    if (first_run) {
-      createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
-    }
+    // if (first_run) {
+    //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
+    // }
     
     mainWindow.webContents.openDevTools()
     return mainWindow
