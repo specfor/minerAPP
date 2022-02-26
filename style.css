@@ -38,7 +38,7 @@ E84545 -second
   background-color:#f5f5f5;
   display: flex;
   padding: 6px;
-  left: 180px;
+  left: 145px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
@@ -1241,3 +1241,49 @@ width: 300px;
   text-align: center;
   /*margin-top: 0px;*/
 }
+
+/*stat tab editing*/
+.stats-tab .conatainer-stats{
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  width: 575px;
+  height: 360px;
+  background-color: #009579;
+}
+.stats-tab .conatainer-stats .sc-veiw{
+  position: relative;
+  top: 10px;
+  left: 10px;
+  width: 320px;
+  height: 350px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  border: 1px solid white;
+}
+.stats-tab .conatainer-stats .sc-veiw .card{
+  background-color: white;
+  padding: 8px;
+  display: flex;
+
+  width: 100%;
+  border-bottom: 2px solid #0d141f;
+}
+.stats-tab .conatainer-stats .sc-veiw button{
+  border: none;
+  cursor: pointer;
+}
+
+.stats-tab .conatainer-stats .sc-veiw .card h5{
+  padding: 5px;
+  margin-right: 5px;
+  border-right: 1px solid black;
+}
+
+.data-line{
+  float: left;
+  padding: 0px;
+  margin: 0px;
+  text-align: left;
+}
+/*stat tab editing*/
