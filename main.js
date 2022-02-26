@@ -603,12 +603,13 @@ function createWindow () {
     });
     check_updates()
     // checkPluginUpdates()
+    getGpuDetails()
     AutoMine()
     // if (first_run) {
     //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
     // }
     
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
     return mainWindow
   })
   
