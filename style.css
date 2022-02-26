@@ -1264,6 +1264,7 @@ width: 300px;
 
 /*stat tab editing*/
 .stats-tab .conatainer-stats{
+  opacity: 100%;              /*------------------------------------*/
   position: absolute;
   top: 70px;
   left: 10px;
@@ -1355,7 +1356,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-.card-data .img-line{
+.card-data .h-extender .img-line{
   position: relative;
   display: flex;
   margin: 20px;
@@ -1363,17 +1364,17 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   justify-content: center;
 
 }
-.card-data h4{
+.card-data .h-extender h4{
   color: rgb(243, 218, 23);
 }
 #greyed{
   color: #1abc9c;
 }
-.card-data .card-oc{
+.card-data .h-extender .card-oc{
   padding: 10px;
 }
 
-.card-data .card-oc .card-oc-items{
+.card-data .h-extender .card-oc .card-oc-items{
   position: relative;
   display: flex;
   width: 200px;
@@ -1382,7 +1383,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   padding: 4px;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.438);
 }
-.card-data .card-oc .card-oc-items h6{
+.card-data .h-extender .card-oc .card-oc-items h6{
   color: rgba(255, 255, 255, 0.705);
   font-size: 10px;
   justify-content: left;
@@ -1403,4 +1404,27 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 }
 
 */
+
+
+.no-gpus{
+  opacity: 0%;
+  text-align: center;
+  position: fixed;
+  left: 200px;
+  top: 200px;
+  padding: 10px;
+  font-size: 15px;
+}
+.no-gpus h1{
+  text-align: center;
+  position: fixed;
+  border: 2px solid rgba(255, 255, 255, 0.597);
+
+  color: #0d141f;
+  padding: 10px;
+  font-size: 15px;
+}
+
+
+
 /*stat tab editing*/
