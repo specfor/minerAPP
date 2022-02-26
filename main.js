@@ -13,6 +13,7 @@ const fs = require('fs');
 const { isEmptyOrSpaces } = require('builder-util');
 const request = require('request');
 const { setTimeout } = require('timers');
+const { cwd } = require('process');
 
 var mainWindowId = null;
 var engine_pid = 0;
@@ -74,6 +75,7 @@ function autoStart(enable = true){
 
 async function pluginFileMissing(engine_name) {
   const notification = {
+    icon:'icon.png',
     title: 'Plugin File Missing,',
     body: 'A plugin file is missing. This can be because an anti-virus program deleting the file.Plugin will be downloaded again.Try disabling any anit-virus if unabled.',
   }
@@ -102,28 +104,44 @@ async function AutoMine() {
   
 }
 
+
 async function downloadEngine(engine_name){
-  console.log('main - download started');
-  let download_url = '';
-  let download_path = '';
+  console.log('Plugin download started');
+  
+  let download_url, download_path, web_data = '';
 
-  if (engine_name == "nbminer") {
-    download_url = "https://dl.nbminer.com/NBMiner_40.1_Win.zip";
-    download_path = path.join(app.getPath('userData'), "minehash-downloads");
-  }else{
-    if (engine_name == 'trex') {
-      download_url = 'https://github.com/trexminer/T-Rex/releases/download/0.25.2/t-rex-0.25.2-win.zip';
-      download_path = path.join(app.getPath('userData'), "minehash-downloads/trex");
-
-    }else{
-      if (engine_name == 'gminer') {
-        download_url = 'https://github.com/develsoftware/GMinerRelease/releases/download/2.78/gminer_2_78_windows64.zip';
-        download_path = path.join(app.getPath('userData'), "minehash-downloads/gminer");
+  let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
+  let options = {json: true};
+  try{
+    request(check_update_link, options, (error, res, body) => {    
+      if (!error && res.statusCode == 200) {
+        web_data = body;
       }else{
-        return false;
+        return
       }
+    });
+  }catch(err){
+    console.error('Download plugin failed.', err.message)
+  }
+
+  function dataReady(){
+    if (web_data == '') {
+      setTimeout(()=>{dataReady}, 400)
     }
   }
+
+  dataReady()
+
+  download_url = web_data[engine_name]['download_link'];
+
+  if (engine_name == "nbminer") {
+    download_path = path.join(app.getPath('userData'), "minehash-downloads");
+  }else if (engine_name == 'trex') {
+    download_path = path.join(app.getPath('userData'), "minehash-downloads/trex");
+  }else if (engine_name == 'gminer') {
+    download_path = path.join(app.getPath('userData'), "minehash-downloads/gminer");
+  }
+  
   console.log('File downloading to ' + download_path)
   let download_file = "";
 
@@ -138,7 +156,7 @@ async function downloadEngine(engine_name){
       download_file = item.path;
     }
   });
-  console.log("main - finished dowloading");
+  console.log("Plugin finished dowloading");
  
   try {
     await extract(download_file, { dir: download_path });
@@ -148,6 +166,7 @@ async function downloadEngine(engine_name){
     }
 
     const notification = {
+      icon:'icon.png',
       title: 'Plugin Downloaded,',
       body: 'Plugin successfully downloaded and installed.',
     }
@@ -355,9 +374,9 @@ function getMinerDetails(engine="") {
     }
     return data;
   }catch(err){
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'config', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':''},
-    'trex': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':''}, 'selected': 'nbminer'};
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'config', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''},
+    'trex': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 
+    'gminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 'selected': 'nbminer'};
     
     let wdata = JSON.stringify(data);
     try{
@@ -415,7 +434,50 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
   
 }
 
+function getGpuDetails(){
+  let nb_details = getMinerDetails('nbminer');
+  let executable_path = path.join(nb_details['path'], 'nbminer.exe')
+  let nb = child.spawn(executable_path,{argv0: '-a beamv3 -o asia-firo.2miners.com:8181 -u waesr.rig_windows --api 127.0.0.1:20005 -log', cwd: nb_details['path']})
+
+  request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
+      try{
+        if (error) {
+          return
+        }
+        let payload = body['devices']
+
+        BrowserWindow.fromId(mainWindowId).webContents.send('gpu-details-first-config', payload)
+      }catch(err){
+        console.error('Error getting gpu details - ' + err.message)
+      }
+    })
+}
+
 // ------------------------------ UPDATE -----------------------------------
+function checkPluginUpdates() {
+  let engines = ['nbminer', 'trex', 'gminer']
+  let details = getMinerDetails();
+
+  let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
+  let options = {json: true};
+  try{
+    request(check_update_link, options, (error, res, body) => {    
+      if (!error && res.statusCode == 200) {         
+        for (let i = 0; i < 3; i++) {
+          if (details[engines[i]]['version'] != body[engines[i]]['version']) {
+            async function t(){ await downloadEngine(engines[i])};
+            t()
+          }
+        }
+      }else{
+        return
+      }
+    });
+  }catch(err){
+    console.error('Download plugin failed.', err.message)
+  }
+}
+
 function check_updates(do_download=false){
   if (!config_file['auto_update']) {
     return
@@ -448,6 +510,7 @@ function check_updates(do_download=false){
               onCompleted: (item) => {
                 BrowserWindow.fromId(mainWindowId).webContents.send('update-download-complete', item.path);
                 const notification = {
+                  icon:'icon.png',
                   title: 'Update Downloaded.',
                   body: 'You need to manually run and install the setup located at ' + item.path
                 }
@@ -539,6 +602,7 @@ function createWindow () {
       mainWindow.show();
     });
     check_updates()
+    // checkPluginUpdates()
     AutoMine()
     // if (first_run) {
     //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
@@ -668,6 +732,7 @@ ipc.on("showConfigurationWindow", createConfigurationWindow);
 
 ipc.on('send-notification', (event, args)=>{
   const notification = {
+    icon:'icon.png',
     title: args['title'],
     body: args['message'],
   }
