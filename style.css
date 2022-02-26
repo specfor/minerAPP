@@ -1249,25 +1249,34 @@ width: 300px;
   left: 10px;
   width: 575px;
   height: 360px;
-  background-color: #009579;
+  background-color: #22232c;
+  display: flex;
+  border-radius: 8px;
 }
 .stats-tab .conatainer-stats .sc-veiw{
   position: relative;
   top: 10px;
   left: 10px;
-  width: 320px;
-  height: 350px;
+  width: 314px;
+  height: 300px;
   overflow-y:auto;
   overflow-x:hidden;
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0.452);
+}
+#big-font{
+  font-size: 12px;
+
 }
 .stats-tab .conatainer-stats .sc-veiw .card{
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.452);
   padding: 8px;
   display: flex;
-
+  
   width: 100%;
   border-bottom: 2px solid #0d141f;
+}
+.stats-tab .conatainer-stats .sc-veiw .card:hover{
+background-color:white ;
 }
 .stats-tab .conatainer-stats .sc-veiw button{
   border: none;
@@ -1277,13 +1286,101 @@ width: 300px;
 .stats-tab .conatainer-stats .sc-veiw .card h5{
   padding: 5px;
   margin-right: 5px;
-  border-right: 1px solid black;
+  
 }
 
 .data-line{
+  border-left: 1px solid black;
+
   float: left;
   padding: 0px;
   margin: 0px;
   text-align: left;
+  padding-left: 10px;
 }
+
+.action-center{
+  position: relative;
+  left: -75px;
+  top: 318px;
+}
+.action-center button{
+  position: relative;
+  color: rgb(130, 126, 126);
+  padding: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+  border: none;
+  font-style: bold;
+  font-weight: 400px;
+  background: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+}
+.action-center button:hover{
+cursor: pointer;
+color: #009579;
+box-shadow: 0 0 10px rgba(0,0,0,0.8)
+}
+.card-data{
+  position: absolute;
+  left: 335px;
+  width: 240px;
+  height: 360px;
+  background-color: #282A35;
+  text-align: center;
+  justify-content: center;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.card-data .img-line{
+  position: relative;
+  display: flex;
+  margin: 20px;
+  text-align: center;
+  justify-content: center;
+
+}
+.card-data h4{
+  color: rgb(243, 218, 23);
+}
+#greyed{
+  color: #1abc9c;
+}
+.card-data .card-oc{
+  padding: 10px;
+}
+
+.card-data .card-oc .card-oc-items{
+  position: relative;
+  display: flex;
+  width: 200px;
+  text-align: center;
+  margin-left: 10px;
+  padding: 4px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.438);
+}
+.card-data .card-oc .card-oc-items h6{
+  color: rgba(255, 255, 255, 0.705);
+  font-size: 10px;
+  justify-content: left;
+  padding-left: 16px;
+}
+#spander{
+  position:absolute;
+  padding-left: 0px;
+  left: 140px;
+  float: left;
+  justify-content: right;
+}
+/*.card-data .card-oc{
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.705);
+}
+
+*/
 /*stat tab editing*/
