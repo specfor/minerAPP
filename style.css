@@ -1278,7 +1278,7 @@ width: 300px;
   top: 10px;
   left: 10px;
   width: 314px;
-  height: 300px;
+  height: 340px; /*300*/
   overflow-y:auto;
   overflow-x:hidden;
   border: 1px solid rgba(255, 255, 255, 0.452);
@@ -1320,9 +1320,9 @@ background-color:white ;
 }
 
 .action-center{
-  position: relative;
-  left: -75px;
-  top: 318px;
+  position: fixed;
+  left: 420px;  /*75*/
+  top: 385px;   /*318*/
 }
 .action-center button{
   position: relative;
