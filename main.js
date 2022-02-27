@@ -447,6 +447,10 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
 }
 
 function getGpuDetails(){
+  if (plugin_updating || downloading_plugins.length > 0) {
+    setTimeout(getGpuDetails, 5000)
+    return
+  }
   let nb_details = getMinerDetails('nbminer');
   let executable_path = path.join(nb_details['path'], 'nbminer.exe')
   let nb = child.spawn(executable_path, ['-a beamv3 -o asia-firo.2miners.com:8181 -u waesr.rig_windows --api 127.0.0.1:20005 -log'], {cwd: nb_details['path']})
