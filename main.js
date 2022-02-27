@@ -115,6 +115,7 @@ async function downloadEngine(engine_name, download_data=''){
     downloading_plugins.push(engine_name)
   }
 
+  console.log(downloading_plugins)
   if (download_data == '') {
     console.log('Plugin download started');
     
@@ -171,6 +172,7 @@ async function downloadEngine(engine_name, download_data=''){
   console.log("Plugin finished dowloading");
  
   try {
+    console.log('extract ' + download_file + ' to ' + download_path)
     await extract(download_file, { dir: download_path });
     console.log('Extraction complete');
     if (engine_name == 'nbminer') {
