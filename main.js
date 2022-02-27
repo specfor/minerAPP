@@ -19,8 +19,9 @@ var mainWindowId = null;
 var engine_pid = 0;
 let config_file = '';
 var first_run = false;
-var mining = false;
+var mining, plugin_updating = false;
 var active_engine_name, start_time = '';
+var downloading_plugins = [];
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -81,7 +82,6 @@ async function pluginFileMissing(engine_name) {
   }
   new Notification(notification).show();
 
-  BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-started');
   await downloadEngine(engine_name);
 }
 
@@ -93,6 +93,10 @@ function checkFilePresence(file_path) {
 }
 // ------------------------- MINER PROGRAM ---------------------------
 async function AutoMine() {
+  if (plugin_updating || downloading_plugins.length > 0) {
+  setTimeout(AutoMine, 5000)
+  return
+  }
   // if (config_file['auto_mine']) {
   let details = getMinerDetails()
   await checkEnginePresence(details['selected']);
@@ -105,34 +109,39 @@ async function AutoMine() {
 }
 
 
-async function downloadEngine(engine_name){
-  console.log('Plugin download started');
-  
-  let download_url, download_path, web_data = '';
+async function downloadEngine(engine_name, download_data=''){
+  let download_url, download_path = '';
+  if (!downloading_plugins.includes(engine_name)) {
+    downloading_plugins.push(engine_name)
+  }
 
-  let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
-  let options = {json: true};
-  try{
+  if (download_data == '') {
+    console.log('Plugin download started');
+    
+    let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
+    let options = {json: true};
     request(check_update_link, options, (error, res, body) => {    
-      if (!error && res.statusCode == 200) {
-        web_data = body;
-      }else{
-        return
+      try{
+        if (!error && res.statusCode == 200) {
+          downloadEngine(engine_name, body)
+        }else{
+          return
+        }
+      }catch(err){
+      console.error('Download plugin failed.', err.message)
       }
     });
-  }catch(err){
-    console.error('Download plugin failed.', err.message)
+    // let d = request(check_update_link, options)
+  
+    // d.on('data', (data)=>{
+    //   downloadEngine(engine_name, data.)
+    //   console.log(data)
+    // })
+
+    return
   }
-
-  function dataReady(){
-    if (web_data == '') {
-      setTimeout(()=>{dataReady}, 400)
-    }
-  }
-
-  dataReady()
-
-  download_url = web_data[engine_name]['download_link'];
+ 
+  download_url = download_data[engine_name]['download_link'];
 
   if (engine_name == "nbminer") {
     download_path = path.join(app.getPath('userData'), "minehash-downloads");
@@ -145,12 +154,15 @@ async function downloadEngine(engine_name){
   console.log('File downloading to ' + download_path)
   let download_file = "";
 
+  BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-started');
+
   await download(BrowserWindow.fromId(mainWindowId), download_url,
   {directory:download_path, overwrite: true, onProgress: (progress) => {
     // console.log(progress.percent * 100);
     BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
     },
     onCompleted: (item) => {
+      downloading_plugins.splice(downloading_plugins.findIndex(engine_name), 1)
       BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
       // console.log(item.path);
       download_file = item.path;
@@ -437,7 +449,7 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
 function getGpuDetails(){
   let nb_details = getMinerDetails('nbminer');
   let executable_path = path.join(nb_details['path'], 'nbminer.exe')
-  let nb = child.spawn(executable_path,{argv0: '-a beamv3 -o asia-firo.2miners.com:8181 -u waesr.rig_windows --api 127.0.0.1:20005 -log', cwd: nb_details['path']})
+  let nb = child.spawn(executable_path, ['-a beamv3 -o asia-firo.2miners.com:8181 -u waesr.rig_windows --api 127.0.0.1:20005 -log'], {cwd: nb_details['path']})
 
   request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
       try{
@@ -455,6 +467,7 @@ function getGpuDetails(){
 
 // ------------------------------ UPDATE -----------------------------------
 function checkPluginUpdates() {
+  plugin_updating = true;
   let engines = ['nbminer', 'trex', 'gminer']
   let details = getMinerDetails();
 
@@ -465,10 +478,11 @@ function checkPluginUpdates() {
       if (!error && res.statusCode == 200) {         
         for (let i = 0; i < 3; i++) {
           if (details[engines[i]]['version'] != body[engines[i]]['version']) {
-            async function t(){ await downloadEngine(engines[i])};
-            t()
+            downloading_plugins.push(engines[i])
+            downloadEngine(engines[i])
           }
         }
+        plugin_updating = false;
       }else{
         return
       }
@@ -602,7 +616,7 @@ function createWindow () {
       mainWindow.show();
     });
     check_updates()
-    // checkPluginUpdates()
+    checkPluginUpdates()
     getGpuDetails()
     AutoMine()
     // if (first_run) {
@@ -660,7 +674,7 @@ ipc.on('setAutoStart', function(event, data){
 });
 
 ipc.on("downloadEngine", (event, engine_name) => {
-  let down_status = downloadEngine(engine_name); 
+   downloadEngine(engine_name); 
 })
 
 
