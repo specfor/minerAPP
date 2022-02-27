@@ -123,6 +123,7 @@ async function downloadEngine(engine_name, download_data=''){
     if (downloading_plugins.length > 0) {
       downloadEngine(downloading_plugins[0])
       downloading = true;
+      setTimeout(()=>{downloadEngine('all')}, 5000)
     }
     return
   }
@@ -176,7 +177,6 @@ async function downloadEngine(engine_name, download_data=''){
     },
     onCompleted: (item) => {
       downloading_plugins.splice(downloading_plugins.indexOf(engine_name), 1)
-      downloading = false;
       BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
       // console.log(item.path);
       download_file = item.path;
@@ -187,6 +187,8 @@ async function downloadEngine(engine_name, download_data=''){
   try {
     console.log('extract ' + download_file + ' to ' + download_path)
     await extract(download_file, { dir: download_path });
+    downloading = false;
+
     console.log('Extraction complete');
     if (engine_name == 'nbminer') {
       download_path = path.join(download_path, 'NBMiner_Win');
