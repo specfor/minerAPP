@@ -120,8 +120,10 @@ async function downloadEngine(engine_name, download_data=''){
       setTimeout(()=>{downloadEngine('all')}, 5000)
       return
     }
-    downloadEngine(downloading_plugins[0])
-    downloading = true;
+    if (downloading_plugins.length > 0) {
+      downloadEngine(downloading_plugins[0])
+      downloading = true;
+    }
     return
   }
 
