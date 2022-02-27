@@ -162,7 +162,7 @@ async function downloadEngine(engine_name, download_data=''){
     BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
     },
     onCompleted: (item) => {
-      downloading_plugins.splice(downloading_plugins.findIndex(engine_name), 1)
+      downloading_plugins.splice(downloading_plugins.indexOf(engine_name), 1)
       BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
       // console.log(item.path);
       download_file = item.path;
