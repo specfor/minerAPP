@@ -10,7 +10,7 @@ const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
 const child = require('child_process');
 const fs = require('fs');
-const { isEmptyOrSpaces } = require('builder-util');
+const { isEmptyOrSpaces, retry } = require('builder-util');
 const request = require('request');
 const { setTimeout } = require('timers');
 const { cwd } = require('process');
@@ -19,7 +19,7 @@ var mainWindowId = null;
 var engine_pid = 0;
 let config_file = '';
 var first_run = false;
-var mining, plugin_updating = false;
+var mining, plugin_updating, downloading = false;
 var active_engine_name, start_time = '';
 var downloading_plugins = [];
 
@@ -115,7 +115,17 @@ async function downloadEngine(engine_name, download_data=''){
     downloading_plugins.push(engine_name)
   }
 
-  console.log(downloading_plugins)
+  if (engine_name == 'all') {
+    if (downloading) {
+      setTimeout(()=>{downloadEngine('all')}, 5000)
+      return
+    }
+    downloadEngine(downloading_plugins[0])
+    downloading = true;
+    return
+  }
+
+  downloading = true;
   if (download_data == '') {
     console.log('Plugin download started');
     
@@ -164,6 +174,7 @@ async function downloadEngine(engine_name, download_data=''){
     },
     onCompleted: (item) => {
       downloading_plugins.splice(downloading_plugins.indexOf(engine_name), 1)
+      downloading = false;
       BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
       // console.log(item.path);
       download_file = item.path;
@@ -485,10 +496,9 @@ function checkPluginUpdates() {
         for (let i = 0; i < 3; i++) {
           if (details[engines[i]]['version'] != body[engines[i]]['version']) {
             downloading_plugins.push(engines[i])
-            downloadEngine(engines[i])
           }
         }
-        plugin_updating = false;
+        downloadEngine('all')
       }else{
         return
       }
