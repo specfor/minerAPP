@@ -119,19 +119,16 @@ async function downloadEngine(engine_name, download_data=''){
   if (engine_name == 'all') {
     if (downloading) {
       setTimeout(()=>{downloadEngine('all')}, 5000)
-      return
-    }
-    if (downloading_plugins.length > 0) {
+    }else if (downloading_plugins.length > 0) {
       downloadEngine(downloading_plugins[0])
       downloading = true;
       setTimeout(()=>{downloadEngine('all')}, 5000)
+    }else{
+      plugin_updating = false;
+      return
     }
-    plugin_updating = false;
-    return
-  }
-
-  downloading = true;
-  if (download_data == '') {
+  }else if (download_data == '') {
+    downloading = true;
     console.log('Plugin download started');
     
     let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
@@ -147,71 +144,66 @@ async function downloadEngine(engine_name, download_data=''){
       console.error('Download plugin failed.', err.message)
       }
     });
-    // let d = request(check_update_link, options)
-  
-    // d.on('data', (data)=>{
-    //   downloadEngine(engine_name, data.)
-    //   console.log(data)
-    // })
-
     return
-  }
- 
-  download_url = download_data[engine_name]['download_link'];
-
-  if (engine_name == "nbminer") {
-    download_path = path.join(app.getPath('userData'), "minehash-downloads");
-  }else if (engine_name == 'trex') {
-    download_path = path.join(app.getPath('userData'), "minehash-downloads/trex");
-  }else if (engine_name == 'gminer') {
-    download_path = path.join(app.getPath('userData'), "minehash-downloads/gminer");
-  }
+  }else{
+    downloading_versions.push(download_data[engine_name]['version'])
+    download_url = download_data[engine_name]['download_link'];
   
-  console.log('File downloading to ' + download_path)
-  let download_file = "";
-
-  BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-started');
-
-  await download(BrowserWindow.fromId(mainWindowId), download_url,
-  {directory:download_path, overwrite: true, onProgress: (progress) => {
-    // console.log(progress.percent * 100);
-    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
-    },
-    onCompleted: (item) => {
-      downloading_plugins.splice(downloading_plugins.indexOf(engine_name), 1)
-      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
-      // console.log(item.path);
-      download_file = item.path;
+    if (engine_name == "nbminer") {
+      download_path = path.join(app.getPath('userData'), "minehash-downloads");
+    }else if (engine_name == 'trex') {
+      download_path = path.join(app.getPath('userData'), "minehash-downloads/trex");
+    }else if (engine_name == 'gminer') {
+      download_path = path.join(app.getPath('userData'), "minehash-downloads/gminer");
     }
-  });
-  console.log("Plugin finished dowloading");
- 
-  try {
-    console.log('extract ' + download_file + ' to ' + download_path)
-    await extract(download_file, { dir: download_path });
-    downloading = false;
-
-    console.log('Extraction complete');
-    if (engine_name == 'nbminer') {
-      download_path = path.join(download_path, 'NBMiner_Win');
+    
+    console.log('File downloading to ' + download_path)
+    let download_file = "";
+  
+    BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-started');
+  
+    await download(BrowserWindow.fromId(mainWindowId), download_url,
+    {directory:download_path, overwrite: true, onProgress: (progress) => {
+      // console.log(progress.percent * 100);
+      BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-progress', (progress.percent*100).toFixed(1).toString());
+      },
+      onCompleted: (item) => {
+        if (downloading_plugins.length > 0) {
+          downloading_plugins.splice(downloading_plugins.indexOf(engine_name), 1)
+        }
+        BrowserWindow.fromId(mainWindowId).webContents.send('engine-download-complete');
+        // console.log(item.path);
+        download_file = item.path;
+      }
+    });
+    console.log("Plugin finished dowloading");
+   
+    try {
+      console.log('extract ' + download_file + ' to ' + download_path)
+      await extract(download_file, { dir: download_path });
+      downloading = false;
+  
+      console.log('Extraction complete');
+      if (engine_name == 'nbminer') {
+        download_path = path.join(download_path, 'NBMiner_Win');
+      }
+  
+      const notification = {
+        icon:'icon.png',
+        title: 'Plugin Downloaded,',
+        body: 'Plugin successfully downloaded and installed.',
+      }
+      new Notification(notification).show()
+  
+      let miner_detail = getMinerDetails(engine_name);
+      saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['selected_coin'], miner_detail['extra_param'], download_path, downloading_versions[0]);
+      downloading_versions.splice(0, 1)
+    } catch (err) {
+      console.error("Download extract error - " + err);
+      // handle any errors
     }
-
-    const notification = {
-      icon:'icon.png',
-      title: 'Plugin Downloaded,',
-      body: 'Plugin successfully downloaded and installed.',
-    }
-    new Notification(notification).show()
-
-    let miner_detail = getMinerDetails(engine_name);
-    saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['selected_coin'], miner_detail['extra_param'], download_path, downloading_versions[0]);
-    downloading_versions.splice(0, 1)
-  } catch (err) {
-    console.error("Download extract error - " + err);
-    // handle any errors
+    return true;
   }
-
-  return true;
 }
 
 async function checkEnginePresence(engine_name) {
@@ -505,7 +497,6 @@ function checkPluginUpdates() {
         for (let i = 0; i < 3; i++) {
           if (details[engines[i]]['version'] != body[engines[i]]['version']) {
             downloading_plugins.push(engines[i])
-            downloading_versions.push( body[engines[i]]['version'])
           }
         }
         downloadEngine('all')
