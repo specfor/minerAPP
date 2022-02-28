@@ -1305,9 +1305,9 @@ background-color:white ;
 }
 
 .stats-tab .conatainer-stats .sc-veiw .card h5{
-  padding: 5px;
+
   margin-right: 5px;
-  
+  padding-top: 8px;
 }
 
 .data-line{
@@ -1320,7 +1320,7 @@ background-color:white ;
 }
 
 .mini-bar{
-  opacity: 0%;
+  opacity: 100%;
   position: relative;
   color: #1a1a1d;
   display: flex;
@@ -1328,6 +1328,7 @@ background-color:white ;
   background-color: #0000003c;
   margin-top: -3px;
   padding-left: 8px;
+  padding-right: 5px;
   border-radius: 5px;
 }
 .profit-card{
