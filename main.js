@@ -96,6 +96,7 @@ function checkFilePresence(file_path) {
 async function AutoMine() {
   if (plugin_updating || downloading_plugins.length > 0) {
   setTimeout(AutoMine, 5000)
+  console.log('awaiting download finish to run miner')
   return
   }
   // if (config_file['auto_mine']) {
@@ -112,14 +113,13 @@ async function AutoMine() {
 
 async function downloadEngine(engine_name, download_data=''){
   let download_url, download_path = '';
-  if (!downloading_plugins.includes(engine_name)) {
-    downloading_plugins.push(engine_name)
-  }
 
   if (engine_name == 'all') {
     if (downloading) {
+      console.log('Download in progress. pending')
       setTimeout(()=>{downloadEngine('all')}, 5000)
     }else if (downloading_plugins.length > 0) {
+      console.log('started new download')
       downloadEngine(downloading_plugins[0])
       downloading = true;
       setTimeout(()=>{downloadEngine('all')}, 5000)
@@ -128,6 +128,9 @@ async function downloadEngine(engine_name, download_data=''){
       return
     }
   }else if (download_data == '') {
+    if (!downloading_plugins.includes(engine_name)) {
+      downloading_plugins.push(engine_name)
+    }
     downloading = true;
     console.log('Plugin download started');
     
@@ -137,14 +140,11 @@ async function downloadEngine(engine_name, download_data=''){
       try{
         if (!error && res.statusCode == 200) {
           downloadEngine(engine_name, body)
-        }else{
-          return
         }
       }catch(err){
       console.error('Download plugin failed.', err.message)
       }
     });
-    return
   }else{
     downloading_versions.push(download_data[engine_name]['version'])
     download_url = download_data[engine_name]['download_link'];
@@ -202,7 +202,6 @@ async function downloadEngine(engine_name, download_data=''){
       console.error("Download extract error - " + err);
       // handle any errors
     }
-    return true;
   }
 }
 
