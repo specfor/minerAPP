@@ -94,6 +94,9 @@ function checkFilePresence(file_path) {
 }
 // ------------------------- MINER PROGRAM ---------------------------
 async function AutoMine() {
+  if (!config_file['auto_mine']) {
+    return
+  }
   if (plugin_updating || downloading_plugins.length > 0) {
   setTimeout(AutoMine, 5000)
   console.log('awaiting download finish to run miner')
