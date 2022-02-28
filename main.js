@@ -21,7 +21,7 @@ let config_file = '';
 var first_run = false;
 var mining, plugin_updating, downloading = false;
 var active_engine_name, start_time = '';
-var downloading_plugins = [];
+var downloading_plugins, downloading_versions = [];
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -125,6 +125,7 @@ async function downloadEngine(engine_name, download_data=''){
       downloading = true;
       setTimeout(()=>{downloadEngine('all')}, 5000)
     }
+    plugin_updating = false;
     return
   }
 
@@ -202,8 +203,8 @@ async function downloadEngine(engine_name, download_data=''){
     new Notification(notification).show()
 
     let miner_detail = getMinerDetails(engine_name);
-    saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['selected_coin'], miner_detail['extra_param'], download_path);
-
+    saveMinerDetails(engine_name, miner_detail['pool_address'], miner_detail['wallet_address'], miner_detail['selected_coin'], miner_detail['extra_param'], download_path, downloading_versions[0]);
+    downloading_versions.splice(0, 1)
   } catch (err) {
     console.error("Download extract error - " + err);
     // handle any errors
@@ -418,7 +419,7 @@ function getMinerDetails(engine="") {
   }
 }
 
-function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_param, engine_path='' ) {
+function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_param, engine_path='', engine_version='' ) {
   // console.log(engine + ' ' + algorithm + ' ' + server + ' ' +pool_address+ ' ' +wallet_address )
   let data = getMinerDetails()
 
@@ -430,6 +431,9 @@ function saveMinerDetails(engine, pool_address, wallet_address, coin, extra_para
 
   if (!isEmptyOrSpaces(engine_path)) {
     data[engine]['path'] = engine_path;
+  }
+  if (!isEmptyOrSpaces(engine_version)) {
+    data[engine]['version'] = engine_version;
   }
 
   let wdata = JSON.stringify(data);
@@ -500,6 +504,7 @@ function checkPluginUpdates() {
         for (let i = 0; i < 3; i++) {
           if (details[engines[i]]['version'] != body[engines[i]]['version']) {
             downloading_plugins.push(engines[i])
+            downloading_versions.push( body[engines[i]]['version'])
           }
         }
         downloadEngine('all')
