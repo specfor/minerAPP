@@ -21,7 +21,8 @@ let config_file = '';
 var first_run = false;
 var mining, plugin_updating, downloading = false;
 var active_engine_name, start_time = '';
-var downloading_plugins, downloading_versions = [];
+var downloading_plugins = [];
+var downloading_versions = [];
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
