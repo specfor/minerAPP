@@ -1312,7 +1312,6 @@ background-color:white ;
 
 .data-line{
   border-left: 1px solid black;
-
   float: left;
   padding: 0px;
   margin: 0px;
@@ -1320,6 +1319,27 @@ background-color:white ;
   padding-left: 10px;
 }
 
+.mini-bar{
+  opacity: 0%;
+  position: relative;
+  color: #1a1a1d;
+  display: flex;
+  font-size: 15px;
+  background-color: #0000003c;
+  margin-top: -3px;
+  padding-left: 8px;
+  border-radius: 5px;
+}
+.profit-card{
+  display: flex;
+  border-left: 1px solid #1a1a1d;
+  margin-left: 5px;
+  font-size: 15px;
+  padding-left: 5px;
+}
+#spacer{
+  margin-left: 5px;
+}
 .action-center{
   position: fixed;
   left: 420px;  /*75*/
