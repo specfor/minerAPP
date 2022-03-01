@@ -1377,6 +1377,9 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+.card-data .h-extender{
+  opacity: 100%;
+}
 .card-data .h-extender .img-line{
   position: relative;
   display: flex;
