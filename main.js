@@ -354,7 +354,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
-          devices.push({'pcie': body['pci_bus_id'], 'name': body['name'], 'hashrate': gpu_hashrate, 'core-clock': body['core_clock'], 'fan': body['fan'], 'mem-clock': body['mem_clock'], 'power': body['power'], 'temperature': body['temperature']})
+          devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
