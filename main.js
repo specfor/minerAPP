@@ -492,53 +492,55 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
 }
 
 function getGpuDetails(){
-  if (plugin_updating || downloading_plugins.length > 0) {
-    console.log('waiting to get gpu data')
-    setTimeout(getGpuDetails, 5000)
-    return
-  }
-  let nb_details = getMinerDetails('nbminer');
+  console.log('gpu data')
 
-  let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default --api 127.0.0.1:20005\r\npause';
-  fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
+  // if (plugin_updating || downloading_plugins.length > 0) {
+    // console.log('waiting to get gpu data')
+  //   setTimeout(getGpuDetails, 5000)
+  //   return
+  // }
+  // let nb_details = getMinerDetails('nbminer');
 
-  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
-  let nb_pid = nb.pid;
+  // let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default --api 127.0.0.1:20005\r\npause';
+  // fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
-  nb.on('close', (code)=>{
-    console.log('gpu program close with code ' + code)
-    run_lock = false;
-  })
+  // let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
+  // let nb_pid = nb.pid;
 
-  nb.on('spawn', ()=>{
-    setTimeout(()=>{
-      request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
-        try{
-          if (error) {
-            console.error('error getting gpu - ' + error.message)
-            return
-          }
-          let devices = [];
-          let count = 0;
+  // nb.on('close', (code)=>{
+  //   console.log('gpu program close with code ' + code)
+  //   run_lock = false;
+  // })
 
-          body['miner']['devices'].forEach(gpu => {
-            count += 1;
-            let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
+  // nb.on('spawn', ()=>{
+  //   setTimeout(()=>{
+  //     request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
+  //       try{
+  //         if (error) {
+  //           console.error('error getting gpu - ' + error.message)
+  //           return
+  //         }
+  //         let devices = [];
+  //         let count = 0;
+
+  //         body['miner']['devices'].forEach(gpu => {
+  //           count += 1;
+  //           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
             
-            devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
-          })
-          let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
+  //           devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+  //         })
+  //         let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
-          killEngine(nb_pid)
+  //         killEngine(nb_pid)
 
-          BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
-          BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
-        }catch(err){
-          console.error('Error getting gpu details - ' + err.message)
-        }
-      })  
-    }, 3000)
-  })
+  //         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
+  //         BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
+  //       }catch(err){
+  //         console.error('Error getting gpu details - ' + err.message)
+  //       }
+  //     })  
+  //   }, 3000)
+  // })
 }
 
 // ------------------------------ UPDATE -----------------------------------
