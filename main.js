@@ -351,7 +351,7 @@ async function sendMiningStatus(){
         let uptime = msToTime(Date.now() - start_time);
 
         let devices = [];
-        body['devices'].forEach(gpu => {
+        body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
           devices.push({'pcie': body['pci_bus_id'], 'name': body['name'], 'hashrate': gpu_hashrate, 'core-clock': body['core_clock'], 'fan': body['fan'], 'mem-clock': body['mem_clock'], 'power': body['power'], 'temperature': body['temperature']})
