@@ -182,6 +182,18 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     txt_mini_hashrate.textContent = args['hashrate'] + 'MH/s';
     txt_mini_power.textContent = args['power'] + 'W';
     txt_mini_uptime.textContent = args['uptime'];
+
+    // status page
+    let gpu_detail_container = document.getElementById('gpu-details-container');
+
+    args['devices'].forEach(gpu => {
+        let card = '<button class="card"><h5>PCI-E:' + gpu['pcie'] + 
+        '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
+        '</h6><div class="mini-bar"><h6>ETC :</h6><h6>: ' + gpu['hashrate'] + 
+        '</h6><div class="profit-card"><h6>20$ </h6><h6 id="spacer"> Per day</h6></div></div></div></button>'
+
+        gpu_detail_container.innerHTML += card;
+    });
 })
 
 window.addEventListener("load", (event) => {

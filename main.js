@@ -326,6 +326,19 @@ function killEngine() {
   child.exec(`taskkill /f /pid ${engine_pid} /t`);
 }
 
+function calculateHashrate(hashrate) {
+  if (hashrate > 1000000000) {
+    hashrate = Math.round(hashrate / 1000000000) + 'TH/s'
+  }else if (hashrate > 1000000) {
+    hashrate = Math.round(hashrate / 1000000) + 'MH/s'
+  }else if (hashrate > 1000) {
+    hashrate = Math.round(hashrate / 1000) + 'KH/s'
+  }else{
+    hashrate = Math.round(hashrate) + 'H/s'
+  }
+  return hashrate
+}
+
 async function sendMiningStatus(){
   if (active_engine_name == 'nbminer') {
     request('http://127.0.0.1:20001/api/v1/status', {json: true}, (error, res, body) => {
@@ -333,11 +346,18 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = body['miner']['total_hashrate'].split(' ')[0];
+        let hashrate = calculateHashrate(body['miner']['total_hashrate_raw']);
         let power = body['miner']['total_power_consume'];
         let uptime = msToTime(Date.now() - start_time);
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
+        let devices = [];
+        body['devices'].forEach(gpu => {
+          let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
+          
+          devices.push({'pcie': body['pci_bus_id'], 'name': body['name'], 'hashrate': gpu_hashrate, 'core-clock': body['core_clock'], 'fan': body['fan'], 'mem-clock': body['mem_clock'], 'power': body['power'], 'temperature': body['temperature']})
+        })
+
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
@@ -357,7 +377,9 @@ async function sendMiningStatus(){
         })
         let uptime = msToTime(body['uptime']*1000);
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
+        let devices = {'pcie': body['pci_bus_id'], 'name': body['name'], 'core-clock': '', 'fan': '', 'mem-clock': '', 'power': '', 'temperature': ''}
+
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
    
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
@@ -378,7 +400,9 @@ async function sendMiningStatus(){
         })
         let uptime = msToTime(body['uptime']*1000);
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime}
+        let devices = {'pcie': body['pci_bus_id'], 'name': body['name'], 'core-clock': '', 'fan': '', 'mem-clock': '', 'power': '', 'temperature': ''}
+
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
@@ -471,6 +495,7 @@ function getGpuDetails(){
   let nb_details = getMinerDetails('nbminer');
   let executable_path = path.join(nb_details['path'], 'nbminer.exe')
   let nb = child.spawn(executable_path, ['-a', 'eamv3', '-o', 'asia-firo.2miners.com:8181', '-u', 'waesr.rig_windows', '--api', '127.0.0.1:20005', '-log'], {detached: true, stdio: 'ignore', cwd: nb_details['path']})
+  // let nb = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
 
   nb.on('close', (code)=>{console.log('gpu program close with code ' + code)})
 
