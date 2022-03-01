@@ -470,7 +470,7 @@ function getGpuDetails(){
   }
   let nb_details = getMinerDetails('nbminer');
   let executable_path = path.join(nb_details['path'], 'nbminer.exe')
-  let nb = child.spawn(executable_path, ['-a', 'eamv3', '-o', 'asia-firo.2miners.com:8181', '-u', 'waesr.rig_windows', '--api', '127.0.0.1:20005', '-log'], {cdetached: true, stdio: 'ignore', wd: nb_details['path']})
+  let nb = child.spawn(executable_path, ['-a', 'eamv3', '-o', 'asia-firo.2miners.com:8181', '-u', 'waesr.rig_windows', '--api', '127.0.0.1:20005', '-log'], {detached: true, stdio: 'ignore', cwd: nb_details['path']})
 
   nb.on('close', (code)=>{console.log('gpu program close with code ' + code)})
 
