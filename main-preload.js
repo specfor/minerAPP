@@ -179,8 +179,8 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     let txt_status_hashrate = document.getElementById('status-hashrate');
     let txt_mini_uptime = document.getElementById('status-mini-uptime');
 
-    txt_status_hashrate.textContent = args['hashrate'] + 'MH/s';
-    txt_mini_hashrate.textContent = args['hashrate'] + 'MH/s';
+    txt_status_hashrate.textContent = args['hashrate'];
+    txt_mini_hashrate.textContent = args['hashrate'];
     txt_mini_power.textContent = args['power'] + 'W';
     txt_mini_uptime.textContent = args['uptime'];
 

@@ -321,8 +321,12 @@ async function runEngine(engine_name, coin_name){
   });
 }
 
-function killEngine() {
+function killEngine(pid) {
   console.log("process termination called.");
+  if (pid) {
+    child.exec(`taskkill /f /pid ${pid} /t`);
+    return
+  }
   child.exec(`taskkill /f /pid ${engine_pid} /t`);
 }
 
@@ -498,25 +502,37 @@ function getGpuDetails(){
   fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
   let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
-  // let executable_path = path.join(nb_details['path'], 'nbminer.exe')
-  // let nb = child.spawn(executable_path, ['-a', 'eamv3', '-o', 'asia-firo.2miners.com:8181', '-u', 'waesr.rig_windows', '--api', '127.0.0.1:20005', '-log'], {detached: true, stdio: 'ignore', cwd: nb_details['path']})
-  // let nb = child.spawn(executable_path, {detached: true, stdio: 'ignore', cwd: engine_details['path']});
+  let nb_pid = nb.pid;
 
   nb.on('close', (code)=>{console.log('gpu program close with code ' + code)})
 
-  request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
-      try{
-        if (error) {
-          console.error('error getting gpu - ' + error.message)
-          return
-        }
-        let payload = body['devices']
+  nb.on('spawn', ()=>{
+    request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
+        try{
+          if (error) {
+            console.error('error getting gpu - ' + error.message)
+            return
+          }
+          let devices = [];
+          let count = 0;
 
-        BrowserWindow.fromId(mainWindowId).webContents.send('gpu-details-first-config', payload)
-      }catch(err){
-        console.error('Error getting gpu details - ' + err.message)
-      }
-    })
+          body['miner']['devices'].forEach(gpu => {
+            count += 1;
+            let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
+            
+            devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          })
+          let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
+
+          BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
+          BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
+        }catch(err){
+          console.error('Error getting gpu details - ' + err.message)
+        }
+      })
+  
+      killEngine(nb_pid)
+  })
 }
 
 // ------------------------------ UPDATE -----------------------------------
@@ -767,11 +783,11 @@ ipc.on('get-gpu-count', (event) => {
   app.getGPUInfo('complete').then(info => {
     // console.log(info['gpuDevice']);
     
-    let count = 0;
+    // let count = 0;
 
 
-    // event.sender.send('gpu-count', count)
-    console.log('GPU count - ' + count)
+    // // event.sender.send('gpu-count', count)
+    // console.log('GPU count - ' + count)
   })
 })
 
