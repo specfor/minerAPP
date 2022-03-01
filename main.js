@@ -524,14 +524,14 @@ function getGpuDetails(){
           })
           let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
+          killEngine(nb_pid)
+
           BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
           BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
         }catch(err){
           console.error('Error getting gpu details - ' + err.message)
         }
-      })
-  
-      killEngine(nb_pid)
+      })  
   })
 }
 
