@@ -6,6 +6,7 @@ const path = require('path')
 var mining_status = false;
 var just_started = true;
 var downloading = false;
+var last_gpu_details = '';
 
 // ------------------------- Engine --------------------------
 function setGUIState(mining) {
@@ -188,13 +189,16 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     let gpu_detail_container = document.getElementById('gpu-details-container');
     gpu_detail_container.innerHTML = '';
 
+    last_gpu_details = args['devices'];
+    let index = 0;
     args['devices'].forEach(gpu => {
-        let card = '<button class="card"><h5>PCI-E:' + gpu['pcie'] + 
+        let card = '<button id="btn_gpu_'+ index +'" class="card"><h5>PCI-E:' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>ETC :</h6><h6>: ' + gpu['hashrate'] + 
         '</h6><div class="profit-card"><h6>20$ </h6><h6 id="spacer"> Per day</h6></div></div></div></button>'
 
         gpu_detail_container.innerHTML += card;
+        index += 1;
     });
 })
 
