@@ -327,11 +327,6 @@ window.addEventListener("load", (event) => {
         txt_status_gpu_count.textContent = args + ' GPUs';
     })
 
-    ipcRenderer.on('gpu-details-first-config', (event, args)=>{
-        console.log(args)
-    })
-
-    ipcRenderer.send('get-gpu-count');
     ipcRenderer.send('get-engine-config');
     ipcRenderer.send('get-app-config');
 

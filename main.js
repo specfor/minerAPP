@@ -23,6 +23,7 @@ var mining = false, plugin_updating = false, downloading = false;
 var active_engine_name, start_time = '';
 var downloading_plugins = [];
 var downloading_versions = [];
+var run_lock = true;
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -46,7 +47,7 @@ setInterval(() => {
   if (mining) {
     sendMiningStatus()
   }
-}, 500);
+}, 1000);
 
 function msToTime(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
@@ -97,7 +98,7 @@ async function AutoMine() {
   if (!config_file['auto_mine']) {
     return
   }
-  if (plugin_updating || downloading_plugins.length > 0) {
+  if (plugin_updating || downloading_plugins.length > 0 || run_lock) {
   setTimeout(AutoMine, 5000)
   console.log('awaiting download finish to run miner')
   return
@@ -507,7 +508,8 @@ function getGpuDetails(){
   nb.on('close', (code)=>{console.log('gpu program close with code ' + code)})
 
   nb.on('spawn', ()=>{
-    request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
+    setTimeout(()=>{
+      request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
         try{
           if (error) {
             console.error('error getting gpu - ' + error.message)
@@ -525,6 +527,7 @@ function getGpuDetails(){
           let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
           killEngine(nb_pid)
+          run_lock = false;
 
           BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
           BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
@@ -532,6 +535,7 @@ function getGpuDetails(){
           console.error('Error getting gpu details - ' + err.message)
         }
       })  
+    }, 3000)
   })
 }
 
