@@ -494,7 +494,7 @@ function getGpuDetails(){
   }
   let nb_details = getMinerDetails('nbminer');
 
-  let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a octopus -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default\r\n pause';
+  let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a octopus -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default\r\npause';
   fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
   let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
