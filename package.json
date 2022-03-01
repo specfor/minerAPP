@@ -20,7 +20,7 @@
   "homepage": "https://github.com/specfor/minerAPP#readme",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
-    "electron": "^16.0.9",
+    "electron": "^16.0.10",
     "electron-builder": "^22.14.13"
   },
   "dependencies": {
