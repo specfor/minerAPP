@@ -11900,3 +11900,4 @@ downloads/trex/t-rex-0.25.2-win (2).zip
 build/builder-effective-config.yaml
 start_ae.bat
 tmp.json
+node_modules
