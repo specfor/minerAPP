@@ -499,13 +499,16 @@ function getGpuDetails(){
   }
   let nb_details = getMinerDetails('nbminer');
 
-  let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a octopus -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default --api 127.0.0.1:20005\r\npause';
+  let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default --api 127.0.0.1:20005\r\npause';
   fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
   let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
   let nb_pid = nb.pid;
 
-  nb.on('close', (code)=>{console.log('gpu program close with code ' + code)})
+  nb.on('close', (code)=>{
+    console.log('gpu program close with code ' + code)
+    run_lock = false;
+  })
 
   nb.on('spawn', ()=>{
     setTimeout(()=>{
@@ -527,7 +530,6 @@ function getGpuDetails(){
           let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
           killEngine(nb_pid)
-          run_lock = false;
 
           BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
           BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
