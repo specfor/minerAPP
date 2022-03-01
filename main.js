@@ -19,7 +19,7 @@ var mainWindowId = null;
 var engine_pid = 0;
 let config_file = '';
 var first_run = false;
-var mining, plugin_updating, downloading = false;
+var mining = false, plugin_updating = false, downloading = false;
 var active_engine_name, start_time = '';
 var downloading_plugins = [];
 var downloading_versions = [];
@@ -399,7 +399,7 @@ function getMinerDetails(engine="") {
     }
     return data;
   }catch(err){
-    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'config', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''},
+    data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''},
     'trex': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 
     'gminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 'selected': 'nbminer'};
     
@@ -470,7 +470,7 @@ function getGpuDetails(){
   }
   let nb_details = getMinerDetails('nbminer');
   let executable_path = path.join(nb_details['path'], 'nbminer.exe')
-  let nb = child.spawn(executable_path, ['-a beamv3 -o asia-firo.2miners.com:8181 -u waesr.rig_windows --api 127.0.0.1:20005 -log'], {cdetached: true, stdio: 'ignore', wd: nb_details['path']})
+  let nb = child.spawn(executable_path, ['-a', 'eamv3', '-o', 'asia-firo.2miners.com:8181', '-u', 'waesr.rig_windows', '--api', '127.0.0.1:20005', '-log'], {cdetached: true, stdio: 'ignore', wd: nb_details['path']})
 
   nb.on('close', (code)=>{console.log('gpu program close with code ' + code)})
 
@@ -739,13 +739,8 @@ ipc.on('get-gpu-count', (event) => {
     
     let count = 0;
 
-    info['gpuDevice'].forEach(gpu => {
-      if (gpu['driverVendor'] == 'NVIDIA' || gpu['driverVendor'] == 'AMD') {
-        count += 1;
-      }
-    });
 
-    event.sender.send('gpu-count', count)
+    // event.sender.send('gpu-count', count)
     console.log('GPU count - ' + count)
   })
 })
