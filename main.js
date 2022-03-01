@@ -328,13 +328,13 @@ function killEngine() {
 
 function calculateHashrate(hashrate) {
   if (hashrate > 1000000000) {
-    hashrate = Math.round(hashrate / 1000000000) + 'TH/s'
+    hashrate = Math.round(hashrate / 1000000000) + ' TH/s'
   }else if (hashrate > 1000000) {
-    hashrate = Math.round(hashrate / 1000000) + 'MH/s'
+    hashrate = Math.round(hashrate / 1000000) + ' MH/s'
   }else if (hashrate > 1000) {
     hashrate = Math.round(hashrate / 1000) + 'KH/s'
   }else{
-    hashrate = Math.round(hashrate) + 'H/s'
+    hashrate = Math.round(hashrate) + ' H/s'
   }
   return hashrate
 }
@@ -354,7 +354,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
-          devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
