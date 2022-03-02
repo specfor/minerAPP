@@ -19,6 +19,7 @@ var mainWindowId, loadingWindowId = null;
 var engine_pid = 0;
 let config_file = '';
 var first_run = false;
+var mining_coin = '';
 var mining = false, plugin_updating = false, downloading = false;
 var active_engine_name, start_time = '';
 var downloading_plugins = [];
@@ -237,6 +238,8 @@ async function runEngine(engine_name, coin_name){
 
   engine_details = getMinerDetails(engine_name);
 
+  mining_coin = coin_name;
+
   console.log("Miner process called to run");
   console.log('Plugin - ' + engine_name + ' & coin - ' + coin_name);
 
@@ -370,7 +373,7 @@ async function sendMiningStatus(){
           devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
@@ -392,7 +395,7 @@ async function sendMiningStatus(){
 
         let devices = {'pcie': body['pci_bus_id'], 'name': body['name'], 'core-clock': '', 'fan': '', 'mem-clock': '', 'power': '', 'temperature': ''}
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
    
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
@@ -415,7 +418,7 @@ async function sendMiningStatus(){
 
         let devices = {'pcie': body['pci_bus_id'], 'name': body['name'], 'core-clock': '', 'fan': '', 'mem-clock': '', 'power': '', 'temperature': ''}
 
-        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'devices': devices}
+        let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
       }catch(err){
