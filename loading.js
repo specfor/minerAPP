@@ -30,5 +30,5 @@ window.addEventListener("load", (event) => {
     })
 
 
-    window.setTimeout(()=> {window.close()}, 5000)
+    window.setTimeout(()=> {window.close()}, 10000)
   });
