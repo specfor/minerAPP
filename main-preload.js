@@ -8,6 +8,7 @@ var just_started = true;
 var downloading = false;
 var last_gpu_details = '';
 var gpu_details = {};
+var selected_gpu_index = 0;
 
 // ------------------------- Engine --------------------------
 function setGUIState(mining) {
@@ -174,6 +175,25 @@ ipcRenderer.on('updates-available', ()=>{
 
 })
 
+function changeStatsGPUData() {
+    let side_gpu_name = document.getElementById('status-gpu-name');
+    let side_pcie = document.getElementById('status-pcie');
+    let side_core_clock = document.getElementById('status-core-clock');
+    let side_mem_clock = document.getElementById('status-mem-clock');
+    let side_fan_speed = document.getElementById('status-fan-speed');
+    let side_power = document.getElementById('status-power');
+    let side_temp = document.getElementById('status-temp');
+    
+    side_gpu_name.textContent = gpu_details['gpu' + selected_gpu_index]['name'];
+    side_pcie.textContent = gpu_details['gpu' + selected_gpu_index]['pcie'];
+    side_core_clock.textContent = gpu_details['gpu' + selected_gpu_index]['core-clock'];
+    side_mem_clock.textContent = gpu_details['gpu' + selected_gpu_index]['mem-clock'];
+    side_fan_speed.textContent = gpu_details['gpu' + selected_gpu_index]['fan'];
+    side_power.textContent = gpu_details['gpu' + selected_gpu_index]['power'];
+    side_gpu_name.textContent = gpu_details['gpu' + selected_gpu_index]['name'];
+    side_temp.textContent = gpu_details['gpu' + selected_gpu_index]['temperature']
+}
+
 ipcRenderer.on('plugin-status', (event, args)=>{
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
@@ -186,14 +206,6 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     txt_mini_uptime.textContent = args['uptime'];
 
     // status page
-    let side_gpu_name = document.getElementById('status-gpu-name');
-    let side_pcie = document.getElementById('status-pcie');
-    let side_core_clock = document.getElementById('status-core-clock');
-    let side_mem_clock = document.getElementById('status-mem-clock');
-    let side_fan_speed = document.getElementById('status-fan-speed');
-    let side_power = document.getElementById('status-power');
-    let side_temp = document.getElementById('status-temp');
-    
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
     gpu_detail_container.innerHTML = '';
@@ -211,21 +223,15 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         gpu_details['gpu' + index] = gpu;
 
+        
         document.getElementById('btn_gpu_'+ index).addEventListener('click', (event)=>{
-            let btn_index = event.target.id.split('_')[2];
-
-            side_gpu_name.textContent = gpu_details['gpu' + btn_index];
-            side_pcie.textContent = gpu_details['gpu' + btn_index]['pcie'];
-            side_core_clock.textContent = gpu_details['gpu' + btn_index]['core-clock'];
-            side_mem_clock.textContent = gpu_details['gpu' + btn_index]['mem-clock'];
-            side_fan_speed.textContent = gpu_details['gpu' + btn_index]['fan'];
-            side_power.textContent = gpu_details['gpu' + btn_index]['power'];
-            side_gpu_name.textContent = gpu_details['gpu' + btn_index]['name'];
-            side_temp.textContent = gpu_details['gpu' + btn_index]['temperature']
+            selected_gpu_index = event.target.id.split('_')[2];
+            changeStatsGPUData()
         })
         
         index += 1;
     });
+    changeStatsGPUData()
     console.log(gpu_details)
 })
 
