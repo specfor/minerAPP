@@ -16,7 +16,7 @@ function setGUIState(mining) {
     let imageMiner2 = document.getElementById('img-mining2');
     let status_mini = document.getElementById('status-mini');
     let status_mini_not = document.getElementById('stutus-mini-not-running');
-    
+
     if (mining) {
         mining_status = true;
         imageMiner.style.opacity = '100%';
@@ -108,6 +108,17 @@ ipcRenderer.on('miner-stopped', ()=>{
     txt_mini_power.textContent =  '- W';
     txt_mini_uptime.textContent = '00:00:00';
 
+    // stats page
+    for([gpu, data] of Object.entries(gpu_details)){
+        gpu_details[gpu]['core-clock'] = '-';
+        gpu_details[gpu]['mem-clock'] = '-';
+        gpu_details[gpu]['fan'] = '-';
+        gpu_details[gpu]['power'] = '-';
+        gpu_details[gpu]['temperature'] = '-';
+    }
+
+    changeStatsGPUData()
+
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
@@ -176,6 +187,9 @@ ipcRenderer.on('updates-available', ()=>{
 })
 
 function changeStatsGPUData() {
+    if (!selected_gpu_index) {
+        return
+    }
     let side_gpu_name = document.getElementById('status-gpu-name');
     let side_pcie = document.getElementById('status-pcie');
     let side_core_clock = document.getElementById('status-core-clock');
