@@ -30,5 +30,9 @@ window.addEventListener("load", (event) => {
     })
 
 
-    window.setTimeout(()=> {window.close()}, 20000)
+    ipcRenderer.on('close-loading', ()=>{
+        window.close()
+    })
+
+    window.setTimeout(()=> {window.close()}, 360000)
   });
