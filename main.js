@@ -573,6 +573,7 @@ function checkPluginUpdates() {
         }
         if (downloading_plugins.length != 0) {
           mainWindow_tasks.push('download-plugins')
+        }else{
           plugin_updating = false;
         }
       }else{
