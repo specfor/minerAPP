@@ -543,7 +543,7 @@ function getGpuDetails(){
           console.error('Error getting gpu details - ' + err.message)
         }
       })  
-    }, 3000)
+    }, 4000)
   })
 
   // temporaly fix
@@ -685,18 +685,19 @@ function createWindow () {
     }
   })
 
-  loadingWindowId = loadingWindow.id;
-
+  
   loadingWindow.loadFile( path.join(__dirname, 'loading-window.html'));
   loadingWindow.setMenu(null);
   
+  
   loadingWindow.once('ready-to-show', () => {
-  loadingWindow.show();
- 
-  // loading functions
-  check_updates()
-  checkPluginUpdates()
-  getGpuDetails()
+    loadingWindow.show();
+    loadingWindowId = loadingWindow.id;
+    
+    // loading functions
+    check_updates()
+    checkPluginUpdates()
+    getGpuDetails()
   });
 
   loadingWindow.on("close", function(){
