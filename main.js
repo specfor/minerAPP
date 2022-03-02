@@ -331,7 +331,7 @@ function killEngine() {
 }
 
 function killEngine2(pid) {
-  console.log("Gpu data gather program termination called.");
+  console.log("Gpu data gather program termination called. PID - " + pid);
   child.exec('taskkill /f /pid '+ pid +' /t');
 }
 
@@ -537,7 +537,7 @@ function getGpuDetails(){
           gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
         mainWindow_tasks.push('send-gpu-data')
-        killEngine2(loadingWindowId)
+        killEngine2(nb_pid)
         BrowserWindow.fromId(loadingWindowId).webContents.send('close-loading')
       }catch(err){
         console.error('Error getting gpu details - ' + err.message)
