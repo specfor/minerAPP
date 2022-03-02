@@ -13,7 +13,7 @@ const fs = require('fs');
 const { isEmptyOrSpaces, retry } = require('builder-util');
 const request = require('request');
 const { setTimeout } = require('timers');
-const { cwd } = require('process');
+const { cwd, pid } = require('process');
 
 var mainWindowId, loadingWindowId = null;
 var engine_pid = 0;
@@ -330,6 +330,11 @@ function killEngine() {
   child.exec(`taskkill /f /pid ${engine_pid} /t`);
 }
 
+function killEngine2(pid) {
+  console.log("process termination called.");
+  child.exec(`taskkill /f /pid ${pid} /t`);
+}
+
 function calculateHashrate(hashrate) {
   if (hashrate > 1000000000) {
     hashrate = Math.round(hashrate / 1000000000) + ' TH/s'
@@ -495,53 +500,54 @@ function getGpuDetails(){
 
   console.log('Gathering gpu devices')
 
-  // if (plugin_updating || downloading_plugins.length > 0) {
-    // console.log('waiting to get gpu data')
-  //   setTimeout(getGpuDetails, 5000)
-  //   return
-  // }
-  // let nb_details = getMinerDetails('nbminer');
+  if (plugin_updating || downloading_plugins.length > 0) {
+    console.log('waiting to get gpu data')
+    setTimeout(getGpuDetails, 5000)
+    return
+  }
+  let nb_details = getMinerDetails('nbminer');
 
-  // let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default --api 127.0.0.1:20005\r\npause';
-  // fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
+  let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o stratum+tcp://cfx.f2pool.com:6800 -u 0x1508ad81fad1d481005b34470699c372b8f6a2c4.default --api 127.0.0.1:20005\r\npause';
+  fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
-  // let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
-  // let nb_pid = nb.pid;
+  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
+  let nb_pid = nb.pid;
 
-  // nb.on('close', (code)=>{
-  //   console.log('gpu program close with code ' + code)
-  //   run_lock = false;
-  // })
+  nb.on('close', (code)=>{
+    console.log('gpu program close with code ' + code)
+    run_lock = false;
+  })
 
-  // nb.on('spawn', ()=>{
-  //   setTimeout(()=>{
-  //     request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
-  //       try{
-  //         if (error) {
-  //           console.error('error getting gpu - ' + error.message)
-  //           return
-  //         }
-  //         let devices = [];
+  nb.on('spawn', ()=>{
+    setTimeout(()=>{
+      request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
+        try{
+          if (error) {
+            console.error('error getting gpu - ' + error.message)
+            return
+          }
+          let devices = [];
 
-  //         body['miner']['devices'].forEach(gpu => {
-            // gpu_count += 1;
-  //           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
+          body['miner']['devices'].forEach(gpu => {
+            gpu_count += 1;
+            let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
             
-  //           devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
-  //         })
-          //  gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
+            devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          })
+           gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
-          // mainWindow_tasks.push('send-gpu-data')
-  //         killEngine(nb_pid)
-  //       }catch(err){
-  //         console.error('Error getting gpu details - ' + err.message)
-  //       }
-  //     })  
-  //   }, 3000)
-  // })
+          mainWindow_tasks.push('send-gpu-data')
+          killEngine2(pid)
+
+        }catch(err){
+          console.error('Error getting gpu details - ' + err.message)
+        }
+      })  
+    }, 3000)
+  })
 
   // temporaly fix
-  run_lock = false;
+  // run_lock = false;
 }
 
 // ------------------------------ UPDATE -----------------------------------
