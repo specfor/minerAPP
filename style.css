@@ -1300,9 +1300,21 @@ width: 300px;
   width: 100%;
   border-bottom: 2px solid #0d141f;
 }
+
 .stats-tab .conatainer-stats .sc-veiw .card:hover{
-background-color:white ;
+background-color:rgba(255, 255, 255, 0.64) ;
 }
+
+.stats-tab .conatainer-stats .sc-veiw .card:focus{
+  background-color: #007a63 ;
+  color: rgba(255, 255, 255, 0.646);
+  }
+
+.stats-tab .conatainer-stats .sc-veiw .card:target{
+  background-color:#007a63 ;
+  color: rgba(255, 255, 255, 0.646);  
+}
+
 .stats-tab .conatainer-stats .sc-veiw button{
   border: none;
   cursor: pointer;
@@ -1465,6 +1477,11 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   font-size: 15px;
 }
 
-
+.mini-bar:focus{
+  color: rgba(255, 255, 255, 0.646);  
+}
+.mini-bar:target{
+  color: rgba(255, 255, 255, 0.646);  
+}
 
 /*stat tab editing*/
