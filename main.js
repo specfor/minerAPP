@@ -15,7 +15,7 @@ const request = require('request');
 const { setTimeout } = require('timers');
 const { cwd } = require('process');
 
-var mainWindowId = null;
+var mainWindowId, loadingWindowId = null;
 var engine_pid = 0;
 let config_file = '';
 var first_run = false;
@@ -24,6 +24,9 @@ var active_engine_name, start_time = '';
 var downloading_plugins = [];
 var downloading_versions = [];
 var run_lock = true;
+var mainWindow_tasks = [];
+var gpu_details = [];
+var gpu_count = 0;
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -488,7 +491,9 @@ function saveAppDetails(auto_update, auto_run, gpu_check, auto_mine, resolve_int
 }
 
 function getGpuDetails(){
-  console.log('gpu data')
+  BrowserWindow.fromId(loadingWindowId).webContents.send("checking-gpu-data")
+
+  console.log('Gathering gpu devices')
 
   // if (plugin_updating || downloading_plugins.length > 0) {
     // console.log('waiting to get gpu data')
@@ -517,20 +522,17 @@ function getGpuDetails(){
   //           return
   //         }
   //         let devices = [];
-  //         let count = 0;
 
   //         body['miner']['devices'].forEach(gpu => {
-  //           count += 1;
+            // gpu_count += 1;
   //           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
             
   //           devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
   //         })
-  //         let payload = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
+          //  gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
 
+          // mainWindow_tasks.push('send-gpu-data')
   //         killEngine(nb_pid)
-
-  //         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
-  //         BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', count)
   //       }catch(err){
   //         console.error('Error getting gpu details - ' + err.message)
   //       }
@@ -544,6 +546,8 @@ function getGpuDetails(){
 
 // ------------------------------ UPDATE -----------------------------------
 function checkPluginUpdates() {
+  BrowserWindow.fromId(loadingWindowId).webContents.send("checking-for-plugin-updates")
+
   plugin_updating = true;
   let engines = ['nbminer', 'trex', 'gminer']
   let details = getMinerDetails();
@@ -558,7 +562,7 @@ function checkPluginUpdates() {
             downloading_plugins.push(engines[i])
           }
         }
-        downloadEngine('all')
+        mainWindow_tasks.push('download-plugins')
       }else{
         return
       }
@@ -573,6 +577,7 @@ function check_updates(do_download=false){
     return
   }
   if (!do_download) {
+    BrowserWindow.fromId(loadingWindowId).webContents.send("checking-for-app-updates")
     console.log("Checking for updates")
   }
   let check_update_link = 'https://minerhouse.lk/wp-content/uploads/updates.json';
@@ -608,7 +613,8 @@ function check_updates(do_download=false){
               }
             }); 
           }else{
-            BrowserWindow.fromId(mainWindowId).webContents.send("updates-available")
+            BrowserWindow.fromId(loadingWindowId).webContents.send("updates-available")
+            mainWindow_tasks.push('app-updates-available')
           }
         }
       }
@@ -644,6 +650,19 @@ function createConfigurationWindow(ownerWindow){
   //configuration_window.webContents.openDevTools()
 }
 // --------------------------------------------------------------
+function mainWindowOnStartTasks() {
+  if (mainWindow_tasks.includes('app-updates-available')) {
+    BrowserWindow.fromId(mainWindowId).webContents.send("updates-available")
+  }
+  if (mainWindow_tasks.includes('download-plugins')) {
+    downloadEngine('all')
+  }
+  if (mainWindow_tasks.includes('send-gpu-data')) {
+    BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', gpu_details)
+    BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', gpu_count)
+  }
+
+}
 
 function createWindow () {
   const loadingWindow = new BrowserWindow({
@@ -660,12 +679,18 @@ function createWindow () {
     }
   })
 
+  loadingWindowId = loadingWindow.id;
+
   loadingWindow.loadFile( path.join(__dirname, 'loading-window.html'));
   loadingWindow.setMenu(null);
   
   loadingWindow.once('ready-to-show', () => {
   loadingWindow.show();
-    
+ 
+  // loading functions
+  check_updates()
+  checkPluginUpdates()
+  getGpuDetails()
   });
 
   loadingWindow.on("close", function(){
@@ -691,9 +716,7 @@ function createWindow () {
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
     });
-    check_updates()
-    checkPluginUpdates()
-    getGpuDetails()
+    mainWindowOnStartTasks()
     AutoMine()
     // if (first_run) {
     //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
