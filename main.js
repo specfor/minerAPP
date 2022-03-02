@@ -332,7 +332,7 @@ function killEngine() {
 
 function killEngine2(pid) {
   console.log("process termination called.");
-  child.exec(`taskkill /f /pid ${pid} /t`);
+  child.exec('taskkill /f /pid '+ pid +' /t');
 }
 
 function calculateHashrate(hashrate) {
