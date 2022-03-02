@@ -538,7 +538,7 @@ function getGpuDetails(){
 
         mainWindow_tasks.push('send-gpu-data')
         killEngine2(pid)
-
+        BrowserWindow.fromId(loadingWindowId).webContents.send('close-loading')
       }catch(err){
         console.error('Error getting gpu details - ' + err.message)
       }
