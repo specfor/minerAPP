@@ -184,6 +184,8 @@ function changeStatsGPUData() {
     let side_power = document.getElementById('status-power');
     let side_temp = document.getElementById('status-temp');
     
+    console.log('selected gpu - gpu' + selected_gpu_index)
+
     side_gpu_name.textContent = gpu_details['gpu' + selected_gpu_index]['name'];
     side_pcie.textContent = gpu_details['gpu' + selected_gpu_index]['pcie'];
     side_core_clock.textContent = gpu_details['gpu' + selected_gpu_index]['core-clock'];
