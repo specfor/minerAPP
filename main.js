@@ -227,6 +227,10 @@ async function checkEnginePresence(engine_name) {
 async function runEngine(engine_name, coin_name){
   // engine_name = 'trex';
   // coin_name = 'eth';
+  if (run_lock) {
+    setTimeout(()=>{runEngine(engine_name, coin_name)}, 5000)
+    return
+  }
   let engine_details = getMinerDetails(engine_name);
 
   await checkEnginePresence(engine_name);  

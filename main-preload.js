@@ -327,6 +327,7 @@ window.addEventListener("load", (event) => {
     })
 
     ipcRenderer.on('gpu-count', (event, args)=>{
+        console.log('gpu -' + args)
         let txt_status_gpu_count = document.getElementById('status-gpu-count');
         txt_status_gpu_count.textContent = args + ' GPUs';
     })
