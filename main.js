@@ -518,32 +518,35 @@ function getGpuDetails(){
     run_lock = false;
   })
 
-  nb.on('spawn', ()=>{
-    setTimeout(()=>{
-      request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
-        try{
-          if (error) {
-            console.error('error getting gpu - ' + error.message)
-            return
-          }
-          let devices = [];
-
-          body['miner']['devices'].forEach(gpu => {
-            gpu_count += 1;
-            let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
-            
-            devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
-          })
-           gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
-
-          mainWindow_tasks.push('send-gpu-data')
-          killEngine2(pid)
-
-        }catch(err){
-          console.error('Error getting gpu details - ' + err.message)
+  function getdata() {
+    request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
+      try{
+        if (error) {
+          console.error('error getting gpu - ' + error.message)
+          setTimeout(getdata, 3000)
+          return
         }
-      })  
-    }, 4000)
+        let devices = [];
+
+        body['miner']['devices'].forEach(gpu => {
+          gpu_count += 1;
+          let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
+          
+          devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+        })
+          gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
+
+        mainWindow_tasks.push('send-gpu-data')
+        killEngine2(pid)
+
+      }catch(err){
+        console.error('Error getting gpu details - ' + err.message)
+      }
+    })  
+  }
+
+  nb.on('spawn', ()=>{
+    getdata()
   })
 
   // temporaly fix
