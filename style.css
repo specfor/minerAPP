@@ -1055,6 +1055,7 @@ width: 300px;
   padding: 0px;
   letter-spacing: 0px;
   margin-left: 30px;
+  margin-bottom: 20px;
 }
 
 .right-container .up-box img{
@@ -1099,6 +1100,7 @@ width: 300px;
   color: rgba(255, 255, 255, 0.618);
   text-align: center;
   justify-content: center;
+
 }
 .right-container .pay-details button {
   font-size: 10px;
@@ -1116,7 +1118,7 @@ width: 300px;
   color: black;
 }
 .right-container .pay-details h6 {
-  font-size: 12px;
+  font-size: 11px;
 }
 .right-container .pay-details span {
   font-size: 10px;
