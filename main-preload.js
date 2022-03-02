@@ -7,6 +7,7 @@ var mining_status = false;
 var just_started = true;
 var downloading = false;
 var last_gpu_details = '';
+var gpu_details = {};
 
 // ------------------------- Engine --------------------------
 function setGUIState(mining) {
@@ -174,7 +175,6 @@ ipcRenderer.on('updates-available', ()=>{
 })
 
 ipcRenderer.on('plugin-status', (event, args)=>{
-    console.log(args)
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
     let txt_status_hashrate = document.getElementById('status-hashrate');
@@ -186,7 +186,15 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     txt_mini_uptime.textContent = args['uptime'];
 
     // status page
+    let side_gpu_name = document.getElementById('status-gpu-name');
+    let side_pcie = document.getElementById('status-pcie');
+    let side_core_clock = document.getElementById('status-core-clock');
+    let side_mem_clock = document.getElementById('status-mem-clock');
+    let side_fan_speed = document.getElementById('status-fan-speed');
+    let side_power = document.getElementById('status-power');
+
     let gpu_detail_container = document.getElementById('gpu-details-container');
+
     gpu_detail_container.innerHTML = '';
 
     last_gpu_details = args['devices'];
@@ -195,9 +203,23 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         let card = '<button id="btn_gpu_'+ index +'" class="card"><h5>PCI-E:' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>ETC :</h6><h6>: ' + gpu['hashrate'] + 
-        '</h6><div class="profit-card"><h6>20$ </h6><h6 id="spacer"> Per day</h6></div></div></div></button>'
+        '</h6><div class="profit-card"><h6>20$ </h6><h6 id="spacer"> Per day</h6>' +
+        '</div></div></div></button>'
 
         gpu_detail_container.innerHTML += card;
+
+        gpu_details[index] = gpu;
+
+        document.getElementById('btn_gpu_'+ index).addEventListener('click', ()=>{
+            side_gpu_name.textContent = gpu_details[index]['name'];
+            side_pcie.textContent = gpu_details[index]['pcie'];
+            side_core_clock.textContent = gpu_details[index]['core-clock'];
+            side_mem_clock.textContent = gpu_details[index]['mem-clock'];
+            side_fan_speed.textContent = gpu_details[index]['fan'];
+            side_power.textContent = gpu_details[index]['power'];
+            side_gpu_name.textContent = gpu_details[index]['name'];
+        })
+        
         index += 1;
     });
 })
