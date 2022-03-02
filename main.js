@@ -571,7 +571,10 @@ function checkPluginUpdates() {
             downloading_plugins.push(engines[i])
           }
         }
-        mainWindow_tasks.push('download-plugins')
+        if (downloading_plugins.length != 0) {
+          mainWindow_tasks.push('download-plugins')
+          plugin_updating = false;
+        }
       }else{
         return
       }
