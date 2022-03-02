@@ -208,16 +208,16 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         gpu_detail_container.innerHTML += card;
 
-        gpu_details[index] = gpu;
+        gpu_details['gpu' + index] = gpu;
 
         document.getElementById('btn_gpu_'+ index).addEventListener('click', ()=>{
-            side_gpu_name.textContent = gpu_details[index]['name'];
-            side_pcie.textContent = gpu_details[index]['pcie'];
-            side_core_clock.textContent = gpu_details[index]['core-clock'];
-            side_mem_clock.textContent = gpu_details[index]['mem-clock'];
-            side_fan_speed.textContent = gpu_details[index]['fan'];
-            side_power.textContent = gpu_details[index]['power'];
-            side_gpu_name.textContent = gpu_details[index]['name'];
+            side_gpu_name.textContent = gpu_details['gpu' + index]['name'];
+            side_pcie.textContent = gpu_details['gpu' + index]['pcie'];
+            side_core_clock.textContent = gpu_details['gpu' + index]['core-clock'];
+            side_mem_clock.textContent = gpu_details['gpu' + index]['mem-clock'];
+            side_fan_speed.textContent = gpu_details['gpu' + index]['fan'];
+            side_power.textContent = gpu_details['gpu' + index]['power'];
+            side_gpu_name.textContent = gpu_details['gpu' + index]['name'];
         })
         
         index += 1;
