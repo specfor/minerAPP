@@ -192,7 +192,8 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     let side_mem_clock = document.getElementById('status-mem-clock');
     let side_fan_speed = document.getElementById('status-fan-speed');
     let side_power = document.getElementById('status-power');
-
+    let side_temp = document.getElementById('status-temp');
+    
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
     gpu_detail_container.innerHTML = '';
@@ -211,13 +212,16 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         gpu_details['gpu' + index] = gpu;
 
         document.getElementById('btn_gpu_'+ index).addEventListener('click', ()=>{
-            side_gpu_name.textContent = gpu_details['gpu' + index]['name'];
-            side_pcie.textContent = gpu_details['gpu' + index]['pcie'];
-            side_core_clock.textContent = gpu_details['gpu' + index]['core-clock'];
-            side_mem_clock.textContent = gpu_details['gpu' + index]['mem-clock'];
-            side_fan_speed.textContent = gpu_details['gpu' + index]['fan'];
-            side_power.textContent = gpu_details['gpu' + index]['power'];
-            side_gpu_name.textContent = gpu_details['gpu' + index]['name'];
+            let btn_index = document.getElementById('btn_gpu_'+ index).id.split('_')[2];
+            
+            side_gpu_name.textContent = gpu_details['gpu' + btn_index]['name'];
+            side_pcie.textContent = gpu_details['gpu' + btn_index]['pcie'];
+            side_core_clock.textContent = gpu_details['gpu' + btn_index]['core-clock'];
+            side_mem_clock.textContent = gpu_details['gpu' + btn_index]['mem-clock'];
+            side_fan_speed.textContent = gpu_details['gpu' + btn_index]['fan'];
+            side_power.textContent = gpu_details['gpu' + btn_index]['power'];
+            side_gpu_name.textContent = gpu_details['gpu' + btn_index]['name'];
+            side_temp.textContent = gpu_details['gpu' + btn_index]['temperature']
         })
         
         index += 1;
