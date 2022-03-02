@@ -322,12 +322,8 @@ async function runEngine(engine_name, coin_name){
   });
 }
 
-function killEngine(pid='') {
+function killEngine() {
   console.log("process termination called.");
-  if (pid != '') {
-    child.exec(`taskkill /f /pid ${pid} /t`);
-    return
-  }
   child.exec(`taskkill /f /pid ${engine_pid} /t`);
 }
 
@@ -541,6 +537,9 @@ function getGpuDetails(){
   //     })  
   //   }, 3000)
   // })
+
+  // temporaly fix
+  run_lock = false;
 }
 
 // ------------------------------ UPDATE -----------------------------------
