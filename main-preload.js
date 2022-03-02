@@ -202,6 +202,12 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     });
 })
 
+ipcRenderer.on('gpu-count', (event, args)=>{
+    console.log('gpu -' + args)
+    let txt_status_gpu_count = document.getElementById('status-gpu-count');
+    txt_status_gpu_count.textContent = args + ' GPUs';
+})
+
 window.addEventListener("load", (event) => {
     let info_update = document.getElementById('info-update');
     info_update.style.opacity = '0%';
@@ -326,11 +332,6 @@ window.addEventListener("load", (event) => {
         document.getElementById('checkbox-fix-common-errors').checked = args['resolve_common_err'];
     })
 
-    ipcRenderer.on('gpu-count', (event, args)=>{
-        console.log('gpu -' + args)
-        let txt_status_gpu_count = document.getElementById('status-gpu-count');
-        txt_status_gpu_count.textContent = args + ' GPUs';
-    })
 
     ipcRenderer.send('get-engine-config');
     ipcRenderer.send('get-app-config');
