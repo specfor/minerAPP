@@ -222,6 +222,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         
         index += 1;
     });
+    console.log(gpu_details)
 })
 
 ipcRenderer.on('gpu-count', (event, args)=>{
