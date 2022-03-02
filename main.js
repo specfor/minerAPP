@@ -734,12 +734,12 @@ function createWindow () {
     
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
+      mainWindowOnStartTasks()
+      AutoMine()
+      // if (first_run) {
+      //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
+      // }
     });
-    mainWindowOnStartTasks()
-    AutoMine()
-    // if (first_run) {
-    //   createConfigurationWindow(BrowserWindow.fromId(mainWindowId))
-    // }
     
     mainWindow.webContents.openDevTools()
     return mainWindow
