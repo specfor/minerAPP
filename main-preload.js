@@ -211,9 +211,9 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         gpu_details['gpu' + index] = gpu;
 
-        document.getElementById('btn_gpu_'+ index).addEventListener('click', ()=>{
-            let btn_index = document.getElementById('btn_gpu_'+ index).id.split('_')[2];
-            
+        document.getElementById('btn_gpu_'+ index).addEventListener('click', (event)=>{
+            let btn_index = event.target.id.split('_')[2];
+
             side_gpu_name.textContent = gpu_details['gpu' + btn_index]['name'];
             side_pcie.textContent = gpu_details['gpu' + btn_index]['pcie'];
             side_core_clock.textContent = gpu_details['gpu' + btn_index]['core-clock'];
