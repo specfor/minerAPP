@@ -123,7 +123,8 @@ ipcRenderer.on('miner-stopped', ()=>{
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
     gpu_detail_container.innerHTML = '';
-    
+
+    let index = 0;
     gpu_details['devices'].forEach(gpu => {
         let card = '<button id="btn_gpu_'+ index +'" class="card"><h5>PCI-E: ' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
@@ -132,6 +133,7 @@ ipcRenderer.on('miner-stopped', ()=>{
         '</div></div></div></button>'
 
         gpu_detail_container.innerHTML += card;
+        index += 1;
     });
 
 })
