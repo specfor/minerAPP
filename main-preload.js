@@ -108,24 +108,21 @@ ipcRenderer.on('miner-stopped', ()=>{
     txt_mini_uptime.textContent = '00:00:00';
 
     // stats page
+    let index = 0;
+    
+    gpu_details['coin'] = '-';
+    gpu_details['hashrate'] = '- MH/s';
+
+    let gpu_detail_container = document.getElementById('gpu-details-container');
+    gpu_detail_container.innerHTML = '';
+
     for([gpu, data] of Object.entries(gpu_details)){
         gpu_details[gpu]['core-clock'] = '-';
         gpu_details[gpu]['mem-clock'] = '-';
         gpu_details[gpu]['fan'] = '-';
         gpu_details[gpu]['power'] = '-';
         gpu_details[gpu]['temperature'] = '-';
-    }
-    gpu_details['coin'] = '-';
-    gpu_details['hashrate'] = '- MH/s';
 
-    changeStatsGPUData()
-
-    let gpu_detail_container = document.getElementById('gpu-details-container');
-
-    gpu_detail_container.innerHTML = '';
-
-    let index = 0;
-    gpu_details['devices'].forEach(gpu => {
         let card = '<button id="btn_gpu_'+ index +'" class="card"><h5>PCI-E: ' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>- :</h6><h6>: - MH/s' + 
@@ -134,8 +131,9 @@ ipcRenderer.on('miner-stopped', ()=>{
 
         gpu_detail_container.innerHTML += card;
         index += 1;
-    });
+    }
 
+    changeStatsGPUData()
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
