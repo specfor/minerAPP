@@ -249,7 +249,11 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
     let index = 0;
     args['devices'].forEach(gpu => {
-        let card = '<button id="btn_gpu_'+ index +'" class="card"><h5>PCI-E: ' + gpu['pcie'] + 
+        let active = ''
+        if (index == selected_gpu_index) {
+            active = 'active'
+        }
+        let card = '<button id="btn_gpu_'+ index +'" class="card '+ active +'"><h5>PCI-E: ' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>'+ coin +' :</h6><h6>: ' + gpu['hashrate'] + 
         '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +

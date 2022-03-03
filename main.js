@@ -522,6 +522,7 @@ function getGpuDetails(){
 
   if (downloading_plugins.length > 0) {
     mainWindow_tasks.push('reload-app-after-download')
+    BrowserWindow.fromId(loadingWindowId).webContents.send('close-loading')
     return
   }
   if (plugin_updating) {
