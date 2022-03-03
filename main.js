@@ -520,7 +520,11 @@ function getGpuDetails(){
 
   console.log('Gathering gpu devices')
 
-  if (plugin_updating || downloading_plugins.length > 0) {
+  if (downloading_plugins.length > 0) {
+    mainWindow_tasks.push('reload-app-after-download')
+    return
+  }
+  if (plugin_updating) {
     console.log('waiting to get gpu data')
     setTimeout(getGpuDetails, 5000)
     return
@@ -705,7 +709,19 @@ function mainWindowOnStartTasks() {
     BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', gpu_details)
     BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', gpu_count)
   }
-  
+  if (mainWindow_tasks.includes('reload-app-after-download')) {
+    function reloadAPP() {
+      if (!plugin_updating) {
+        app.relaunch()
+        app.quit()
+        return
+      }else{
+        setTimeout(reloadAPP, 8000)
+      }
+    }
+    reloadAPP()
+  }
+
   function readyToMine() {
     if (!run_lock) {
       BrowserWindow.fromId(mainWindowId).webContents.send('ready-to-mine')
@@ -745,7 +761,7 @@ function createWindow () {
     // loading functions
     check_updates()
     checkPluginUpdates()
-    getGpuDetails()
+    setTimeout(getGpuDetails, 3000)
   });
 
   loadingWindow.on("close", function(){
