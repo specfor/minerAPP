@@ -1379,6 +1379,7 @@ color: #009579;
 box-shadow: 0 0 10px rgba(0,0,0,0.8)
 }
 .card-data{
+
   position: absolute;
   left: 335px;
   width: 240px;
@@ -1389,9 +1390,30 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
 .card-data .h-extender{
-  opacity: 100%;
+  opacity: 0%;
 }
+.h-no-extender{
+  opacity: ;
+  position: absolute;
+  align-items: center;
+  align-content: center;
+  top: 60px;
+  left: 345px;
+  width: 240px;
+  height: 360px;
+  text-align: center;
+}
+.h-no-extender img{
+  margin-top: 150px;
+}
+.h-no-extender h2{
+  font-size: 14px;
+  color: #ffffff77;
+  font-weight: 300;
+}
+
 .card-data .h-extender .img-line{
   position: relative;
   display: flex;
