@@ -386,14 +386,15 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = Math.round(body['hashrate'] / 1000000);
+        let hashrate = calculateHashrate(body['hashrate']);
+        let devices = [];
         let power = 0;
+
         body['gpus'].forEach(gpu=>{
-          power += gpu['power']
+          power += gpu['power'];
+          devices.push({'pcie': body['pci_id'], 'name': gpu['name'], 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': '', 'temperature': ''})
         })
         let uptime = msToTime(body['uptime']*1000);
-
-        let devices = {'pcie': body['pci_bus_id'], 'name': body['name'], 'core-clock': '', 'fan': '', 'mem-clock': '', 'power': '', 'temperature': ''}
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
    
@@ -409,14 +410,24 @@ async function sendMiningStatus(){
         if (error) {
           return
         }
-        let hashrate = Math.round(body['miner']['devices']['total_hashrate'] / 1000000);
+        // {"start_time":1646306289,"uptime":32,"extended_share_info":true,"miner":
+        //   {"devices":
+        //     [{"hashrate":16486272,"id":0,"info":"ASUS GeForce GTX 1650 SUPER 4GB","temperature":"51","power":77,"accepted_shares":0,"stale_shares":0,"invalid_shares":0,"rejected_shares":0}],
+        //   "total_hashrate":16486272}
+        // ,"stratum":
+        //   {"shares_per_minute":0.00,"server":"asia-eth.2miners.com:2020","user": "0xbe6a88119d93e9947159f81f242727d2e4cc098e","accepted_shares":0,"stale_shares":0,"invalid_shares":0,"rejected_shares":0}}
+
+        let hashrate = calculateHashrate(body['miner']['devices']['total_hashrate']);
+        let devices = [];
         let power = 0;
+
         body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
+          devices.push({'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         let uptime = msToTime(body['uptime']*1000);
 
-        let devices = {'pcie': body['pci_bus_id'], 'name': body['name'], 'core-clock': '', 'fan': '', 'mem-clock': '', 'power': '', 'temperature': ''}
+         
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
 
