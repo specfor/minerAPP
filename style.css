@@ -1310,10 +1310,6 @@ background-color:rgba(255, 255, 255, 0.64) ;
   color: rgba(255, 255, 255, 0.646);
   }
 
-.stats-tab .conatainer-stats .sc-veiw .card:target{
-  background-color:#007a63 ;
-  color: rgba(255, 255, 255, 0.646);  
-}
 
 .stats-tab .conatainer-stats .sc-veiw button{
   border: none;
