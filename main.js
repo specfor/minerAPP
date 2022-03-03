@@ -534,13 +534,23 @@ function getGpuDetails(){
   let gpu_detection_content = '@cd /d "%~dp0"\r\nnbminer -a etchash -o asia-eth.2miners.com:2020 -u 0xbe6a88119d93e9947159f81f242727d2e4cc098e.default --api 127.0.0.1:20005\r\npause';
   fs.writeFileSync(path.join(nb_details['path'], 'gpu_detection.bat'),  gpu_detection_content);
 
-  let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {stdio: 'ignore', cwd: nb_details['path']})
-  let nb_pid = nb.pid;
+  let nb_pid = 0;
+  try{
+    let nb = child.spawn(path.join(nb_details['path'], 'gpu_detection.bat'), {stdio: 'ignore', cwd: nb_details['path']})
+    nb_pid = nb.pid;
+    
+    nb.on('close', (code)=>{
+      console.log('gpu program close with code ' + code);
+      run_lock = false;
+    })
 
-  nb.on('close', (code)=>{
-    console.log('gpu program close with code ' + code)
-    run_lock = false;
-  })
+    nb.on('spawn', ()=>{
+      getdata()
+    })
+  }catch(err){
+    BrowserWindow.fromId(loadingWindowId).webContents.send('close-loading')
+  }
+
 
   function getdata() {
     request('http://127.0.0.1:20005/api/v1/status', {json: true}, (error, res, body) => {
@@ -570,9 +580,6 @@ function getGpuDetails(){
     })  
   }
 
-  nb.on('spawn', ()=>{
-    getdata()
-  })
 
   // temporaly fix
   // run_lock = false;
@@ -694,12 +701,21 @@ function mainWindowOnStartTasks() {
   }
   if (mainWindow_tasks.includes('download-plugins')) {
     downloadEngine('all')
-  }
-  if (mainWindow_tasks.includes('send-gpu-data')) {
+  }else if (mainWindow_tasks.includes('send-gpu-data')) {
     BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', gpu_details)
     BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', gpu_count)
   }
+  
+  function readyToMine() {
+    if (!run_lock) {
+      BrowserWindow.fromId(mainWindowId).webContents.send('ready-to-mine')
+      return
+    }else{
+      setTimeout(readyToMine, 5000)
+    }    
+  }
 
+  readyToMine()
 }
 
 function createWindow () {

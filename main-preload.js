@@ -3,6 +3,7 @@ const { info } = require('console');
 const { ipcRenderer, BrowserWindow, webContents } = require('electron')
 const path = require('path')
 
+var ready_to_mine = false;
 var mining_status = false;
 var just_started = true;
 var downloading = false;
@@ -72,6 +73,10 @@ function change_home_status(pool_address, algorithm, plugin_used){
         txt_status_server.textContent = server;
     }
 }
+
+ipcRenderer.on('ready-to-mine', ()=>{
+    ready_to_mine = true;
+})
 
 ipcRenderer.on('engine-download-started', () => {
     downloading = true;
@@ -281,7 +286,7 @@ window.addEventListener("load", (event) => {
     // ------------------ RUN MINER -----------------
     let checbox_mine = document.getElementById('check-run-engine');
     checbox_mine.addEventListener('click', (event)=>{
-        if (!downloading) {
+        if (!downloading || !ready_to_mine) {
             runMiner()
         }else{
             event.preventDefault()
