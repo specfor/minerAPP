@@ -238,7 +238,7 @@ async function runEngine(engine_name, coin_name){
 
   engine_details = getMinerDetails(engine_name);
 
-  mining_coin = coin_name;
+  mining_coin = coin_name.toUpperCase();
 
   console.log("Miner process called to run");
   console.log('Plugin - ' + engine_name + ' & coin - ' + coin_name);
