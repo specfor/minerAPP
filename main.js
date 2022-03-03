@@ -392,7 +392,7 @@ async function sendMiningStatus(){
 
         body['gpus'].forEach(gpu=>{
           power += gpu['power'];
-          devices.push({'pcie': body['pci_id'], 'name': gpu['name'], 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': '', 'temperature': ''})
+          devices.push({'pcie': gpu['pci_id'], 'name': gpu['name'], 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         let uptime = msToTime(body['uptime']*1000);
 
