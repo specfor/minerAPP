@@ -120,6 +120,9 @@ ipcRenderer.on('miner-stopped', ()=>{
     gpu_detail_container.innerHTML = '';
 
     for([gpu_id, gpu] of Object.entries(gpu_details)){
+        if (gpu_id == 'coin' || gpu_id == 'hashrate') {
+            continue
+        }
         gpu_details[gpu_id]['core-clock'] = '-';
         gpu_details[gpu_id]['mem-clock'] = '-';
         gpu_details[gpu_id]['fan'] = '-';
@@ -218,7 +221,7 @@ function changeStatsGPUData() {
     console.log('selected gpu - gpu' + selected_gpu_index)
 
     side_gpu_name.textContent = gpu_details['gpu' + selected_gpu_index]['name'];
-    side_pcie.textContent = gpu_details['gpu' + selected_gpu_index]['pcie'];
+    side_pcie.textContent = gpu_details['gpu' + selected_gpu_index]['id'];
     side_core_clock.textContent = gpu_details['gpu' + selected_gpu_index]['core-clock'];
     side_mem_clock.textContent = gpu_details['gpu' + selected_gpu_index]['mem-clock'];
     side_fan_speed.textContent = gpu_details['gpu' + selected_gpu_index]['fan'];
