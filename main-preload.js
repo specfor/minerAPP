@@ -255,7 +255,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     args['devices'].forEach(gpu => {
         let active = ''
         if (gpu['id'] == selected_gpu_index) {
-            active = 'active'
+            active = 'actives'
         }
         let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card '+ active +'"><h5>Device ID: ' + gpu['id'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
