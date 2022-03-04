@@ -370,7 +370,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
-          devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
@@ -393,7 +393,7 @@ async function sendMiningStatus(){
         body['gpus'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          devices.push({'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         let uptime = msToTime(body['uptime']*1000);
 
@@ -425,7 +425,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          devices.push({'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         let uptime = msToTime(body['uptime']*1000);
 
@@ -571,7 +571,7 @@ function getGpuDetails(){
           gpu_count += 1;
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
-          devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': '', 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         console.log('gpu count - ' + gpu_count)
         gpu_details = {'hashrate': '0 MH/s', 'power': '0', 'uptime': '00:00:00', 'devices': devices}

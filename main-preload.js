@@ -112,9 +112,7 @@ ipcRenderer.on('miner-stopped', ()=>{
     txt_mini_power.textContent =  '- W';
     txt_mini_uptime.textContent = '00:00:00';
 
-    // stats page
-    let index = 0;
-    
+    // stats page    
     gpu_details['coin'] = '-';
     gpu_details['hashrate'] = '- MH/s';
 
@@ -128,14 +126,13 @@ ipcRenderer.on('miner-stopped', ()=>{
         gpu_details[gpu]['power'] = '-';
         gpu_details[gpu]['temperature'] = '-';
 
-        let card = '<button id="btn_gpu_'+ index +'" class="card"><h5>PCI-E: ' + gpu['pcie'] + 
+        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card"><h5>PCI-E: ' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>- :</h6><h6>: - MH/s' + 
         '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +
         '</div></div></div></button>'
 
         gpu_detail_container.innerHTML += card;
-        index += 1;
     }
 
     changeStatsGPUData()
@@ -250,13 +247,12 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         coin = '-'
     }
 
-    let index = 0;
     args['devices'].forEach(gpu => {
         let active = ''
-        if (index == selected_gpu_index) {
+        if (gpu['id'] == selected_gpu_index) {
             active = 'active'
         }
-        let card = '<button id="btn_gpu_'+ index +'" class="card '+ active +'"><h5>PCI-E: ' + gpu['pcie'] + 
+        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card '+ active +'"><h5>PCI-E: ' + gpu['pcie'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>'+ coin +' :</h6><h6>: ' + gpu['hashrate'] + 
         '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +
@@ -264,17 +260,15 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         gpu_detail_container.innerHTML += card;
 
-        gpu_details['gpu' + index] = gpu;
+        gpu_details['gpu' + gpu['id']] = gpu;
 
         let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
         
-        document.getElementById('btn_gpu_'+ index).addEventListener('click', (event)=>{
+        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
             selected_gpu_index = event.target.id.split('_')[2];
             no_gpu_selected_msg.style.opacity = '0%';
             changeStatsGPUData()
         })
-        
-        index += 1;
     });
     changeStatsGPUData()
     // console.log(gpu_details)
