@@ -574,7 +574,7 @@ function getGpuDetails(){
           devices.push({'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         console.log('gpu count - ' + gpu_count)
-        gpu_details = {'hashrate': '0 MH/s', 'power': '0 W', 'uptime': '00:00:00', 'devices': devices}
+        gpu_details = {'hashrate': '0 MH/s', 'power': '0', 'uptime': '00:00:00', 'devices': devices}
 
         mainWindow_tasks.push('send-gpu-data')
         killEngine2(nb_pid)

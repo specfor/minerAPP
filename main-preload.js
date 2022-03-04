@@ -238,7 +238,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
     txt_status_hashrate.textContent = args['hashrate'];
     txt_mini_hashrate.textContent = args['hashrate'];
-    txt_mini_power.textContent = args['power'] + 'W';
+    txt_mini_power.textContent = args['power'] + ' W';
     txt_mini_uptime.textContent = args['uptime'];
 
     // status page
@@ -246,6 +246,9 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
     gpu_detail_container.innerHTML = '';
     let coin = args['coin'];
+    if (!coin) {
+        coin = '-'
+    }
 
     let index = 0;
     args['devices'].forEach(gpu => {
@@ -263,16 +266,18 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         gpu_details['gpu' + index] = gpu;
 
+        let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
         
         document.getElementById('btn_gpu_'+ index).addEventListener('click', (event)=>{
             selected_gpu_index = event.target.id.split('_')[2];
+            no_gpu_selected_msg.style.opacity = '0%';
             changeStatsGPUData()
         })
         
         index += 1;
     });
     changeStatsGPUData()
-    console.log(gpu_details)
+    // console.log(gpu_details)
 })
 
 ipcRenderer.on('gpu-count', (event, args)=>{
