@@ -261,12 +261,14 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         gpu_detail_container.innerHTML += card;
 
         gpu_details['gpu' + gpu['id']] = gpu;
-
+        
         let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
+        let gpu_selected_msg = document.getElementById('msg-gpu-data')
         
         document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
             selected_gpu_index = event.target.id.split('_')[2];
             no_gpu_selected_msg.style.opacity = '0%';
+            gpu_selected_msg.style.opacity = '100%';
             changeStatsGPUData()
         })
     });
