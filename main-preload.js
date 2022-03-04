@@ -8,7 +8,7 @@ var mining_status = false;
 var just_started = true;
 var downloading = false;
 var gpu_details = {};
-var selected_gpu_index = 0;
+var selected_gpu_index = -1;
 
 // ------------------------- Engine --------------------------
 function setGUIState(mining) {
