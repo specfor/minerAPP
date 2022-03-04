@@ -119,12 +119,12 @@ ipcRenderer.on('miner-stopped', ()=>{
     let gpu_detail_container = document.getElementById('gpu-details-container');
     gpu_detail_container.innerHTML = '';
 
-    for([gpu, data] of Object.entries(gpu_details)){
-        gpu_details[gpu]['core-clock'] = '-';
-        gpu_details[gpu]['mem-clock'] = '-';
-        gpu_details[gpu]['fan'] = '-';
-        gpu_details[gpu]['power'] = '-';
-        gpu_details[gpu]['temperature'] = '-';
+    for([gpu_id, gpu] of Object.entries(gpu_details)){
+        gpu_details[gpu_id]['core-clock'] = '-';
+        gpu_details[gpu_id]['mem-clock'] = '-';
+        gpu_details[gpu_id]['fan'] = '-';
+        gpu_details[gpu_id]['power'] = '-';
+        gpu_details[gpu_id]['temperature'] = '-';
 
         let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card"><h5>Device ID: ' + gpu['id'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
@@ -239,8 +239,8 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     txt_mini_uptime.textContent = args['uptime'];
 
     // status page
-    gpu_details = [];
-    
+    gpu_details = {};
+
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
     gpu_detail_container.innerHTML = '';
