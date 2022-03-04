@@ -1306,8 +1306,7 @@ background-color:rgba(255, 255, 255, 0.64) ;
 }
 
 .stats-tab .conatainer-stats .sc-veiw .card:focus{
-  background-color: #007a63 ;
-  color: rgba(255, 255, 255, 0.646);
+
   }
 
 
@@ -1395,7 +1394,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   opacity: 0%;
 }
 .h-no-extender{
-  opacity: ;
+
   position: absolute;
   align-items: center;
   align-content: center;
@@ -1500,6 +1499,10 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 }
 .mini-bar:target{
   color: rgba(255, 255, 255, 0.646);  
+}
+.actives{
+  background-color: #007a63 ;
+  color: rgba(255, 255, 255, 0.646);
 }
 
 /*stat tab editing*/
