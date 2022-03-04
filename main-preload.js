@@ -126,7 +126,7 @@ ipcRenderer.on('miner-stopped', ()=>{
         gpu_details[gpu]['power'] = '-';
         gpu_details[gpu]['temperature'] = '-';
 
-        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card"><h5>PCI-E: ' + gpu['pcie'] + 
+        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card"><h5>Device ID: ' + gpu['id'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>- :</h6><h6>: - MH/s' + 
         '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +
@@ -239,6 +239,8 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     txt_mini_uptime.textContent = args['uptime'];
 
     // status page
+    gpu_details = [];
+    
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
     gpu_detail_container.innerHTML = '';
@@ -252,7 +254,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         if (gpu['id'] == selected_gpu_index) {
             active = 'active'
         }
-        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card '+ active +'"><h5>PCI-E: ' + gpu['pcie'] + 
+        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card '+ active +'"><h5>Device ID: ' + gpu['id'] + 
         '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
         '</h6><div class="mini-bar"><h6>'+ coin +' :</h6><h6>: ' + gpu['hashrate'] + 
         '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +

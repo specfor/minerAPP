@@ -427,9 +427,7 @@ async function sendMiningStatus(){
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
           devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
-        let uptime = msToTime(body['uptime']*1000);
-
-         
+        let uptime = msToTime(body['uptime']*1000);        
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
 
