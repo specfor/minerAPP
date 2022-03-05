@@ -249,6 +249,17 @@ function calculateProfit() {
       });
 }
 
+function addGPUClickHandler(event) {
+    let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
+    let gpu_selected_msg = document.getElementById('msg-gpu-data')
+   
+    selected_gpu_index = event.target.id.split('_')[2];
+    console.log('handler added for gpu - ' + selected_gpu_index)
+    event.target.classList.add('actives');
+    no_gpu_selected_msg.style.opacity = '0%';
+    gpu_selected_msg.style.opacity = '100%';
+    changeStatsGPUData()
+}
 ipcRenderer.on('plugin-status', (event, args)=>{
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
@@ -287,17 +298,8 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         console.log('gpu - ' + gpu['id'])
         gpu_details['gpu' + gpu['id']] = gpu;
         
-        let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
-        let gpu_selected_msg = document.getElementById('msg-gpu-data')
         
-        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
-            console.log('handler added for gpu - ' + gpu['id'])
-            selected_gpu_index = event.target.id.split('_')[2];
-            event.target.classList.add('actives');
-            no_gpu_selected_msg.style.opacity = '0%';
-            gpu_selected_msg.style.opacity = '100%';
-            changeStatsGPUData()
-        })
+        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{addGPUClickHandler(event)} )
     });
     changeStatsGPUData()
     // console.log(gpu_details)
