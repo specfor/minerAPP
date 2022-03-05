@@ -214,7 +214,7 @@ ipcRenderer.on('updates-available', ()=>{
 })
 
 function changeStatsGPUData() {
-    if (!selected_gpu_index) {
+    if (selected_gpu_index == -1) {
         return
     }
     let side_gpu_name = document.getElementById('status-gpu-name');
@@ -304,7 +304,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 })
 
 ipcRenderer.on('gpu-count', (event, args)=>{
-    console.log('gpu -' + args)
+    // console.log('gpu -' + args)
     let txt_status_gpu_count = document.getElementById('status-gpu-count');
     txt_status_gpu_count.textContent = args + ' GPUs';
 })
