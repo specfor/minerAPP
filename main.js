@@ -774,6 +774,7 @@ function createWindow () {
       alwaysOnTop:true,
 
       webPreferences: {
+        webviewTag: true,
         preload: path.join(__dirname, 'main-preload.js')
       }
     })
