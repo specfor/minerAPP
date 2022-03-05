@@ -1,6 +1,7 @@
 const { isEmptyOrSpaces } = require('builder-util');
 const { info } = require('console');
-const { ipcRenderer, BrowserWindow, webContents } = require('electron')
+const { ipcRenderer, BrowserWindow, webContents } = require('electron');
+const { request } = require('http');
 const path = require('path')
 
 var ready_to_mine = false;
@@ -236,6 +237,18 @@ function changeStatsGPUData() {
     side_temp.textContent = gpu_details['gpu' + selected_gpu_index]['temperature']
 }
 
+function calculateProfit() {
+    request(check_update_link, options, (error, res, body) => {    
+        try{
+          if (!error && res.statusCode == 200) {
+            downloadEngine(engine_name, body)
+          }
+        }catch(err){
+        console.error('Download plugin failed.', err.message)
+        }
+      });
+}
+
 ipcRenderer.on('plugin-status', (event, args)=>{
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
@@ -271,14 +284,16 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         gpu_detail_container.innerHTML += card;
 
+        console.log('gpu - ' + gpu['id'])
         gpu_details['gpu' + gpu['id']] = gpu;
         
         let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
         let gpu_selected_msg = document.getElementById('msg-gpu-data')
         
         document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
+            console.log('handler added for gpu - ' + gpu['id'])
             selected_gpu_index = event.target.id.split('_')[2];
-            event.target.classList.add('actives')
+            event.target.classList.add('actives');
             no_gpu_selected_msg.style.opacity = '0%';
             gpu_selected_msg.style.opacity = '100%';
             changeStatsGPUData()
