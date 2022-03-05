@@ -136,6 +136,12 @@ ipcRenderer.on('miner-stopped', ()=>{
         '</div></div></div></button>'
 
         gpu_detail_container.innerHTML += card;
+
+        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
+            selected_gpu_index = event.target.id.split('_')[2];
+            event.target.classList.add('actives')
+            changeStatsGPUData()
+        })
     }
 
     changeStatsGPUData()
