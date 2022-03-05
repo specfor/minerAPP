@@ -1507,3 +1507,43 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 }
 
 /*stat tab editing*/
+/*--------------------------------DASHBORAD---------------------------------*/
+.on-board{
+  position: fixed;
+  top: 40px;
+  justify-content: center;
+
+}
+.on-board .auto-refsher{
+  position: relative;
+  top: -10px;
+  left: 520px;
+  font-size: 10px;
+  font-weight: 300;
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: #009579;
+  color: rgba(255, 255, 255, 0.852);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 100;
+  letter-spacing: 0.4px;
+}
+.on-board .auto-refsher:hover{
+color: rgba(255, 255, 255, 0.694);
+background-color: #076d5b;
+font-weight: 100;
+}
+#foo{
+  position: relative;
+  left: 10px;
+  border-radius: 8px;
+  border: 2px solid #828282;
+  justify-content: center;
+  padding: 5px;
+}
+
+
+/*--------------------------------DASHBORAD---------------------------------*/
