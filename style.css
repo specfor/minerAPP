@@ -1509,6 +1509,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 /*stat tab editing*/
 /*--------------------------------DASHBORAD---------------------------------*/
 .on-board{
+  opacity: 100%;
   position: fixed;
   top: 40px;
   justify-content: center;
