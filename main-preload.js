@@ -299,7 +299,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         gpu_details['gpu' + gpu['id']] = gpu;
         
         
-        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{addGPUClickHandler(event)} )
+        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', addGPUClickHandler)
     });
     changeStatsGPUData()
     // console.log(gpu_details)
