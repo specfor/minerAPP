@@ -364,7 +364,7 @@ function calculateHashrate(hashrate) {
 
 async function calculateProfit() {
   gpu_details.forEach(gpu => {
-    let url = 'https://www.coincalculators.io/api?hashrate='+gpu['hashrate']
+    let url = 'https://www.coincalculators.io/api?hashrate='+gpu['hashrate-raw']
     console.log(url)
     request(url, {json: true}, (error, res, body) => {    
         try{
@@ -415,7 +415,7 @@ async function sendMiningStatus(){
           }
 
           console.log('profit  pp - '+ profit)
-          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate-raw': gpu['hashrate_raw'],'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
         if (profits.length < devices.length) {
@@ -452,7 +452,7 @@ async function sendMiningStatus(){
               profit = data;
             }
           }
-          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'],'hashrate-raw': gpu['hashrate'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         gpu_details = devices;
 
@@ -499,7 +499,7 @@ async function sendMiningStatus(){
               profit = data;
             }
           }
-          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'profit/h': profit, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate-raw': gpu['hashrate'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         if (profits.length < devices.length) {
           devices.forEach(gpu => {
