@@ -367,7 +367,7 @@ function calculateProfit(hashrate) {
             console.log('vvvvvv - '+ body)
           
             body.forEach(coin_d => {
-              if (coin_name == coin_d.toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
+              if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
                   profit = '$ ' + coin_d['revenueInHourUSD'];
                   console.log('profit - '+ profit)
                   return profit;
