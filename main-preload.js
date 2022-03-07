@@ -238,21 +238,36 @@ function changeStatsGPUData() {
 }
 
 function calculateProfit() {
-    request(check_update_link, options, (error, res, body) => {    
+    request('https://whattomine.com/coins.json', {json: true}, (error, res, body) => {    
         try{
-          if (!error && res.statusCode == 200) {
-            downloadEngine(engine_name, body)
+            if (!error && res.statusCode == 200) {
+                let profit = '';
+                let coin_name = gpu_details['coin'].toLowerCase();
+
+            
+                for([coin_n, coin_d] of Object.entries(bodu['coins'])){
+                if (coin_name == coin_n.toLowerCase() || coin_name == coin_d['tag'].toLowerCase()) {
+                    profit = 'BTC ' + coin_d['btc_revenue24'];
+                }
+
+                if (profit) {
+                    return profit;
+                }else{
+                    return 'NO DATA';
+                }
+            }
           }
         }catch(err){
-        console.error('Download plugin failed.', err.message)
+            console.error('Coin data receival failed.', err.message)
         }
-      });
+    });
 }
 
 function addGPUClickHandler(event) {
     let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
     let gpu_selected_msg = document.getElementById('msg-gpu-data')
    
+    console.log(event.target.id)
     selected_gpu_index = event.target.id.split('_')[2];
     console.log('handler added for gpu - ' + selected_gpu_index)
     event.target.classList.add('actives');
@@ -260,6 +275,7 @@ function addGPUClickHandler(event) {
     gpu_selected_msg.style.opacity = '100%';
     changeStatsGPUData()
 }
+
 ipcRenderer.on('plugin-status', (event, args)=>{
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
