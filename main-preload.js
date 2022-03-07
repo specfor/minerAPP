@@ -131,7 +131,8 @@ ipcRenderer.on('miner-stopped', ()=>{
         gpu_details[gpu_id]['power'] = '-';
         gpu_details[gpu_id]['temperature'] = '-';
 
-        let card = '<button class="card"><div class="data-line"><h6 id="big-font">'+ gpu['name'] +'</h6>' +
+        let card = '<button class="card"><div class="data-line"><div class="id-s">ID:' + gpu['id'] +
+          '</div><h6 id="big-font">'+ gpu['name'] +'</h6>' +
           '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5> -- </h5>' +
           '<H5>- H/s</H5></div><div  class="profit-card"><h6> - $/hour' 
           '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +
@@ -239,7 +240,9 @@ ipcRenderer.on('plugin-status', (event, args)=>{
             active = 'actives'
         }
         console.log(gpu)
-        let card = '<button class="card"><div class="data-line"><h6 id="big-font">'+ gpu['name'] +'</h6>' +
+        
+        let card = '<button class="card"><div class="data-line"><div class="id-s">ID:' + gpu['id'] +
+          '</div><h6 id="big-font">'+ gpu['name'] +'</h6>' +
           '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5>'+coin +'</h5>' +
           '<H5>'+ args['hashrate'] +'</H5></div><div  class="profit-card"><h6>'+ gpu['profit/h'] + 
           '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +

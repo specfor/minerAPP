@@ -386,10 +386,20 @@ async function calculateProfit() {
                     }else{
                       profit = coin_d['revenueInHourUSD'].toFixed(3) + ' $/hour';
                     }
-                    // console.log('profit - '+ profit)
-                    profits[gpu['id']] = profit
+                    console.log('profit - '+ profit)
+
+                    let x=0;
+                    profits.forEach(item => {
+                      if (item['id'] == gpu['id']) {
+                        profits[x]['profit'] = profit;
+                        break
+                      }
+                      x +=1;
+                    });
+                    // profits[gpu['id']] = profit
                 }
               });
+              console.log('array = '+ profits)
           }
         }catch(err){
             console.error('Coin data receival failed.', err.message)
@@ -410,14 +420,16 @@ async function sendMiningStatus(){
         let uptime = msToTime(Date.now() - start_time);
 
         let devices = [];
+        let x = 0;
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
 
           let profit = '- $/hour';
-          for (const [id, data] of Object.entries(profits)) {
+          for (var [id, data] of Object.entries(profits[x])) {
             profit = '- $/hour';
-            if (id == gpu['id'] && gpu['hashrate_raw'] > 0) {
-              profit = data;
+            if (id == 'id' && data == gpu['id'] && gpu['hashrate_raw'] > 0) {
+              profit = profits[x]['profit'];
+              break
             }
           }
 
@@ -510,8 +522,7 @@ async function sendMiningStatus(){
         })
         if (profits.length < devices.length) {
           devices.forEach(gpu => {
-            let id = gpu['id']
-            profits.push({id: '-'})
+            profits.push({'id': gpu['id'], 'profit': '-'})
           });
         }
 
