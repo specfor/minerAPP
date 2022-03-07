@@ -292,7 +292,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
-    gpu_detail_container.innerHTML = '';
+    //gpu_detail_container.innerHTML = '';
     let coin = args['coin'];
     if (!coin) {
         coin = '-'
