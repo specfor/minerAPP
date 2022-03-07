@@ -392,7 +392,6 @@ async function calculateProfit() {
                     profits.forEach(item => {
                       if (item['id'] == gpu['id']) {
                         profits[x]['profit'] = profit;
-                        break
                       }
                       x +=1;
                     });
@@ -429,11 +428,10 @@ async function sendMiningStatus(){
             profit = '- $/hour';
             if (id == 'id' && data == gpu['id'] && gpu['hashrate_raw'] > 0) {
               profit = profits[x]['profit'];
-              break
             }
           }
 
-          // console.log('profit  pp - '+ profit)
+          console.log('profit  pp - '+ profit)
           devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate-raw': gpu['hashrate_raw'],'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
