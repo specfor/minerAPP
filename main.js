@@ -355,6 +355,30 @@ function calculateHashrate(hashrate) {
   return hashrate
 }
 
+function calculateProfit(hashrate) {
+  request('https://www.coincalculators.io/api?hashrate='+hashrate, {json: true}, (error, res, body) => {    
+      try{
+          if (error) {
+              return false;
+          }
+          if (!error && res.statusCode == 200) {
+              let profit = '';
+              let coin_name = mining_coin.toLowerCase();
+          
+            body.forEach(coin_d => {
+              if (coin_name == coin_d.toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
+                  profit = '$ ' + coin_d['revenueInHourUSD'];
+                  return profit;
+              }
+            });
+            return 'NO DATA';
+        }
+      }catch(err){
+          console.error('Coin data receival failed.', err.message)
+      }
+  });
+}
+
 async function sendMiningStatus(){
   if (active_engine_name == 'nbminer') {
     request('http://127.0.0.1:20001/api/v1/status', {json: true}, (error, res, body) => {
@@ -369,8 +393,9 @@ async function sendMiningStatus(){
         let devices = [];
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
-          
-          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          let profit = calculateProfit(gpu['hashrate_raw']);
+
+          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
@@ -393,7 +418,9 @@ async function sendMiningStatus(){
         body['gpus'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          let profit = calculateProfit(gpu['hashrate']);
+
+          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         let uptime = msToTime(body['uptime']*1000);
 
@@ -425,7 +452,9 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
+          let profit = calculateProfit(gpu['hashrate']);
+
+          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'profit/h': profit, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         let uptime = msToTime(body['uptime']*1000);        
 
@@ -708,24 +737,24 @@ function mainWindowOnStartTasks() {
     BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', gpu_details)
     BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', gpu_count)
   }
-  let d = [];
+  // let d = [];
   
-  d.push({'id': 0, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 1, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 2, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 3, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 4, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 5, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 6, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 7, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 8, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 9, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 10, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 11, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  d.push({'id': 12, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 0, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 1, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 2, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 3, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 4, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 5, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 6, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 7, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 8, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 9, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 10, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 11, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 12, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
   
 
-  let p = {'hashrate': '55 MH/s', 'power': '20W', 'uptime': '00:20:00', 'coin': 'ETH', 'devices': d}
+  // let p = {'hashrate': '55 MH/s', 'power': '20W', 'uptime': '00:20:00', 'coin': 'ETH', 'devices': d}
 
   // BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', p)
 
