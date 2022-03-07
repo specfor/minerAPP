@@ -1297,7 +1297,6 @@ width: 300px;
   background-color: rgba(255, 255, 255, 0.452);
   padding: 8px;
   display: flex;
-  
   width: 100%;
   border-bottom: 2px solid #0d141f;
 }
@@ -1324,6 +1323,7 @@ background-color:rgba(255, 255, 255, 0.64) ;
   margin: 0px;
   text-align: left;
   padding-left: 10px;
+
 }
 
 .mini-bar{
@@ -1332,7 +1332,6 @@ background-color:rgba(255, 255, 255, 0.64) ;
   color: #1a1a1d;
   display: flex;
   font-size: 15px;
-  background-color: #0000003c;
   margin-top: -3px;
   padding-left: 8px;
   padding-right: 5px;
@@ -1429,11 +1428,44 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 
 .card-oc-info{
 position: relative;
-top: 00px;
-background-color: #009579;
-width: 200px;
+top: 0px;
+left: -50px;
+background-color: #d8d8d898;
+display: flex;
+float: right;
+border-radius: 5px;
+padding-left: 8px;
+padding-right: 8px;
+width: 300px;
 }
 
+.card-oc-info .oc-item{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding: 5px;
+  font-size: 14px;
+}
+.card-oc-info .oc-item h6{
+  font-size: 10px;
+  padding-left: 5px;
+}
+   
+.left-pa{
+  justify-content: center;
+  text-align: center;
+  padding: 5px;
+  display: flex;
+  background-color: #828282;
+  float: left;
+}
+.left-pa .profit-card{
+padding-right: 150PX;
+}
+.deta{
+  font-size: 10px;
+}
 
 /*stat tab editing*/
 /*--------------------------------DASHBORAD---------------------------------*/
