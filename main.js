@@ -27,6 +27,7 @@ var downloading_versions = [];
 var run_lock = true;
 var mainWindow_tasks = [];
 var gpu_details = [];
+var profits = [];
 var gpu_count = 0;
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
@@ -52,6 +53,12 @@ setInterval(() => {
     sendMiningStatus()
   }
 }, 1000);
+
+setInterval(() => {
+  if (mining) {
+    calculateProfit()
+  }
+}, 5000);
 
 function msToTime(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
@@ -355,29 +362,31 @@ function calculateHashrate(hashrate) {
   return hashrate
 }
 
-async function calculateProfit(hashrate) {
-  request('https://www.coincalculators.io/api?hashrate='+hashrate, {json: true}, (error, res, body) => {    
-      try{
-          if (error) {
-              return false;
+async function calculateProfit() {
+  gpu_details.forEach(gpu => {
+    request('https://www.coincalculators.io/api?hashrate='+gpu['hashrate'], {json: true}, (error, res, body) => {    
+        try{
+            if (error) {
+                return false;
+            }
+            if (!error && res.statusCode == 200) {
+              let profit = '';
+              let coin_name = mining_coin.toLowerCase();
+              // console.log('vvvvvv - '+ body)
+            
+              body.forEach(coin_d => {
+                if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
+                    profit = '$ ' + coin_d['revenueInHourUSD'].toFixed(3);
+                    console.log('profit - '+ profit)
+                    profits[gpu['id']] = profit
+                }
+              });
+              return 'NO DATA';
           }
-          if (!error && res.statusCode == 200) {
-            let profit = '';
-            let coin_name = mining_coin.toLowerCase();
-            // console.log('vvvvvv - '+ body)
-          
-            body.forEach(coin_d => {
-              if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
-                  profit = '$ ' + coin_d['revenueInHourUSD'].toFixed(3);
-                  console.log('profit - '+ profit)
-                  return profit;
-              }
-            });
-            return 'NO DATA';
+        }catch(err){
+            console.error('Coin data receival failed.', err.message)
         }
-      }catch(err){
-          console.error('Coin data receival failed.', err.message)
-      }
+    });
   });
 }
 
@@ -395,12 +404,17 @@ async function sendMiningStatus(){
         let devices = [];
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
-          let profit = await calculateProfit(gpu['hashrate_raw']);
 
           console.log('profit  pp - '+ profit)
           devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
+        if (profits.length < devices.length) {
+          devices.forEach(gpu => {
+            profits.push({gpu['id']: '-'})
+          });
+        }
+        gpu_details = devices;
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
 
         BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', payload)
@@ -421,10 +435,16 @@ async function sendMiningStatus(){
         body['gpus'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          let profit = await calculateProfit(gpu['hashrate_raw']);
 
           devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
+        gpu_details = devices;
+
+        if (profits.length < devices.length) {
+          devices.forEach(gpu => {
+            profits.push({gpu['id']: '-'})
+          });
+        }
         let uptime = msToTime(body['uptime']*1000);
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
@@ -455,10 +475,15 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          let profit = await calculateProfit(gpu['hashrate_raw']);
 
           devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'profit/h': profit, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
+        if (profits.length < devices.length) {
+          devices.forEach(gpu => {
+            profits.push({gpu['id']: '-'})
+          });
+        }
+
         let uptime = msToTime(body['uptime']*1000);        
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
@@ -601,7 +626,7 @@ function getGpuDetails(){
           gpu_count += 1;
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
-          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': '-', 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         console.log('gpu count - ' + gpu_count)
         gpu_details = {'hashrate': '0 MH/s', 'power': '0', 'uptime': '00:00:00', 'devices': devices}
