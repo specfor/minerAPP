@@ -4,6 +4,7 @@ const { ipcRenderer, BrowserWindow, webContents } = require('electron');
 const { request } = require('http');
 const path = require('path')
 
+var income = false;
 var ready_to_mine = false;
 var mining_status = false;
 var just_started = true;
@@ -237,31 +238,6 @@ function changeStatsGPUData() {
     side_temp.textContent = gpu_details['gpu' + selected_gpu_index]['temperature']
 }
 
-function calculateProfit() {
-    request('https://whattomine.com/coins.json', {json: true}, (error, res, body) => {    
-        try{
-            if (!error && res.statusCode == 200) {
-                let profit = '';
-                let coin_name = gpu_details['coin'].toLowerCase();
-
-            
-                for([coin_n, coin_d] of Object.entries(bodu['coins'])){
-                if (coin_name == coin_n.toLowerCase() || coin_name == coin_d['tag'].toLowerCase()) {
-                    profit = 'BTC ' + coin_d['btc_revenue24'];
-                }
-
-                if (profit) {
-                    return profit;
-                }else{
-                    return 'NO DATA';
-                }
-            }
-          }
-        }catch(err){
-            console.error('Coin data receival failed.', err.message)
-        }
-    });
-}
 
 function addGPUClickHandler(event) {
     let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
@@ -292,7 +268,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
     let gpu_detail_container = document.getElementById('gpu-details-container');
 
-    //gpu_detail_container.innerHTML = '';
+    gpu_detail_container.innerHTML = '';
     let coin = args['coin'];
     if (!coin) {
         coin = '-'
@@ -303,19 +279,23 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         if (gpu['id'] == selected_gpu_index) {
             active = 'actives'
         }
-        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card '+ active +'"><h5>Device ID: ' + gpu['id'] + 
-        '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
-        '</h6><div class="mini-bar"><h6>'+ coin +' :</h6><h6>: ' + gpu['hashrate'] + 
-        '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +
-        '</div></div></div></button>'
+        let card = '<button class="card"><div class="data-line"><h6 id="big-font">gtx 1080</h6>' +
+          '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5>ETH</h5>' +
+          '<H5>'+ args['hashrate'] +'</H5></div><div  class="profit-card"><h6>'+ gpu['profit/h'] + 
+          '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +
+          '<img src="./processer.png" alt="" width="15px" height="15px"><h6>'+ gpu['core-clock'] +
+          '</h6></div><div class="oc-item"><img src="./ram.png" alt="" width="15px" height="15px">' +
+          '<h6>'+ gpu['mem-clock'] +'</h6></div><div class="oc-item"><img src="./watt.png" alt="" width="20px" height="20px">' +
+          '<h6>'+ gpu['power'] +'</h6></div><div class="oc-item"><img src="./fan.png" alt="" width="20px" height="20px">' +
+          '<h6>'+ gpu['fan'] +'</h6></div><div class="oc-item"><img src="./temp.png" alt="" width="20px" height="20px">' +
+          '<h6>'+ gpu['temperature'] +'</h6></div></div></div></div></button>';
 
         gpu_detail_container.innerHTML += card;
 
         console.log('gpu - ' + gpu['id'])
         gpu_details['gpu' + gpu['id']] = gpu;
         
-        
-        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', addGPUClickHandler)
+        // document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', addGPUClickHandler)
     });
     changeStatsGPUData()
     // console.log(gpu_details)
