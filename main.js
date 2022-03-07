@@ -452,7 +452,7 @@ function getMinerDetails(engine="") {
   }catch(err){
     data = {'nbminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ae', 'beam', 'conflux', 'ergo', 'etc', 'eth_overclock', 'eth', 'rvn'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''},
     'trex': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['ERGO', 'ETC', 'ETH', 'FIRO', 'RVN', 'SERO', 'VBK', 'VEIL', 'ZANO'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 
-    'gminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['aetenity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 'selected': 'nbminer'};
+    'gminer': {'pool_address':'', 'wallet_address':'', 'extra_param':'', 'supported_coins': ['aeternity', 'aion', 'beam', 'btg', 'cortex', 'etc', 'eth', 'ravencoin', 'zelcash'], 'selected_coin': 'no_coin_selected', 'path':'', 'version': ''}, 'selected': 'nbminer'};
     
     let wdata = JSON.stringify(data);
     try{
@@ -708,6 +708,27 @@ function mainWindowOnStartTasks() {
     BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', gpu_details)
     BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', gpu_count)
   }
+  let d = [];
+  
+  d.push({'id': 0, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 1, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 2, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 3, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 4, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 5, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 6, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 7, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 8, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 9, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 10, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 11, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  d.push({'id': 12, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  
+
+  let p = {'hashrate': '55 MH/s', 'power': '20W', 'uptime': '00:20:00', 'coin': 'ETH', 'devices': d}
+
+  // BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', p)
+
   if (mainWindow_tasks.includes('reload-app-after-download')) {
     function reloadAPP() {
       if (!plugin_updating) {
@@ -793,7 +814,7 @@ function createWindow () {
       // }
     });
     
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
     return mainWindow
   })
   
