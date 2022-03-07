@@ -131,13 +131,18 @@ ipcRenderer.on('miner-stopped', ()=>{
         gpu_details[gpu_id]['power'] = '-';
         gpu_details[gpu_id]['temperature'] = '-';
 
-        let card = '<button id="btn_gpu_'+ gpu['id'] +'" class="card"><h5>Device ID: ' + gpu['id'] + 
-        '</h5><div class="data-line"><h6 id="big-font">' + gpu['name'] + 
-        '</h6><div class="mini-bar"><h6>- :</h6><h6>: - MH/s' + 
-        '</h6><div class="profit-card"><h6>-$ </h6><h6 id="spacer"> Per day</h6>' +
-        '</div></div></div></button>'
-
-        gpu_detail_container.innerHTML += card;
+        let card = '<button class="card"><div class="data-line"><h6 id="big-font">'+ gpu['name'] +'</h6>' +
+          '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5> -- </h5>' +
+          '<H5>- H/s</H5></div><div  class="profit-card"><h6> - $/hour' 
+          '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +
+          '<img src="./processer.png" alt="" width="15px" height="15px"><h6>'+ gpu['core-clock'] +
+          '</h6></div><div class="oc-item"><img src="./ram.png" alt="" width="15px" height="15px">' +
+          '<h6>'+ gpu['mem-clock'] +'</h6></div><div class="oc-item"><img src="./watt.png" alt="" width="20px" height="20px">' +
+          '<h6>'+ gpu['power'] +'</h6></div><div class="oc-item"><img src="./fan.png" alt="" width="20px" height="20px">' +
+          '<h6>'+ gpu['fan'] +'</h6></div><div class="oc-item"><img src="./temp.png" alt="" width="20px" height="20px">' +
+          '<h6>'+ gpu['temperature'] +'</h6></div></div></div></div></button>';
+        
+          gpu_detail_container.innerHTML += card;
 
         document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
             selected_gpu_index = event.target.id.split('_')[2];

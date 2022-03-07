@@ -374,12 +374,16 @@ async function calculateProfit() {
             if (!error && res.statusCode == 200) {
               let profit = '';
               let coin_name = mining_coin.toLowerCase();
-              console.log('vvvvvv - '+ body)
+              // console.log('vvvvvv - '+ body)
             
               body.forEach(coin_d => {
                 if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
-                    profit = '$ ' + coin_d['revenueInHourUSD'].toFixed(3);
-                    console.log('profit - '+ profit)
+                    if (coin_d['revenueInHourUSD'] < 0.001) {
+                      profit = coin_d['revenueInHourUSD'].toFixed(6) + ' $/hour';
+                    }else{
+                      profit = coin_d['revenueInHourUSD'].toFixed(3) + ' $/hour';
+                    }
+                    // console.log('profit - '+ profit)
                     profits[gpu['id']] = profit
                 }
               });
@@ -407,14 +411,15 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
 
-          let profit = '---';
+          let profit = '- $/hour';
           for (const [id, data] of Object.entries(profits)) {
-            if (id == gpu['id']) {
+            profit = '- $/hour';
+            if (id == gpu['id'] && gpu['hashrate_raw'] > 0) {
               profit = data;
             }
           }
 
-          console.log('profit  pp - '+ profit)
+          // console.log('profit  pp - '+ profit)
           devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate-raw': gpu['hashrate_raw'],'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
@@ -650,7 +655,7 @@ function getGpuDetails(){
           gpu_count += 1;
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           
-          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': '-', 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': '- $/hour', 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         console.log('gpu count - ' + gpu_count)
         gpu_details = {'hashrate': '0 MH/s', 'power': '0', 'uptime': '00:00:00', 'devices': devices}
