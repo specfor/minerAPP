@@ -1315,7 +1315,6 @@ background-color:rgba(255, 255, 255, 0.64) ;
 
 
 .data-line{
-  border-left: 1px solid black;
   float: left;
   padding: 0px;
   margin: 0px;
@@ -1336,18 +1335,10 @@ background-color:rgba(255, 255, 255, 0.64) ;
   border-radius: 5px;
   background-color: #007a63;
   padding-bottom: -2.5px;
+  width: 600px;
+}
 
-}
-.profit-card{
-  position: relative;
-  display: flex;
-  margin-left: 5px;
-  font-size: 15px;
-  padding-left: 5px;
-  color: white;
-  justify-content: center;
-  height: 30px;
-}
+
 #spacer{
   margin-left: 5px;
 }
@@ -1433,7 +1424,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 .card-oc-info{
 position: relative;
 top: 2px;
-left: -90px;
+left: 65px;
 background-color: #d8d8d898;
 display: flex;
 float: right;
@@ -1468,10 +1459,9 @@ height: 30px;
   height: 30px;
 
 }
-.left-pa .profit-card{
-padding-right: 150PX;
-}
+
 .deta{
+  position: relative;
   text-align: left;
   font-size: 12px;
   margin-top: -6px;
@@ -1488,6 +1478,37 @@ padding-right: 150PX;
   }
 .card-id{
   width: 100px;
+}
+.profit-card{
+  position: relative;
+  left: -20px;
+  display: flex;
+  margin-left: 5px;
+  font-size: 15px;
+  padding-left: 5px;
+  color: white;
+  justify-content: center;
+  height: 30px;
+  width: 70px;
+
+}
+.profit-card h6{
+  height: 30px;
+  color: white;
+  padding: 5px;
+  font-size: 15px;
+  margin-top: -10px;
+
+}
+.data-line .id-s{
+  background-color: #1a1a1d;
+  color: white;
+  width: 50px;
+  height: 20px;
+  text-align: center;
+  padding: 3px;
+  font-size: 10px;
+  border-radius: 5px;
 }
 /*stat tab editing*/
 /*--------------------------------DASHBORAD---------------------------------*/
