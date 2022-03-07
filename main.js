@@ -364,11 +364,11 @@ function calculateProfit(hashrate) {
           if (!error && res.statusCode == 200) {
             let profit = '';
             let coin_name = mining_coin.toLowerCase();
-            console.log('vvvvvv - '+ body)
+            // console.log('vvvvvv - '+ body)
           
             body.forEach(coin_d => {
               if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
-                  profit = '$ ' + coin_d['revenueInHourUSD'];
+                  profit = '$ ' + Math.round(coin_d['revenueInHourUSD']);
                   console.log('profit - '+ profit)
                   return profit;
               }
@@ -396,7 +396,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
           let profit = calculateProfit(gpu['hashrate_raw']);
-
+          console.log('profit  pp - '+ profit)
           devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
