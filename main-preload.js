@@ -279,7 +279,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         if (gpu['id'] == selected_gpu_index) {
             active = 'actives'
         }
-        let card = '<button class="card"><div class="data-line"><h6 id="big-font">gtx 1080</h6>' +
+        let card = '<button class="card"><div class="data-line"><h6 id="big-font">'+ gpu['name'] +'</h6>' +
           '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5>ETH</h5>' +
           '<H5>'+ args['hashrate'] +'</H5></div><div  class="profit-card"><h6>'+ gpu['profit/h'] + 
           '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +
