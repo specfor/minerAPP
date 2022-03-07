@@ -437,8 +437,7 @@ async function sendMiningStatus(){
 
         if (profits.length < devices.length) {
           devices.forEach(gpu => {
-            let id = gpu['id']
-            profits.push({id: '-'})
+            profits.push({'id': gpu['id'], 'profit': '-'})
           });
         }
         gpu_details = devices;
@@ -474,9 +473,8 @@ async function sendMiningStatus(){
         gpu_details = devices;
 
         if (profits.length < devices.length) {
-          devices.forEach(gpu => {            
-            let id = gpu['id']
-            profits.push({id: '-'})
+          devices.forEach(gpu => {
+            profits.push({'id': gpu['id'], 'profit': '-'})
           });
         }
         let uptime = msToTime(body['uptime']*1000);
