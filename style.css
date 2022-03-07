@@ -1310,11 +1310,9 @@ background-color:rgba(255, 255, 255, 0.64) ;
   cursor: pointer;
 }
 
-.stats-tab .conatainer-stats .sc-veiw .card h5{
 
-  margin-right: 5px;
-  padding-top: 8px;
-}
+
+
 
 .data-line{
   border-left: 1px solid black;
@@ -1332,17 +1330,23 @@ background-color:rgba(255, 255, 255, 0.64) ;
   color: #1a1a1d;
   display: flex;
   font-size: 15px;
-  margin-top: -3px;
+  margin-top: 5px;
   padding-left: 8px;
   padding-right: 5px;
   border-radius: 5px;
+  background-color: #007a63;
+  padding-bottom: -2.5px;
+
 }
 .profit-card{
+  position: relative;
   display: flex;
-  border-left: 1px solid #1a1a1d;
   margin-left: 5px;
   font-size: 15px;
   padding-left: 5px;
+  color: white;
+  justify-content: center;
+  height: 30px;
 }
 #spacer{
   margin-left: 5px;
@@ -1428,15 +1432,16 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 
 .card-oc-info{
 position: relative;
-top: 0px;
-left: -50px;
+top: 2px;
+left: -90px;
 background-color: #d8d8d898;
 display: flex;
 float: right;
 border-radius: 5px;
 padding-left: 8px;
 padding-right: 8px;
-width: 300px;
+width: 320px;
+height: 30px;
 }
 
 .card-oc-info .oc-item{
@@ -1453,20 +1458,37 @@ width: 300px;
 }
    
 .left-pa{
+  margin-top: 5px;
   justify-content: center;
   text-align: center;
   padding: 5px;
   display: flex;
-  background-color: #828282;
+
   float: left;
+  height: 30px;
+
 }
 .left-pa .profit-card{
 padding-right: 150PX;
 }
 .deta{
-  font-size: 10px;
+  text-align: left;
+  font-size: 12px;
+  margin-top: -6px;
+  padding: 0px;
+  width: 50px;
+  color: white;
+  border-right: 1px solid white;
 }
-
+.id-c{
+  margin-right: 10px;
+  font-size: 10px;
+  background-color: #007a63;
+  width: 100px;
+  }
+.card-id{
+  width: 100px;
+}
 /*stat tab editing*/
 /*--------------------------------DASHBORAD---------------------------------*/
 .on-board{
