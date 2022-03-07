@@ -364,7 +364,9 @@ function calculateHashrate(hashrate) {
 
 async function calculateProfit() {
   gpu_details.forEach(gpu => {
-    request('https://www.coincalculators.io/api?hashrate='+gpu['hashrate'], {json: true}, (error, res, body) => {    
+    let url = 'https://www.coincalculators.io/api?hashrate='+gpu['hashrate']
+    console.log(url)
+    request(url, {json: true}, (error, res, body) => {    
         try{
             if (error) {
                 return false;
@@ -372,7 +374,7 @@ async function calculateProfit() {
             if (!error && res.statusCode == 200) {
               let profit = '';
               let coin_name = mining_coin.toLowerCase();
-              // console.log('vvvvvv - '+ body)
+              console.log('vvvvvv - '+ body)
             
               body.forEach(coin_d => {
                 if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
