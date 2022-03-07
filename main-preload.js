@@ -142,16 +142,8 @@ ipcRenderer.on('miner-stopped', ()=>{
           '<h6>'+ gpu['fan'] +'</h6></div><div class="oc-item"><img src="./temp.png" alt="" width="20px" height="20px">' +
           '<h6>'+ gpu['temperature'] +'</h6></div></div></div></div></button>';
         
-          gpu_detail_container.innerHTML += card;
-
-        document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', (event)=>{
-            selected_gpu_index = event.target.id.split('_')[2];
-            event.target.classList.add('actives')
-            changeStatsGPUData()
-        })
+        gpu_detail_container.innerHTML += card;
     }
-
-    changeStatsGPUData()
 })
 
 ipcRenderer.on("engine-download-progress", (event, args) => {
@@ -219,44 +211,6 @@ ipcRenderer.on('updates-available', ()=>{
 
 })
 
-function changeStatsGPUData() {
-    if (selected_gpu_index == -1) {
-        return
-    }
-    let side_gpu_name = document.getElementById('status-gpu-name');
-    let side_pcie = document.getElementById('status-pcie');
-    let side_core_clock = document.getElementById('status-core-clock');
-    let side_mem_clock = document.getElementById('status-mem-clock');
-    let side_fan_speed = document.getElementById('status-fan-speed');
-    let side_power = document.getElementById('status-power');
-    let side_temp = document.getElementById('status-temp');
-    
-    console.log('selected gpu - gpu' + selected_gpu_index)
-
-    side_gpu_name.textContent = gpu_details['gpu' + selected_gpu_index]['name'];
-    side_pcie.textContent = gpu_details['gpu' + selected_gpu_index]['id'];
-    side_core_clock.textContent = gpu_details['gpu' + selected_gpu_index]['core-clock'];
-    side_mem_clock.textContent = gpu_details['gpu' + selected_gpu_index]['mem-clock'];
-    side_fan_speed.textContent = gpu_details['gpu' + selected_gpu_index]['fan'];
-    side_power.textContent = gpu_details['gpu' + selected_gpu_index]['power'];
-    side_gpu_name.textContent = gpu_details['gpu' + selected_gpu_index]['name'];
-    side_temp.textContent = gpu_details['gpu' + selected_gpu_index]['temperature']
-}
-
-
-function addGPUClickHandler(event) {
-    let no_gpu_selected_msg = document.getElementById('msg-select-gpu')
-    let gpu_selected_msg = document.getElementById('msg-gpu-data')
-   
-    console.log(event.target.id)
-    selected_gpu_index = event.target.id.split('_')[2];
-    console.log('handler added for gpu - ' + selected_gpu_index)
-    event.target.classList.add('actives');
-    no_gpu_selected_msg.style.opacity = '0%';
-    gpu_selected_msg.style.opacity = '100%';
-    changeStatsGPUData()
-}
-
 ipcRenderer.on('plugin-status', (event, args)=>{
     let txt_mini_hashrate = document.getElementById('status-mini-hashrate');
     let txt_mini_power = document.getElementById('status-mini-power');
@@ -300,10 +254,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
 
         console.log('gpu - ' + gpu['id'])
         gpu_details['gpu' + gpu['id']] = gpu;
-        
-        // document.getElementById('btn_gpu_'+ gpu['id']).addEventListener('click', addGPUClickHandler)
     });
-    changeStatsGPUData()
     // console.log(gpu_details)
 })
 

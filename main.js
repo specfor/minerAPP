@@ -364,8 +364,11 @@ function calculateHashrate(hashrate) {
 
 async function calculateProfit() {
   gpu_details.forEach(gpu => {
+    if (gpu['hashrate-raw']==0) {
+      return
+    }
     let url = 'https://www.coincalculators.io/api?hashrate='+gpu['hashrate-raw']
-    console.log(url)
+    // console.log(url)
     request(url, {json: true}, (error, res, body) => {    
         try{
             if (error) {
@@ -387,7 +390,6 @@ async function calculateProfit() {
                     profits[gpu['id']] = profit
                 }
               });
-              return 'NO DATA';
           }
         }catch(err){
             console.error('Coin data receival failed.', err.message)
