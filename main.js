@@ -355,7 +355,7 @@ function calculateHashrate(hashrate) {
   return hashrate
 }
 
-function calculateProfit(hashrate) {
+async function calculateProfit(hashrate) {
   request('https://www.coincalculators.io/api?hashrate='+hashrate, {json: true}, (error, res, body) => {    
       try{
           if (error) {
@@ -368,7 +368,7 @@ function calculateProfit(hashrate) {
           
             body.forEach(coin_d => {
               if (coin_name == coin_d['name'].toLowerCase() || coin_name == coin_d['symbol'].toLowerCase()) {
-                  profit = '$ ' + Math.round(coin_d['revenueInHourUSD']);
+                  profit = '$ ' + coin_d['revenueInHourUSD'].toFixed(3);
                   console.log('profit - '+ profit)
                   return profit;
               }
@@ -395,7 +395,8 @@ async function sendMiningStatus(){
         let devices = [];
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
-          let profit = calculateProfit(gpu['hashrate_raw']);
+          let profit = await calculateProfit(gpu['hashrate_raw']);
+
           console.log('profit  pp - '+ profit)
           devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
@@ -420,7 +421,7 @@ async function sendMiningStatus(){
         body['gpus'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          let profit = calculateProfit(gpu['hashrate']);
+          let profit = await calculateProfit(gpu['hashrate_raw']);
 
           devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
@@ -454,7 +455,7 @@ async function sendMiningStatus(){
         body['miner']['devices'].forEach(gpu=>{
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
-          let profit = calculateProfit(gpu['hashrate']);
+          let profit = await calculateProfit(gpu['hashrate_raw']);
 
           devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate': gpu_hashrate, 'profit/h': profit, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
