@@ -153,50 +153,56 @@
 
         <div class="conatainer-stats">
           <div class="sc-veiw" id="gpu-details-container">
-              <!-- details will be added by js at runtime -->
+            <button id="0" class="card">
+              <h5>Device ID: 0</h5>
+              <div class="data-line">
+                <h6 id="big-font">gtx 1080</h6>
+                <div class="mini-bar">
+                  <h6>- :</h6><h6>: - MH/s </h6>
+                  <div  class="profit-card">
+                    <h6>-$ </h6><h6 id="spacer"> Per day</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card-oc-info">
+
+                <div class="oc-item">
+                  <img src="./processer.png" alt="" width="20px" height="20px">
+                  <h6>100%</h6>
+                </div>
+                <div class="oc-item">
+                  <img src="./ram.png" alt="" width="20px" height="20px">
+                  <h6>100%</h6>
+                </div>
+                <div class="oc-item">
+                  <img src="./watt.png" alt="" width="20px" height="20px">
+                  <h6>100%</h6>
+                </div>
+                <div class="oc-item">
+                  <img src="./fan.png" alt="" width="20px" height="20px">
+                  <h6>100%</h6>
+                </div>
+                <div class="oc-item">
+                  <img src="./temp.png" alt="" width="20px" height="20px">
+                  <h6>100%</h6>
+                </div>
+              </div>
+            </button>
             </div>
             <!--<div class="action-center">
               <button class="auto-oc"> <b>AUTO-OC </b></button>
               <button class="clean-oc"> Clean </button> 
             </div>-->
 
-            <div class="card-data">
-              <div id="msg-gpu-data" class="h-extender">
-              <div class="img-line">
-                <img src="./gpu-front.png" alt="" width="80" height="80">
-                <img src="./gpu-back.png" alt="" width="80" height="80">
-              </div>
-              <h4 id="status-gpu-name">Select a GPU</h4>
-              <h4 id="greyed">Overclocks-settings</h4>
-              <div class="card-oc">
-                <div class="card-oc-items"><h6>Device ID :</h6><span></span></div>
-                <div class="card-oc-items"><h6>Core-clock</h6><span></span></div>
-                <div class="card-oc-items"><h6>Memmory-clock</h6><span></span></div>
-                <div class="card-oc-items"><h6>Fan-Speed</h6<span></span></div>
-                <div class="card-oc-items"><h6>Power-limit</h6><span></span></div>
-                <div class="card-oc-items"><h6>Temp</h6><span></span></div>
 
-              </div>
-                  <div class="data-sheet">
-                    <h6 id="status-pcie">-</h6>
-                    <h6 id="status-core-clock">-</h6>
-                    <h6 id="status-mem-clock">-</h6>
-                    <h6 id="status-fan-speed">-</h6>
-                    <h6 id="status-power">-</h6>
-                    <h6 id="status-temp">-</h6>
-                  </div>
               <div class="action-center">
                 <!-- <button class="auto-oc"> <b>AUTO-OC </b></button> -->
                 <!--<button class="clean-oc"> Clean </button> -->
               </div>
-            </div>
-            </div>
-        </div>
-        <div id="msg-select-gpu" class="h-no-extender">
 
-          <img src="./confirmation.png" alt="" width="50px" height="50px">
-          <h2>Please select GPU</h2>
+
         </div>
+
       </div>
 
       <div>
