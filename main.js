@@ -421,27 +421,12 @@ async function sendMiningStatus(){
         let uptime = msToTime(Date.now() - start_time);
 
         let devices = [];
-        let x = 0;
         body['miner']['devices'].forEach(gpu => {
           let gpu_hashrate = calculateHashrate(gpu['hashrate_raw']);
 
-          let profit = '- $/hour';
-          for (var [id, data] of Object.entries(profits[x])) {
-            profit = '- $/hour';
-            if (id == 'id' && data == gpu['id'] && gpu['hashrate_raw'] > 0) {
-              profit = profits[x]['profit'];
-            }
-          }
-
-          console.log('profit  pp - '+ profit)
-          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate-raw': gpu['hashrate_raw'],'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['pci_bus_id'], 'name': gpu['info'], 'hashrate-raw': gpu['hashrate_raw'],'hashrate': gpu_hashrate, 'profit/h': '-', 'core-clock': gpu['core_clock'], 'fan': gpu['fan'], 'mem-clock': gpu['mem_clock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
 
-        if (profits.length < devices.length) {
-          devices.forEach(gpu => {
-            profits.push({'id': gpu['id'], 'profit': '-'})
-          });
-        }
         gpu_details = devices;
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
 
@@ -464,21 +449,10 @@ async function sendMiningStatus(){
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
 
-          let profit = '---';
-          for (const [id, data] of Object.entries(profits)) {
-            if (id == gpu['id']) {
-              profit = data;
-            }
-          }
-          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'],'hashrate-raw': gpu['hashrate'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['gpu_id'], 'pcie': gpu['pci_id'], 'name': gpu['name'],'hashrate-raw': gpu['hashrate'], 'hashrate': gpu_hashrate, 'profit/h': '-', 'core-clock': gpu['cclock'], 'fan': gpu['fan_speed'], 'mem-clock': gpu['mclock'], 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
         gpu_details = devices;
 
-        if (profits.length < devices.length) {
-          devices.forEach(gpu => {
-            profits.push({'id': gpu['id'], 'profit': '-'})
-          });
-        }
         let uptime = msToTime(body['uptime']*1000);
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
@@ -510,20 +484,9 @@ async function sendMiningStatus(){
           power += gpu['power'];
           let gpu_hashrate = calculateHashrate(gpu['hashrate']);
         
-          let profit = '---';
-          for (const [id, data] of Object.entries(profits)) {
-            if (id == gpu['id']) {
-              profit = data;
-            }
-          }
-          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate-raw': gpu['hashrate'], 'hashrate': gpu_hashrate, 'profit/h': profit, 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
+          devices.push({'id': gpu['id'], 'pcie': gpu['id'], 'name': gpu['info'], 'core-clock': 'NO DATA', 'hashrate-raw': gpu['hashrate'], 'hashrate': gpu_hashrate, 'profit/h': '-', 'fan': 'NO DATA', 'mem-clock': 'NO DATA', 'power': gpu['power'], 'temperature': gpu['temperature']})
         })
-        if (profits.length < devices.length) {
-          devices.forEach(gpu => {
-            profits.push({'id': gpu['id'], 'profit': '-'})
-          });
-        }
-
+       
         let uptime = msToTime(body['uptime']*1000);        
 
         let payload = {'hashrate': hashrate, 'power': power, 'uptime': uptime, 'coin': mining_coin, 'devices': devices}
