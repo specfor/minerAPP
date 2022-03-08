@@ -1638,13 +1638,44 @@ font-weight: 100;
   position: fixed;
   top: 70px;
   left: 8px;
-  background-color: #009579;
+
   width: 578px;
   height: 365px;
 }
 .cal-frame{
-  z-index: 4;
+  position: absolute;
+  top: 30px;
+  left: 5px;
+
+}
+.main-frame .cal-frame .ac-btn{
+  position: absolute;
   background-color: #083029;
+  z-index: 2;
+  left: 153px;
+  top: -30px;
+}
+.main-frame .cal-frame a{
+  margin-top: 90px;
+  position: relative;
+  top: 35px;
+}
+.main-frame .cal-frame .ac-btn .unit-sel{
+  position: relative;
+  padding: 8px;
+  border: none;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+}
+
+.main-frame .cal-frame .ac-btn .coin-sel{
+  position: relative;
+  padding: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border: none;
+  margin-right: 20px;
 }
 
 /*--------------------------------DASHBORAD---------------------------------*/
