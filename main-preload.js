@@ -115,7 +115,7 @@ ipcRenderer.on('miner-stopped', ()=>{
     txt_mini_uptime.textContent = '00:00:00';
 
     // stats page    
-    gpu_details['coin'] = '-';
+    gpu_details['coin'] = 'no-coin';
     gpu_details['hashrate'] = '- MH/s';
 
     let gpu_detail_container = document.getElementById('gpu-details-container');
@@ -125,8 +125,6 @@ ipcRenderer.on('miner-stopped', ()=>{
         if (gpu_id == 'coin' || gpu_id == 'hashrate') {
             continue
         }
-        gpu_details[gpu_id]['core-clock'] = '-';
-        gpu_details[gpu_id]['mem-clock'] = '-';
         gpu_details[gpu_id]['fan'] = '-';
         gpu_details[gpu_id]['power'] = '-';
         gpu_details[gpu_id]['temperature'] = '-';
@@ -134,8 +132,7 @@ ipcRenderer.on('miner-stopped', ()=>{
         let card = '<button class="card"><div class="data-line"><div class="id-s">ID:' + gpu['id'] +
         '</div><h6 id="big-font">'+ gpu['name'] +'</h6>' +
         '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5>--</h5>' +
-        '<H5>- MH/s</H5></div><div  class="profit-card"><h6>-- $/hour' +
-        '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +
+        '<H5>- MH/s</H5></div></div><div class="card-oc-info"><div class="oc-item">' +
         '<img src="./processer.png" alt="" width="15px" height="15px"><h6>'+ gpu['core-clock'] +
         '</h6></div><div class="oc-item"><img src="./ram.png" alt="" width="15px" height="15px">' +
         '<h6>'+ gpu['mem-clock'] +'</h6></div><div class="oc-item"><img src="./watt.png" alt="" width="20px" height="20px">' +
@@ -231,7 +228,7 @@ ipcRenderer.on('plugin-status', (event, args)=>{
     gpu_detail_container.innerHTML = '';
     let coin = args['coin'];
     if (!coin) {
-        coin = '-'
+        coin = 'no-coin'
     }
 
     args['devices'].forEach(gpu => {
@@ -244,8 +241,8 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         let card = '<button class="card"><div class="data-line"><div class="id-s">ID:' + gpu['id'] +
           '</div><h6 id="big-font">'+ gpu['name'] +'</h6>' +
           '<div class="mini-bar"><div class="left-pa"><div class="deta"><h5>'+coin +'</h5>' +
-          '<H5>'+ args['hashrate'] +'</H5></div><div  class="profit-card"><h6>'+ gpu['profit/h'] + 
-          '</h6><h6 id="spacer"></h6></div></div><div class="card-oc-info"><div class="oc-item">' +
+          '<H5>'+ args['hashrate'] +'</H5></div>' + 
+          '</div><div class="card-oc-info"><div class="oc-item">' +
           '<img src="./processer.png" alt="" width="15px" height="15px"><h6>'+ gpu['core-clock'] +
           '</h6></div><div class="oc-item"><img src="./ram.png" alt="" width="15px" height="15px">' +
           '<h6>'+ gpu['mem-clock'] +'</h6></div><div class="oc-item"><img src="./watt.png" alt="" width="20px" height="20px">' +
