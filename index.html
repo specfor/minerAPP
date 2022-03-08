@@ -224,14 +224,18 @@
         <div class="main-frame">
 
           <div class="cal-frame">
-          
-            <div class="ac-btn">
-              <select class="coin-sel" name="coin" id="widget-coin">
-                <option value="3">btc</option>
-              </select>
-              <select class="unit-sel" name="hashrate" id="widget-hash-metric">
-                <option value="2">h/s</option>
-              </select>
+            <select name="coin" id="widget-coin">
+              <!-- COINS will be added by js -->
+            </select>
+            <select name="hashrate" id="widget-hash-metric">
+              <option value="H">H/s</option>
+              <option value="KH">KH/s</option>
+              <option value="MH">MH/s</option>
+              <option value="GH">GH/s</option>
+              <option value="TH">TH/s</option>
+            </select>
+            <div id="widget-coin-area">
+              <a class="minerstat-widget" title="ETH mining calculator" data-coin="ETH" data-algo="Ethash" data-info="yes" data-style="dark" data-color="" data-unit="MH" data-hashrate="100" data-width="300" rel="nofollow" href="https://minerstat.com/coin/ETH">Ethereum mining calculator</a><script async src="https://api.minerstat.com/v2/widgets/coin.js" charset="utf-8"></script>          
             </div>
             <a class="minerstat-widget" title="ETH mining calculator" data-coin="ETH" data-algo="Ethash" data-info="yes" data-style="dark" data-color="" data-unit="MH" data-hashrate="100" data-width="302" rel="nofollow" href="https://minerstat.com/coin/ETH">Ethereum mining calculator</a><script async src="https://api.minerstat.com/v2/widgets/coin.js" charset="utf-8"></script>
           
@@ -246,11 +250,11 @@
             <div class="sel-pool">
               <h2>Select a pool</h2>
               <div class="sel">
-                <button class="sel-i mp" id="alignmet">
+                <button class="sel-i mp" id="pool-minerpool">
                   <img src="./minerpool.jpg" alt="" width="40px" height="40px" id="circled">
                   <h4>Minerpool</h4>  
                 </button>
-                <button class="sel-i m2p">
+                <button class="sel-i m2p" id="pool-2miners">
                   <img src="./2miner.png" alt="" width="40px" height="40px">
                   <h4>2miners</h4>
                 </button>

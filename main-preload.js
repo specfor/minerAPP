@@ -406,6 +406,34 @@ window.addEventListener("load", (event) => {
         ipcRenderer.send('send-notification', {"title": "BTC wallet address copied", "message": "BTC wallet address copied to clipboard."})
     })
     
+    // --------------------- DASHBOARD TAB WIDGET --------------------------------
+    let widget_area = document.getElementById('widget-coin-area')
+    let select_widget_coin = document.getElementById('widget-coin')
+    let select_widget_coin_metric = document.getElementById('widget-hash-metric')
+
+    let widget_coins = {'ETH': 'Ethash', 'FIRO': 'FiroPoW', 'BTC': 'SHA-256', 'VEIL': 'SHA-256', 'DOGE': 'Scrypt'}
+    let metric = select_widget_coin_metric.value;
+
+    for (const [coin_name, algorithm] of Object.entries(widget_coins)) {
+        let option = '<option value="'+ coin_name +'">'+ coin_name +'</option>'
+        select_widget_coin.innerHTML += option;
+    }
+
+    select_widget_coin.addEventListener('change', ()=>{
+        let coin = select_widget_coin.value
+        console.log(coin)
+        let d = '<a class="minerstat-widget" title="'+ coin +' mining calculator" data-coin="'+ coin +
+                '" data-algo="'+ widget_coins[coin] +'" data-info="yes" data-style="dark" data-color=""' +
+                'data-unit="'+ metric +'" data-hashrate="100" data-width="300" rel="nofollow"' + 
+                'href="https://minerstat.com/coin/'+ coin +'">'+ coin +' mining calculator</a><script async src="https://api.minerstat.com/v2/widgets/coin.js" charset="utf-8"></script>'
+        widget_area.innerHTML = d;
+    })
+
+    select_widget_coin_metric.addEventListener('change', ()=>{
+        metric = select_widget_coin_metric.value
+    })
+    
+    // ------------------INTERNET CONNECTIVITY -------------------------------------
     setInterval(()=>{
         let internet = document.getElementById('wifi_badge');
         if (navigator.onLine) {
