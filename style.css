@@ -1573,7 +1573,7 @@ font-weight: 100;
   padding: 5px;
 }
 .pre-board{
-  position: relative;
+  position: fixed;
   top: 80px;
   left: 320px;
   background-color: #282A35;
