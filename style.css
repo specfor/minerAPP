@@ -1574,9 +1574,8 @@ font-weight: 100;
 }
 .pre-board{
   position: fixed;
-  top: 80px;
-  left: 320px;
-  background-color: #282A35;
+  top: 70px;
+  left: 330px;
   width: 250px;
   height: 190px;
   font-size: 8px;
@@ -1638,13 +1637,55 @@ font-weight: 100;
   position: fixed;
   top: 70px;
   left: 8px;
-  background-color: #009579;
+
   width: 578px;
   height: 365px;
 }
 .cal-frame{
-  z-index: 4;
-  background-color: #083029;
+  position: absolute;
+  top: 0px;
+  left: 5px;
+
+}
+.main-frame .cal-frame .ac-btn{
+  position: absolute;
+  background-color:#4d515b;
+  z-index: 2;
+  left: 4px;
+  top: 60px;
+  width:294px;
+  height: 50px;
+  display: flex;
+}
+.main-frame .cal-frame a{
+  margin-top: 10px;
+  position: relative;
+  top: 35px;
+}
+.main-frame .cal-frame .ac-btn .unit-sel{
+  top: 10px;
+  position: relative;
+  text-align: center;
+  width: 147px;
+  border: none;
+  height: 30px;
+  border-start-end-radius: 5px;
+  border-end-end-radius: 5px;
+}
+
+.main-frame .cal-frame .ac-btn .coin-sel{
+  position: relative;
+  top: 10px;
+  text-align: center;
+  width: 147px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border: none;
+  height: 30px;
+  border-right: 2px solid #5f636c;
+  
+  border-start-start-radius: 5px;
+  border-end-start-radius: 5px;
 }
 
 /*--------------------------------DASHBORAD---------------------------------*/
