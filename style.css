@@ -1425,7 +1425,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 .card-oc-info{
   position: relative;
   top: 2px;
-  left: 45px;
+  left: 15px;
   background-color: #d8d8d898;
   display: flex;
   float: right;
@@ -1484,24 +1484,25 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   width: 100px;
 }
 .profit-card{
+  /*background-color: #244b44;*/
   position: relative;
-  left: -20px;
+  top: -5px;
+  left: 5px;
   display: flex;
   margin-left: 5px;
-  font-size: 15px;
   padding-left: 5px;
   color: white;
   justify-content: center;
   height: 30px;
-  width: 70px;
+  width: 90px;
 
 }
 .profit-card h6{
   height: 30px;
   color: white;
   padding: 5px;
-  font-size: 15px;
-  margin-top: -10px;
+  font-size: 13px;
+  margin-top: 0px;
 
 }
 .data-line .id-s{
@@ -1527,7 +1528,8 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
   text-align: center;
   padding: 3px;
   font-size: 10px;
-  border-radius: 5px;
+  border-radius: 5px
+  ;
   padding-left: 5px;
 
 }
@@ -1572,14 +1574,14 @@ font-weight: 100;
 }
 .pre-board{
   position: relative;
-  top: 150px;
-  left: 170px;
+  top: 80px;
+  left: 320px;
   background-color: #282A35;
-  width: 300px;
-  height: 200px;
-  font-size: 12px;
+  width: 250px;
+  height: 190px;
+  font-size: 8px;
   border-radius: 8px;
-  padding: 8px;
+
 }
 .pre-board .sel-pool{
   padding: 5px;
@@ -1592,7 +1594,7 @@ font-weight: 100;
   opacity: 100%;
 }
 .sel-i h4{
-  font-size: 12px;
+  font-size: 8px;
   color: white;
   font-weight: 200;
   letter-spacing: 1px;
@@ -1632,7 +1634,14 @@ font-weight: 100;
 }
 
 
-
+.main-frame{
+  position: fixed;
+  top: 70px;
+  left: 8px;
+  background-color: #009579;
+  width: 578px;
+  height: 365px;
+}
 
 
 /*--------------------------------DASHBORAD---------------------------------*/
