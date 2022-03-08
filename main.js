@@ -375,6 +375,8 @@ async function calculateProfit() {
                 return false;
             }
             if (!error && res.statusCode == 200) {
+              // console.log('calculating profit')
+
               let profit = '';
               let coin_name = mining_coin.toLowerCase();
               // console.log('vvvvvv - '+ body)
@@ -805,7 +807,7 @@ function mainWindowOnStartTasks() {
   }
   // let d = [];
   
-  // d.push({'id': 0, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
+  // d.push({'id': 0, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'hashrate-raw': 1000000, 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
   // d.push({'id': 1, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
   // d.push({'id': 2, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
   // d.push({'id': 3, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
@@ -820,9 +822,12 @@ function mainWindowOnStartTasks() {
   // d.push({'id': 12, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
   
 
+  // gpu_details = d;
   // let p = {'hashrate': '55 MH/s', 'power': '20W', 'uptime': '00:20:00', 'coin': 'ETH', 'devices': d}
 
   // BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', p)
+
+  // mining = true;
 
   if (mainWindow_tasks.includes('reload-app-after-download')) {
     function reloadAPP() {
