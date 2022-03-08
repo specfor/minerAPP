@@ -224,13 +224,19 @@
         <div class="main-frame">
 
           <div class="cal-frame">
-            <iframe src="https://widget.nicehash.com/profcalc" width="400" height="350" scrolling="no" id="nhiframe"></iframe>          </div>
-
+            <select name="coin" id="widget-coin">
+              <option value="3">btc</option>
+            </select>
+            <select name="hashrate" id="widget-hash-metric">
+              <option value="2">h/s</option>
+            </select>
+            <a class="minerstat-widget" title="LTZ mining calculator" data-coin="LTZ" data-algo="Zhash" data-info="yes" data-style="dark" data-color="" data-unit="KH" data-hashrate="100" data-width="300" rel="nofollow" href="https://minerstat.com/coin/LTZ">LitecoinZ mining calculator</a><script async src="https://api.minerstat.com/v2/widgets/coin.js" charset="utf-8"></script>
+          </div>
           <div class="pool-frame">
 
             <div class="on-board">
-              <button class="auto-refsher"> <b>Refresh</b></button>
-              <webview id="foo" src="https://eth.2miners.com/account/bc1qf4tugypjtqlq05jx8tcv09sn7kpry53ppm634g" style="display:inline-flex; width:570px; height:360px"></webview>
+              <!-- <button class="auto-refsher"> <b>Refresh</b></button> -->
+              <!-- <webview id="foo" src="https://eth.2miners.com/account/bc1qf4tugypjtqlq05jx8tcv09sn7kpry53ppm634g" style="display:inline-flex; width:570px; height:360px"></webview> -->
           </div>
           <div class="pre-board">
             <div class="sel-pool">
