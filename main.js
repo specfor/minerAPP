@@ -54,11 +54,11 @@ setInterval(() => {
   }
 }, 1000);
 
-setInterval(() => {
-  if (mining) {
-    calculateProfit()
-  }
-}, 5000);
+// setInterval(() => {
+//   if (mining) {
+//     calculateProfit()
+//   }
+// }, 5000);
 
 function msToTime(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
