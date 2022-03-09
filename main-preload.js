@@ -476,9 +476,9 @@ window.addEventListener("load", (event) => {
         }else if (poolname == '2miner') {
             console.log('searching 2miners for wallet')
             let addr = 'https://2miners.com/search'
-            if (!current_mining_settings['wallet_address'].startsWith('0x')) {
-                current_mining_settings['wallet_address'] = '0x' + current_mining_settings['wallet_address']
-            }
+            // if (!current_mining_settings['wallet_address'].startsWith('0x')) {
+            //     current_mining_settings['wallet_address'] = '0x' + current_mining_settings['wallet_address']
+            // }
             let p = {'address': current_mining_settings['wallet_address']}
 
             request.post(addr, {form: p}, (err, res, body)=>{
@@ -486,6 +486,8 @@ window.addEventListener("load", (event) => {
                     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Error getting data - ' + err.message})
                 }
 
+                // console.log(res.statusCode)
+                console.log(p)
                 console.log(res.statusCode)
                 console.log(body)
                 if (res.statusCode == 302) {
