@@ -1,6 +1,7 @@
 const { isEmptyOrSpaces } = require('builder-util');
 const { info } = require('console');
 const { ipcRenderer, BrowserWindow, webContents } = require('electron');
+const { powerMonitor } = require('electron/main');
 const { request } = require('http');
 const path = require('path')
 
@@ -237,7 +238,6 @@ ipcRenderer.on('plugin-status', (event, args)=>{
         if (gpu['id'] == selected_gpu_index) {
             active = 'actives'
         }
-        console.log(gpu)
         
         let card = '<button class="card"><div class="data-line"><div class="id-s">ID:' + gpu['id'] +
           '</div><h6 id="big-font">'+ gpu['name'] +'</h6>' +
@@ -267,7 +267,6 @@ ipcRenderer.on('gpu-count', (event, args)=>{
 
 ipcRenderer.on('current-mining-settings', (event, args)=>{
     current_mining_settings = args
-    console.log(current_mining_settings)
 })
 
 window.addEventListener("load", (event) => {
@@ -452,13 +451,45 @@ window.addEventListener("load", (event) => {
     let btn_2miner = document.getElementById('pool-2miners')
 
     function loadPoolDashboard(poolname) {
-        if (!mining_status) {
-            ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine.'})
-            return
-        }
+        // if (!mining_status) {
+        //     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine.'})
+        //     return
+        // }
+        
+        let url = ''
+        let coin = ''
 
         if (poolname == 'minerpool') {
-            
+            if (current_mining_settings['coin'].toLowerCase() == 'flux') {
+                coin = 'flux'
+            }else if (current_mining_settings['coin'].toLowerCase() == 'rvn') {
+                coin = 'rvn'
+            }else if (current_mining_settings['coin'].toLowerCase() == 'zero') {
+                coin = 'zer'
+            }else{
+                ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not Supported Coin', 'message': 'Coin is not supported by pool.'})
+                return
+            }
+            url = 'https://'+ coin +'.minerpool.org/workers/' + current_mining_settings['wallet_address']
+
+            webview_dashboard.src = url;
+        }else if (poolname == '2miner') {
+            console.log('searching 2miners for wallet')
+            let addr = 'https://2miners.com/search'
+            if (!current_mining_settings['wallet_address'].startsWith('0x')) {
+                current_mining_settings['wallet_address'] = '0x' + current_mining_settings['wallet_address']
+            }
+            let p = {'address': current_mining_settings['wallet_address']}
+
+            request.post(addr, {form: p}, (err, res, body)=>{
+                if (err) {
+                    ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Error getting data - ' + err.message})
+                }
+
+                if (res.statusCode == 302) {
+                    console.log(res.headers['location'])
+                }
+            })
         }
 
     }
