@@ -1593,14 +1593,26 @@ font-weight: 100;
   opacity: 100%;
 }
 .sel-i h4{
-  font-size: 8px;
+  font-size: 10px;
   color: white;
-  font-weight: 200;
+  font-weight: 300;
   letter-spacing: 1px;
+}
+.mp{
+  margin-right: 10px;
 }
 .pre-board .sel-pool p{
   font-size: 10px;
   color: white;  
+  letter-spacing: 0.8px;
+  font-weight: 200;
+}
+.pre-board .sel-pool h2{
+  font-size: 15px;
+  font-weight: 300;
+  color: white;  
+  margin-bottom: -10px;
+  letter-spacing: 0.5px;
 }
 .sel{
   align-items: center;
@@ -1623,14 +1635,11 @@ font-weight: 100;
 }
 .sel-i:hover{
   opacity: 100%;
-  background-color: rgba(255, 255, 255, 0.852);
-  color: #1a1a1d;
+  background-color: #1a1a1d;
+  color: #1717e1;
+  font-size: 12px;
 }
 
-.sel-i h4:hover{
-  opacity: 100%;
-  color: #1a1a1d;
-}
 
 
 .main-frame{
@@ -1690,5 +1699,28 @@ font-weight: 100;
   border-start-start-radius: 5px;
   border-end-start-radius: 5px;
 }
+
+.guide{
+  background-color: #009579;
+  margin-left: 8px;
+}
+.guide h4{
+  font-size: 14px;
+}
+.guide .steps{
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #1717e1;
+  color: white;
+  font-size: 11px;
+  text-align: center;
+}
+.guide .steps p{
+
+  font-size: 9px;
+  letter-spacing: .5px;
+  font-weight: 200;
+}
+
 
 /*--------------------------------DASHBORAD---------------------------------*/
