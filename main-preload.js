@@ -459,7 +459,6 @@ window.addEventListener("load", (event) => {
             webview_dashboard.parentElement.style.opacity = '0%'
         }
     }
-    showWebviewDashboard()
 
     function loadPoolDashboard(poolname) {
         if (current_mining_settings['coin'] == '' || current_mining_settings['wallet_address'] == '') {
