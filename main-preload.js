@@ -507,6 +507,8 @@ window.addEventListener("load", (event) => {
                     console.log(res.headers['location'])
                     webview_dashboard.src = res.headers['location'];
                     showWebviewDashboard()
+                }else if (res.statusCode == 404) {
+                    ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error Not Found', 'message': 'No data found.'})
                 }else{
                     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Your wallet address seems not valid.'})
                 }
