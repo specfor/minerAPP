@@ -426,7 +426,6 @@ window.addEventListener("load", (event) => {
                 '" data-algo="'+ widget_coins[coin] +'" data-info="yes" data-style="dark" data-color=""' +
                 'data-unit="'+ metric +'" data-hashrate="100" data-width="300" rel="nofollow"' + 
                 'href="https://minerstat.com/coin/'+ coin +'">'+ coin +' mining calculator</a><script async src="https://api.minerstat.com/v2/widgets/coin.js" charset="utf-8"></script>'
-        // widget_area.innerHTML = d;
         document.getElementById('widget-coins').src = "data:text/html;charset=utf-8," + escape(d);
     
     }

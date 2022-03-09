@@ -1538,7 +1538,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 .on-board{
   opacity: 0%;
   position: fixed;
-  top: 40px;
+  top: 70px;
   justify-content: center;
 
 }
@@ -1577,7 +1577,7 @@ font-weight: 100;
   top: 70px;
   left: 330px;
   width: 250px;
-  height: 190px;
+  height: 600px;
   font-size: 8px;
   border-radius: 8px;
 
