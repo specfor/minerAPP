@@ -452,17 +452,20 @@ window.addEventListener("load", (event) => {
 
     function showWebviewDashboard(show=true) {
         if (show) {
-            webview_dashboard.style.parentNode.style.zIndex = '5'
+            webview_dashboard.parentElement.style.zIndex = '5'
+            webview_dashboard.parentElement.style.opacity = '100%'
         }else{
-            webview_dashboard.style.parentNode.style.zIndex = '-1'   
+            webview_dashboard.parentElement.style.zIndex = '-1'   
+            webview_dashboard.parentElement.style.opacity = '0%'
         }
     }
+    showWebviewDashboard()
 
     function loadPoolDashboard(poolname) {
-        // if (!mining_status) {
-        //     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine.'})
-        //     return
-        // }
+        if (current_mining_settings['coin'] == '' || current_mining_settings['wallet_address'] == '') {
+            ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine for first time.'})
+            return
+        }
         
         let url = ''
         let coin = ''
@@ -492,18 +495,21 @@ window.addEventListener("load", (event) => {
 
             request.post(addr, {form: p}, (err, res, body)=>{
                 if (err) {
-                    ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Error getting data - ' + err.message})
+                    // ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Error getting data - '})
+                    return
                 }
 
                 // console.log(res.statusCode)
-                console.log(p)
-                console.log(res.statusCode)
-                console.log(body)
+                // console.log(p)
+                // console.log(res.statusCode)
+                // console.log(body)
 
                 if (res.statusCode == 302) {
                     console.log(res.headers['location'])
                     webview_dashboard.src = res.headers['location'];
                     showWebviewDashboard()
+                }else{
+                    ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Your wallet address seems not valid.'})
                 }
             })
         }
