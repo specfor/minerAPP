@@ -1701,26 +1701,43 @@ font-weight: 100;
 }
 
 .guide{
-  background-color: #009579;
+
   margin-left: 8px;
 }
 .guide h4{
   font-size: 14px;
+  color: #67D295;
+  text-align: center;
 }
 .guide .steps{
   padding-left: 5px;
   padding-right: 5px;
-  background-color: #1717e1;
   color: white;
   font-size: 11px;
   text-align: center;
 }
 .guide .steps p{
-
+  color: #c7d0cd;
   font-size: 9px;
   letter-spacing: .5px;
-  font-weight: 200;
+  font-weight: 250;
+  float: right;
+  width: 220px;
+  text-align: justify;
+}
+.guide .steps b{
+
+  letter-spacing: .5px;
+  font-weight: 550;
+
 }
 
+.guide .steps h5{
+  
+  color: rgba(255, 255, 255, 0.735);
+  font-size: 10px;
+  letter-spacing: .5px;
+  float: left;
+}
 
 /*--------------------------------DASHBORAD---------------------------------*/
