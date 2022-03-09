@@ -419,18 +419,25 @@ window.addEventListener("load", (event) => {
         select_widget_coin.innerHTML += option;
     }
 
-    select_widget_coin.addEventListener('change', ()=>{
+    function changeWidgetCoin() {
         let coin = select_widget_coin.value
         console.log(coin)
         let d = '<a class="minerstat-widget" title="'+ coin +' mining calculator" data-coin="'+ coin +
                 '" data-algo="'+ widget_coins[coin] +'" data-info="yes" data-style="dark" data-color=""' +
                 'data-unit="'+ metric +'" data-hashrate="100" data-width="300" rel="nofollow"' + 
                 'href="https://minerstat.com/coin/'+ coin +'">'+ coin +' mining calculator</a><script async src="https://api.minerstat.com/v2/widgets/coin.js" charset="utf-8"></script>'
-        widget_area.innerHTML = d;
-    })
+        // widget_area.innerHTML = d;
+        document.getElementById('widget-coins').src = "data:text/html;charset=utf-8," + escape(d);
+    
+    }
+
+    changeWidgetCoin()
+
+    select_widget_coin.addEventListener('change', changeWidgetCoin)
 
     select_widget_coin_metric.addEventListener('change', ()=>{
         metric = select_widget_coin_metric.value
+        changeWidgetCoin()
     })
     
     // ------------------INTERNET CONNECTIVITY -------------------------------------
