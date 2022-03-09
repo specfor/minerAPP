@@ -2,7 +2,7 @@ const { isEmptyOrSpaces } = require('builder-util');
 const { info } = require('console');
 const { ipcRenderer, BrowserWindow, webContents } = require('electron');
 const { powerMonitor } = require('electron/main');
-const { request } = require('http');
+const request = require('request');
 const path = require('path')
 
 var current_mining_settings = {}
