@@ -4,6 +4,7 @@ const { ipcRenderer, BrowserWindow, webContents } = require('electron');
 const { request } = require('http');
 const path = require('path')
 
+var current_mining_settings = {}
 var income = false;
 var ready_to_mine = false;
 var mining_status = false;
@@ -265,7 +266,8 @@ ipcRenderer.on('gpu-count', (event, args)=>{
 })
 
 ipcRenderer.on('current-mining-settings', (event, args)=>{
-
+    current_mining_settings = args
+    console.log(current_mining_settings)
 })
 
 window.addEventListener("load", (event) => {
