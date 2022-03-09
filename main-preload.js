@@ -486,6 +486,8 @@ window.addEventListener("load", (event) => {
                     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error occured', 'message': 'Error getting data - ' + err.message})
                 }
 
+                console.log(res.statusCode)
+                console.log(body)
                 if (res.statusCode == 302) {
                     console.log(res.headers['location'])
                 }
