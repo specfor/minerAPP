@@ -461,7 +461,7 @@ window.addEventListener("load", (event) => {
     }
 
     function loadPoolDashboard(poolname) {
-        if (current_mining_settings['coin'] == '' || current_mining_settings['wallet_address'] == '') {
+        if (current_mining_settings == {}) {
             ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine for first time.'})
             return
         }
