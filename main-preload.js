@@ -450,6 +450,14 @@ window.addEventListener("load", (event) => {
     let btn_minerpool = document.getElementById('pool-minerpool')
     let btn_2miner = document.getElementById('pool-2miners')
 
+    function showWebviewDashboard(show=true) {
+        if (show) {
+            webview_dashboard.style.parentNode.style.zIndex = '5'
+        }else{
+            webview_dashboard.style.parentNode.style.zIndex = '-1'   
+        }
+    }
+
     function loadPoolDashboard(poolname) {
         // if (!mining_status) {
         //     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine.'})
@@ -473,6 +481,7 @@ window.addEventListener("load", (event) => {
             url = 'https://'+ coin +'.minerpool.org/workers/' + current_mining_settings['wallet_address']
 
             webview_dashboard.src = url;
+            showWebviewDashboard()
         }else if (poolname == '2miner') {
             console.log('searching 2miners for wallet')
             let addr = 'https://2miners.com/search'
@@ -490,8 +499,11 @@ window.addEventListener("load", (event) => {
                 console.log(p)
                 console.log(res.statusCode)
                 console.log(body)
+
                 if (res.statusCode == 302) {
                     console.log(res.headers['location'])
+                    webview_dashboard.src = res.headers['location'];
+                    showWebviewDashboard()
                 }
             })
         }
