@@ -1333,10 +1333,10 @@ background-color:rgba(255, 255, 255, 0.64) ;
   padding-left: 8px;
   padding-right: 0px;
   border-radius: 5px;
-  background-color: #007a63;
+  background-color: transparent;
   padding-bottom: -2.5px;
-  width: 515px;
-  left: 0px;
+  width: 400px;
+  left: -10px;
 }
 
 
@@ -1425,7 +1425,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.8)
 .card-oc-info{
   position: relative;
   top: 2px;
-  left: 15px;
+  left: 5px;
   background-color: #d8d8d898;
   display: flex;
   float: right;
