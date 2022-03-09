@@ -264,6 +264,10 @@ ipcRenderer.on('gpu-count', (event, args)=>{
     txt_status_gpu_count.textContent = args + ' GPUs';
 })
 
+ipcRenderer.on('current-mining-settings', (event, args)=>{
+
+})
+
 window.addEventListener("load", (event) => {
     let info_update = document.getElementById('info-update');
     info_update.style.opacity = '0%';
@@ -439,6 +443,27 @@ window.addEventListener("load", (event) => {
         changeWidgetCoin()
     })
     
+    // ------------------ DASHBOARD POOL STATUS ----------------------------------
+    let webview_dashboard = document.getElementById('pool-dashboard')
+
+    let btn_minerpool = document.getElementById('pool-minerpool')
+    let btn_2miner = document.getElementById('pool-2miners')
+
+    function loadPoolDashboard(poolname) {
+        if (!mining_status) {
+            ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine.'})
+            return
+        }
+
+        if (poolname == 'minerpool') {
+            
+        }
+
+    }
+
+    btn_2miner.addEventListener('click', ()=>{loadPoolDashboard('2miner')})
+    btn_minerpool.addEventListener('click', ()=>{loadPoolDashboard('minerpool')})
+
     // ------------------INTERNET CONNECTIVITY -------------------------------------
     setInterval(()=>{
         let internet = document.getElementById('wifi_badge');

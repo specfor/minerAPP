@@ -325,6 +325,9 @@ async function runEngine(engine_name, coin_name){
   mining = true;
   start_time = Date.now()
 
+  let settings = {coin: coin_name, wallet_address: engine_details['wallet_address']}
+  BrowserWindow.fromId(mainWindowId).webContents.send('current-mining-settings', settings);
+
   engine.on('error', (err)=>{
     console.error('Error running plugin - ' + err.message);
     let present_ = checkFilePresence(executable_path);
