@@ -1,6 +1,6 @@
 const { isEmptyOrSpaces } = require('builder-util');
 const { info } = require('console');
-const { ipcRenderer, BrowserWindow, webContents } = require('electron');
+const { ipcRenderer, BrowserWindow, webContents , WebView} = require('electron');
 const { powerMonitor } = require('electron/main');
 const request = require('request');
 const path = require('path')
@@ -459,8 +459,16 @@ window.addEventListener("load", (event) => {
             webview_dashboard.parentElement.style.opacity = '0%'
         }
     }
-
+    
     function loadPoolDashboard(poolname) {
+        showWebviewDashboard()
+        
+        let webviews = document.getElementById('pool-dashboard')
+        console.log(webviews)
+        console.log(webviews.getURL())
+
+        webviews.loadURL('https://minerhouse.lk');
+
         if (current_mining_settings == {}) {
             ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine for first time.'})
             return
@@ -505,7 +513,7 @@ window.addEventListener("load", (event) => {
 
                 if (res.statusCode == 302) {
                     console.log(res.headers['location'])
-                    webview_dashboard.src = res.headers['location'];
+                    webview_dashboard.loadURL(res.headers['location']);
                     showWebviewDashboard()
                 }else if (res.statusCode == 404) {
                     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error Not Found', 'message': 'No data found.'})
