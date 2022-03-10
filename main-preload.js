@@ -1,7 +1,5 @@
 const { isEmptyOrSpaces } = require('builder-util');
-const { info } = require('console');
-const { ipcRenderer, BrowserWindow, webContents , WebView} = require('electron');
-const { powerMonitor } = require('electron/main');
+const { ipcRenderer} = require('electron');
 const request = require('request');
 const path = require('path')
 
@@ -417,7 +415,10 @@ window.addEventListener("load", (event) => {
     let select_widget_coin = document.getElementById('widget-coin')
     let select_widget_coin_metric = document.getElementById('widget-hash-metric')
 
-    let widget_coins = {'ETH': 'Ethash', 'FIRO': 'FiroPoW', 'BTC': 'SHA-256', 'VEIL': 'SHA-256', 'DOGE': 'Scrypt'}
+    let widget_coins = {'ETH': 'Ethash', 'FIRO': 'FiroPoW', 'BTC': 'SHA-256', 'AE': 'CuckooCycle', 
+        'BEAM': 'BeamHashIII', 'LTZ': 'Zhash', 'ETC': 'Etchash', 'FLUX': 'Equihash(125,4)', 
+        'RVN': 'KAWPOW', 'LTC': 'Scrypt','BELL': 'YesPoWer','KDA': 'Blake (2s-Kadena)',
+        'SERO': 'ProgPowSERO', 'VEIL': 'SHA-256', 'DOGE': 'Scrypt'}
     let metric = select_widget_coin_metric.value;
 
     for (const [coin_name, algorithm] of Object.entries(widget_coins)) {
@@ -469,7 +470,7 @@ window.addEventListener("load", (event) => {
     function loadPoolDashboard(poolname) {    
         let webviews = document.getElementById('pool-dashboard')
 
-        if (current_mining_settings == {}) {
+        if (!mining_status) {
             ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine for first time.'})
             return
         }

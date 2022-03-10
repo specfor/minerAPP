@@ -4,7 +4,6 @@
 const { app, BrowserWindow, Notification, dialog } = require('electron')
 const path = require('path')
 const {download} = require('electron-dl')
-const ipcRend =  require('electron').ipcRenderer;
 const ipc = require('electron').ipcMain;
 const extract = require('extract-zip')
 const AutoLaunch = require('auto-launch');
