@@ -413,6 +413,7 @@ window.addEventListener("load", (event) => {
     
     // --------------------- DASHBOARD TAB WIDGET --------------------------------
     let widget_area = document.getElementById('widget-coin-area')
+    let pool_select_area = document.getElementById('pool-select-area')
     let select_widget_coin = document.getElementById('widget-coin')
     let select_widget_coin_metric = document.getElementById('widget-hash-metric')
 
@@ -449,25 +450,24 @@ window.addEventListener("load", (event) => {
 
     let btn_minerpool = document.getElementById('pool-minerpool')
     let btn_2miner = document.getElementById('pool-2miners')
+    let btn_switch = document.getElementById('btn-switch')
 
     function showWebviewDashboard(show=true) {
         if (show) {
+            widget_area.style.opacity = '0%'
+            pool_select_area.style.opacity = '0%'
             webview_dashboard.parentElement.style.zIndex = '5'
             webview_dashboard.parentElement.style.opacity = '100%'
         }else{
+            widget_area.style.opacity = '100%'
+            pool_select_area.style.opacity = '100%'
             webview_dashboard.parentElement.style.zIndex = '-1'   
             webview_dashboard.parentElement.style.opacity = '0%'
         }
     }
     
-    function loadPoolDashboard(poolname) {
-        showWebviewDashboard()
-        
+    function loadPoolDashboard(poolname) {    
         let webviews = document.getElementById('pool-dashboard')
-        console.log(webviews)
-        console.log(webviews.getURL())
-
-        webviews.loadURL('https://minerhouse.lk');
 
         if (current_mining_settings == {}) {
             ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Not In Mining', 'message': 'Click on the relavent miner pool after starting to mine for first time.'})
@@ -490,7 +490,7 @@ window.addEventListener("load", (event) => {
             }
             url = 'https://'+ coin +'.minerpool.org/workers/' + current_mining_settings['wallet_address']
 
-            webview_dashboard.src = url;
+            webviews.setAttribute('src', url)
             showWebviewDashboard()
         }else if (poolname == '2miner') {
             console.log('searching 2miners for wallet')
@@ -512,8 +512,8 @@ window.addEventListener("load", (event) => {
                 // console.log(body)
 
                 if (res.statusCode == 302) {
-                    console.log(res.headers['location'])
-                    webview_dashboard.loadURL(res.headers['location']);
+                    // console.log(res.headers['location'])
+                    webviews.setAttribute('src', res.headers['location'])
                     showWebviewDashboard()
                 }else if (res.statusCode == 404) {
                     ipcRenderer.send('show-notification', {'type': 'error', 'title': 'Error Not Found', 'message': 'No data found.'})
@@ -525,6 +525,7 @@ window.addEventListener("load", (event) => {
 
     }
 
+    btn_switch.addEventListener('click', ()=>{showWebviewDashboard(false)})
     btn_2miner.addEventListener('click', ()=>{loadPoolDashboard('2miner')})
     btn_minerpool.addEventListener('click', ()=>{loadPoolDashboard('minerpool')})
 

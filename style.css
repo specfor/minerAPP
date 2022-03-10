@@ -375,7 +375,7 @@ input:checked ~ .text:before{
   opacity: 100%;
   top: 25PX;
   left: 260PX;
-  width: 300px;
+  width: 600px;
   position: relative;
   padding-left: 30px;
   border-left: 2px solid rgb(255, 255, 255);

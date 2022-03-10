@@ -177,10 +177,10 @@
           <div class="pool-frame">
 
             <div class="on-board">
-              <button class="auto-refsher"> <b>Switch</b></button> 
+              <button id="btn-switch" class="auto-refsher"> <b>Switch</b></button> 
               <webview id="pool-dashboard" src="https://google.com" style="display:inline-flex; width:570px; height:360px; z-index: -1;" nodeintegration></webview>
           </div>
-          <div class="cal-frame">
+          <div id="widget-coin-area" class="cal-frame">
             <div class="ac-btn">
               <select class="coin-sel"  name="coin" id="widget-coin">
                 <!-- COINS will be added by js -->
@@ -193,12 +193,11 @@
                 <option value="TH">TH/s</option>
               </select>
             </div>
-            <div id="widget-coin-area">
+            <div>
               <iframe id="widget-coins" src="" frameborder="0" style="width: 330px;" height="500px"></iframe>
             </div>
-          
           </div>
-          <div class="pre-board">
+          <div id="pool-select-area" class="pre-board">
             <div class="sel-pool">
               <h2>POOL DASHBOARD</h2>
               <div class="sel">
