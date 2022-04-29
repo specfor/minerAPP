@@ -13,6 +13,10 @@ const { isEmptyOrSpaces, retry } = require('builder-util');
 const request = require('request');
 const { setTimeout } = require('timers');
 const { cwd, pid } = require('process');
+const {machineId, machineIdSync} = require('node-machine-id');
+const axios = require('axios');
+const { url } = require('inspector');
+const { method } = require('requests');
 
 var mainWindowId, loadingWindowId = null;
 var engine_pid = 0;
@@ -25,9 +29,10 @@ var downloading_plugins = [];
 var downloading_versions = [];
 var run_lock = true;
 var mainWindow_tasks = [];
-var gpu_details = [];
+var gpu_details = ['0'];
 var profits = [];
 var gpu_count = 0;
+var deviceId = '';
 
 let config_file_path = path.join(app.getPath('userData'), 'config.json');
 try{
@@ -734,6 +739,38 @@ function check_updates(do_download=false){
   }
 }
 
+// --------------------- USER EXPERIENCE DATA COLLECTING --------------------
+machineId().then((id) => {
+  deviceId = id;
+})
+
+function sendCustomerData(){
+  let msg = {"deviceId": deviceId, "user_data": gpu_details};
+  // msg = json.stringify(msg)
+
+  console.log(deviceId)
+  console.log(gpu_details.toString())
+
+  axios({
+    method: 'post',
+    url: 'https://minerhouse.lk/wp-json/contact-form-7/v1/contact-forms/1565/feedback', 
+    data: {
+      user_data: gpu_details.toString(),
+      deviceId: deviceId
+    },
+    headers: {
+      "Content-Type": "multipart/form-data",
+    }
+  })
+  .then(res => {
+    console.log(`statusCode: ${res.status}`);
+    console.log(res['data']);
+  })
+  .catch(error => {
+    console.error('Data send err - '+error);
+  });
+}
+
 // --------------------------------------------------------------------
 function createConfigurationWindow(ownerWindow){
   const configuration_window = new BrowserWindow({
@@ -769,30 +806,10 @@ function mainWindowOnStartTasks() {
   }else if (mainWindow_tasks.includes('send-gpu-data')) {
     BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', gpu_details)
     BrowserWindow.fromId(mainWindowId).webContents.send('gpu-count', gpu_count)
+    sendCustomerData()
+  }else{
+    sendCustomerData()
   }
-  // let d = [];
-  
-  // d.push({'id': 0, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'hashrate-raw': 1000000, 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 1, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 2, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 3, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 4, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 5, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 6, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 7, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 8, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 9, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 10, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 11, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  // d.push({'id': 12, 'pcie': 0, 'name': 'gtx 1090', 'hashrate': '55 MH/s', 'core-clock': '3456', 'fan': 50, 'mem-clock': 11, 'power': 59, 'temperature':59})
-  
-
-  // gpu_details = d;
-  // let p = {'hashrate': '55 MH/s', 'power': '20W', 'uptime': '00:20:00', 'coin': 'ETH', 'devices': d}
-
-  // BrowserWindow.fromId(mainWindowId).webContents.send('plugin-status', p)
-
-  // mining = true;
 
   if (mainWindow_tasks.includes('reload-app-after-download')) {
     function reloadAPP() {

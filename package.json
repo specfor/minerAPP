@@ -25,9 +25,11 @@
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
+    "axios": "^0.27.2",
     "builder-util": "^23.0.0",
     "electron-dl": "^3.3.0",
     "extract-zip": "^2.0.1",
+    "node-machine-id": "^1.1.12",
     "request": "^2.88.2",
     "requests": "^0.3.0",
     "save": "^2.4.0",
