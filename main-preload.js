@@ -14,5 +14,5 @@ function setUpdateMode(updateMode = true) {
 }
 
 window.addEventListener("load", (event) => {
-    setUpdateMode();
+    
 });
