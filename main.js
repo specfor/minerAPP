@@ -10,9 +10,9 @@ const createWindow = () => {
     width: 800,
     height: 500,
     resizable: false,
-    // webPreferences: {
-    //   preload: path.join(__dirname, 'preload.js')
-    // }
+    webPreferences: {
+      preload: path.join(__dirname, 'main-preload.js')
+    }
   })
 
   // and load the index.html of the app.
