@@ -3,10 +3,11 @@
     margin: 0px;
     padding: 0px;
     background-color: white;
+    font-family: sans-serif;
 }
 .container{
     background-color: beige;
-    color: blue;
+
 }
 .menu-section{
     background-color:rgba(0, 0, 0, 0.212);
@@ -38,54 +39,50 @@
 }
 .tabs{
     position: absolute;
-    background-color: blueviolet;
     top: 50px;
     width: 100%;
-    height: 411px;
+    height: 421px;
     display: block;
+    background-color: rgb(28, 86, 86);
 }
 
 .tab{
     position: relative;
-    background-color: brown;
-    height: 400px;
+    background-color: white;
+    height: 410px;
     display: none;
     margin: 5px;
-
+    border-radius: 8px;
 }
-.tab h1{
-    position: relative;
-    background-color: transparent;
-    font-size: 15px;
-    text-align: center;
-    top: 150px;
-
-}
-
-
 
 
 /*SETTING PAGE*/
-.default-page{
 
-}
 .left-pane{
     position: relative;
     padding: 10px;
-    height: 380px;
+    height: 350px;
     width: 330px;
     border-right: 2px solid rgba(0, 0, 0, 0.476);
+    z-index: 1;
+    top: 15px;
 }
 .right-pane{
     position: absolute;
-    top: -380px;
-    right: 250px;
-    background-color: aqua;
-    width: 350px;
+    top: 0px;
+    left: 340px;
+
+    width: 430px;
+
 }
 .right-pane .heading{
-    background-color: blanchedalmond;
-    margin: 8px;
+    background-color: rgb(220, 138, 16);
+    margin: 6px;
+    text-align: right;
+}
+.right-pane h2{
+    font-weight: 600;
+    font-size: 40px;
 }
 
 /*dropdown*/
@@ -107,11 +104,11 @@ select {
     font-size: 1em;
     font-family: 'Open Sans', sans-serif;
     
- }
- select::-ms-expand {
+}
+select::-ms-expand {
     display: none;
 }
- .select {
+.select {
     position: relative;
     display: flex;
     width: 300px;
@@ -121,8 +118,8 @@ select {
     overflow: hidden;
     border-radius: .25em;
     margin: 10px;
- }
- .select::after {
+}
+.select::after {
     content: '\25BC';
     position: absolute;
     top: 0;
@@ -133,10 +130,10 @@ select {
     pointer-events:none;
     transition:.25s all ease;
     margin-top: 0px;
- }
- .select:hover::after {
+}
+.select:hover::after {
     /*color: #23b499;*/
- }
+}
 .input-box{
     border: 2px solid rgba(0, 0, 0, 0.144);
     outline: none;
@@ -145,4 +142,10 @@ select {
     margin-left: 10px;
     width: 280px;
     height: 30px;
+}
+
+/*HOME PAGE*/
+
+.left-home-pane{
+    background-color: aquamarine;
 }
