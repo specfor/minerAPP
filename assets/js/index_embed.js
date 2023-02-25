@@ -12,8 +12,13 @@ var lastTabId = "home";
 
 for (let index = 0; index < tabNavBtns.length; index++) {
     tabNavBtns.item(index).addEventListener("click", ()=>{
-        document.getElementById(tabNavBtns.item(index).id.substr(4)).style.display = "block";
-        document.getElementById(lastTabId).style.display = "none";
+        var newSelectedTab = document.getElementById(tabNavBtns.item(index).id.substr(4));
+        var oldSelectedTab = document.getElementById(lastTabId);
+        if (newSelectedTab == oldSelectedTab) {
+            return
+        }
+        newSelectedTab.style.display = "block";
+        oldSelectedTab.style.display = "none";
         lastTabId = tabNavBtns.item(index).id.substr(4);
     })    
 }
