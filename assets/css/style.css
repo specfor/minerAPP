@@ -154,7 +154,7 @@ select::-ms-expand {
     /*display: none;*/
 }
 .left-home-pane{
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
     position: absolute;
     width: 350px;
     height: 370px;
@@ -283,6 +283,13 @@ select::-ms-expand {
     margin-bottom: 5px;
     border-radius: 5px;
 }
+.card:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.101);
+}
+.card:active{
+    background-color: rgba(0, 0, 0, 0.187);
+}
 .card h5{
     font-size: 15px;
     text-align: left;
@@ -297,7 +304,7 @@ select::-ms-expand {
 .card img{
     position: relative;
     top: -40px ;
-    left: 115px;
+    left: 85px;
     z-index: 1;
 }
 .card-status{
