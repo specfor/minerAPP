@@ -151,7 +151,7 @@ select::-ms-expand {
 }
 /*default view*/
 .default-view{
-    /*display: none;*/
+    display: none;
 }
 .left-home-pane{
     /*background-color: aquamarine;*/
@@ -325,7 +325,7 @@ select::-ms-expand {
 .update-view{
     text-align: center;
     color: rgba(0, 0, 0, 0.464);
-    display: none;
+    /*display: none;*/
 }
 .update-view h6{
     position: relative;
