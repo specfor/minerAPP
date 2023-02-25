@@ -360,7 +360,7 @@ select::-ms-expand {
 	width: calc(var(--width, 0) * 1%);
 	min-width: 2rem;
 	max-width: calc(100% - 1em);
-	background-color: #069;
+	background-color: rgb(32, 179, 73);
 	border-radius: 1em;
 	padding: 5px;
     height: 5px;
