@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
+    <link rel="stylesheet" href="./assest/css/style.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <div class="container">
+      <div class="menu-section">
+          <div class="nav-btn">Home</div>
+          <div class="nav-btn">Settings</div>
+      </div>
+      <div class="tabs">
+        <div class="tab default-page" id="default">
+            <h1>Default page </h1>
+        </div>
+      </div>
+    </div>
   </body>
+
+  <script src="./help.js">
+  </script>
 </html>

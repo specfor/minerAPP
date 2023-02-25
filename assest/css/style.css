@@ -1,0 +1,49 @@
+
+*{
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+}
+.container{
+    background-color: beige;
+    color: blue;
+}
+.menu-section{
+    background-color: white(123, 123, 27);
+    position: absolute;
+    width:100%;
+    height: 50px;
+    display: flex;
+}
+.nav-btn{
+    padding: 8px;
+}
+.nav-btn:hover{
+    cursor: pointer;
+    background-color: aquamarine;
+}
+.menu-section h5{
+    background-color: transparent;
+}
+.tabs{
+    position: absolute;
+    background-color: blueviolet;
+    top: 50px;
+    width: 100%;
+    height: 411px;
+    display: block;
+}
+.tab{
+    position: relative;
+    background-color: brown;
+    height: 411px;
+    display: none;
+}
+.tab h1{
+    position: relative;
+    background-color: transparent;
+    font-size: 15px;
+    text-align: center;
+    top: 150px;
+
+}
