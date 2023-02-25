@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <link rel="stylesheet" href="./assest/css/style.css">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
     <div class="container">
@@ -13,8 +16,14 @@
           <div class="nav-btn"id="nav-s">Settings</div>
       </div>
       <div class="tabs">
-        <div class="tab default-page" id="default">
-            <h1>Default page </h1>
+        <div class="tab default-page" id="home">
+          <h1>Home</h1>
+        </div>
+        <div class="tab default-page" id="settings">
+          <h1>Settings</h1>
+        </div>
+        <div class="tab default-page" id="info">
+          <h1>Info</h1>
         </div>
         <div class="tab setting-page" id="default">
           <h1>Default page </h1>
@@ -23,6 +32,5 @@
     </div>
   </body>
 
-  <script src="./help.js">
-  </script>
+  <script src="./assets/js/index_embed.js"></script>
 </html>
