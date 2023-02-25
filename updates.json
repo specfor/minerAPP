@@ -1,7 +1,0 @@
-{
-"version": "1.0.0",
-"download_link": "",
-"nbminer": {"download_link": "https://dl.nbminer.com/NBMiner_40.1_Win.zip", "version": "40.1"},
-"trex": {"download_link": "https://github.com/trexminer/T-Rex/releases/download/0.25.8/t-rex-0.25.8-win.zip", "version": "0.25.8"},
-"gminer": {"download_link": "https://github.com/develsoftware/GMinerRelease/releases/download/2.81/gminer_2_81_windows64.zip", "version": "2.81"}
-}
