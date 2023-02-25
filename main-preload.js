@@ -13,6 +13,47 @@ function setUpdateMode(updateMode = true) {
     }
 }
 
+function setCoinsForSelection(defaultCoinIndex = 0) {
+    coinSelectionMenu = document.getElementById("coinSelector");
+    coins = ["Hybrid", "Rvn", "Eth", "Kaspa", "CCX", "FLUX"];
+
+    coins.forEach(coin => {
+        if (coins.indexOf(coin) == defaultCoinIndex) {
+            var option = document.createElement("option", "slected disabled")
+        }else{
+            var option = document.createElement("option")
+        }
+        var text = document.createTextNode(coin);
+        option.appendChild(text);
+        coinSelectionMenu.appendChild(option)
+    });
+
+}
+
+function setPluginsForSelection(defaultPluginIndex = 0){
+    pluginSelectionMenu = document.getElementById("pluginSelector");
+    plugins = ["NBminer", "T rex", "TTMINER", "CC MINER", "LOL MINER"];
+
+    plugins.forEach(plugin => {
+        if (plugins.indexOf(plugin) == defaultPluginIndex) {
+            var option = document.createElement("option", "slected disabled")
+        }else{
+            var option = document.createElement("option")
+        }
+        var text = document.createTextNode(plugin);
+        option.appendChild(text);
+        pluginSelectionMenu.appendChild(option)
+    });
+}
+
+
+
+
+function init(params) {
+    setCoinsForSelection();
+    setPluginsForSelection();
+}
+
 window.addEventListener("load", (event) => {
-    
+    init();
 });
