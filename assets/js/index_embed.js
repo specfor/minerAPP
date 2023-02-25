@@ -12,13 +12,13 @@ var lastTabId = "home";
 
 for (let index = 0; index < tabNavBtns.length; index++) {
     tabNavBtns.item(index).addEventListener("click", ()=>{
-        var newSelectedTab = document.getElementById(tabNavBtns.item(index).id.substr(4));
+        var newSelectedTab = document.getElementById(tabNavBtns.item(index).id.substring(4));
         var oldSelectedTab = document.getElementById(lastTabId);
         if (newSelectedTab == oldSelectedTab) {
             return
         }
         newSelectedTab.style.display = "block";
         oldSelectedTab.style.display = "none";
-        lastTabId = tabNavBtns.item(index).id.substr(4);
+        lastTabId = tabNavBtns.item(index).id.substring(4);
     })    
 }
