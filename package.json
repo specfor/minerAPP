@@ -2,7 +2,7 @@
   "name": "minehash",
   "version": "2.0.0",
   "description": "Manage your mining at one place",
-  "main": "index.js",
+  "main": "main.js",
   "dependencies": {
     "7zip-bin": "^5.1.1",
     "abbrev": "^1.1.1",
@@ -469,6 +469,7 @@
     "electron": "^23.1.1"
   },
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
