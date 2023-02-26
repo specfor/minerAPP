@@ -142,6 +142,26 @@ select::-ms-expand {
     height: 30px;
 }
 
+.save-settings{
+    text-align: end;
+    padding: 5px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+.btn-save{
+    width: 80px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.419);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+}
+.btn-save:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.178);
+    color: black;
+}
 /*HOME PAGE*/
 #home{
     justify-content: center;
