@@ -164,23 +164,35 @@ select::-ms-expand {
 }
 
 .tikbox-section{
-    background-color: #069;
+    position: relative;
+    /*background-color: #069;*/
     padding: 5px;
-    height: 300px;
+    height: 250px;
+    width: 300px;
+    left: 60px;
+    padding-left: 25px;
 }
 
 .tikbox-section .line{
-    background-color: aqua;
-    width: 260px;
-    height: 25px;
+    /*background-color: rgba(94, 94, 94, 0.155);*/
+    width: 270px;
+    height: 30px;
     padding: 5px;
     font-size: 20px;
     border-radius: 5px;
-    padding-left: 10px;
     border: none;
     letter-spacing: 1px;
     font-weight: 400;
     text-align: left;
+    margin: 8px;
+    border: 1px solid grey;
+    background-color: white;
+    padding-top: 6px;
+    padding-left: 8px;
+}
+.line:hover{
+    background-color: rgba(94, 94, 94, 0.155);
+    cursor: pointer;
 }
 .tikbox-section .line .status-dot{
     position: relative;
@@ -189,7 +201,7 @@ select::-ms-expand {
     height: 15px;
     border-radius: 50%;
     top: -15px;
-    left: 210px;
+    left: 225px;
 }
 
 
