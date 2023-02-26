@@ -77,6 +77,10 @@
 .right-pane .heading{
     margin: 6px;
     text-align: right;
+    position: relative;
+    right: 45px;
+    color: grey;
+    bottom: -8px;
 }
 .right-pane h2{
     font-weight: 600;
