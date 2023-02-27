@@ -16,6 +16,7 @@ class Application
         self::$app = $this;
 
         $this->router = new Router();
-        $this->db = new Database($config['servername'], $config['dbname'], $config['username'], $config['password']);
+        $this->db = new Database($config['db']['servername'], $config['db']['dbname'],
+            $config['db']['username'], $config['db']['password']);
     }
 }
