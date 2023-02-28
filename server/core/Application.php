@@ -14,6 +14,13 @@ require_once './../controllers/SiteController.php';
 //Import modules
 require_once './../models/User.php';
 
+//Import exceptions
+foreach (scandir(dirname(__FILE__).'/exceptions') as $filename) {
+    $path = dirname(__FILE__).'/exceptions/' . $filename;
+    if (is_file($path)) {
+        require_once $path;
+    }
+}
 
 /**
  * Class Application
@@ -28,6 +35,7 @@ class Application
     public Response $response;
     public Renderer $renderer;
 
+    public static string $ROOT_DIR;
 
     /**
      * Return an instance of Application
@@ -36,13 +44,14 @@ class Application
     public function __construct(array $config)
     {
         self::$app = $this;
+        self::$ROOT_DIR = $config['rootPath'];
 
         $this->response = new Response();
         $this->request = new Request();
+        $this->renderer = new Renderer();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']['servername'], $config['db']['dbname'],
             $config['db']['username'], $config['db']['password']);
-
     }
 
     /**
@@ -51,13 +60,14 @@ class Application
      */
     public function run()
     {
-//        try {
-//            echo $this->router->resolveRoute();
-//        } catch (Exception $e) {
-//            $this->response->setStatusCode($e->getCode());
-//            echo $this->view->renderView('_error', [
-//                'exception' => $e
-//            ]);
-//        }
+        try {
+            $this->router->resolveRoute();
+        } catch (Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            $this->renderer->renderPage('error', [
+                'err-code' => $e->getCode(),
+                'err-message' => $e->getMessage()
+            ]);
+        }
     }
 }

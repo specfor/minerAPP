@@ -7,6 +7,7 @@ $jsonRead = file_get_contents('./../databaseConfig.json');
 $jsonData = json_decode($jsonRead, true);
 
 $config = [
+    'rootPath' => dirname(__DIR__),
     'db' => [
         "servername" => $jsonData['servername'],
         "username" => $jsonData['username'],

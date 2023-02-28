@@ -43,9 +43,19 @@ class Router
     /**
      * When user made a request, request path is refined and call the relevant functions
      * with parameters.
+     * @throws NotFoundException throw code 404 exception
      */
-    public function resolveRoute(){
-//        todo: do the relevant things according to the url
+    public function resolveRoute()
+    {
+        $path = $this->request->getPath();
+        $method = $this->request->getMethod();
+        $callback = $this->routes[$method][$path] ?? false;
+        if ($callback === false){
+            throw new NotFoundException();
+        }
+        if (is_array($callback)){
+
+        }
     }
 
 }
