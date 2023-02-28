@@ -1,14 +1,23 @@
 <?php
 
+//Import core modules
 require_once 'Database.php';
 require_once 'Router.php';
 require_once 'Session.php';
 require_once 'Request.php';
 require_once 'Response.php';
+require_once 'Renderer.php';
 
+//Import controllers
+require_once './../controllers/SiteController.php';
+
+//Import modules
 require_once './../models/User.php';
 
 
+/**
+ * Class Application
+ */
 class Application
 {
     public static Application $app;
@@ -17,9 +26,14 @@ class Application
     public User $user;
     public Request $request;
     public Response $response;
+    public Renderer $renderer;
 
 
-    public function __construct($config)
+    /**
+     * Return an instance of Application
+     * @param array $config parse an nested array of configurations.
+     */
+    public function __construct(array $config)
     {
         self::$app = $this;
 
@@ -31,6 +45,10 @@ class Application
 
     }
 
+    /**
+     * Start the application. Call to resolveRoute.
+     * If any error occurred, call to render the relevant error page.
+     */
     public function run()
     {
 //        try {

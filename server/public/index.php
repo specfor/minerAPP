@@ -17,3 +17,6 @@ $config = [
 
 $app = new Application($config);
 
+$app->router->addGetRoute('/', [SiteController::class, 'home']);
+
+$app->run();

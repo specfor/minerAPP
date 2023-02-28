@@ -3,7 +3,12 @@
 
 class Request
 {
-    public function getPath()
+    /**
+     * Returns the base path of the requested url.
+     * ex:- "/contact?id=1" => "/contact"
+     * @return string base path
+     */
+    public function getPath() : string
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path, '?');
@@ -14,7 +19,11 @@ class Request
         return substr($path, 0, $position);
     }
 
-    public function getBody()
+    /**
+     * Returns the parsed parameters as an array of [key => value] scheme.
+     * @return array body of the request.
+     */
+    public function getBody() : array
     {
         $body = [];
         if ($this->getMethod() === 'get') {
@@ -30,19 +39,31 @@ class Request
         return $body;
     }
 
-    public function getMethod()
+    /**
+     * Returns the method of the request whether GET or POST.
+     * @return string method of the request
+     */
+    public function getMethod() : string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function isGet()
+    /**
+     * Returns true if called method is GET, otherwise returns false
+     * @return boolean true|false
+     */
+    public function isGet() : bool
     {
-        return $this->method() === 'get';
+        return $this->getMethod() === 'get';
     }
 
-    public function isPost()
+    /**
+     * Returns true if called method is POST, otherwise returns false
+     * @return boolean true|false
+     */
+    public function isPost() : bool
     {
-        return $this->method() === 'post';
+        return $this->getMethod() === 'post';
     }
 
 
