@@ -23,7 +23,7 @@ class Request
      * Returns the parsed parameters as an array of [key => value] scheme.
      * @return array body of the request.
      */
-    public function getBody() : array
+    public function getBodyParams() : array
     {
         $body = [];
         if ($this->getMethod() === 'get') {

@@ -21,7 +21,7 @@ $app = new Application($config);
 $app->router->addGetRoute('/', [SiteController::class, 'home']);
 $app->router->addGetRoute('/login', [SiteController::class, 'login']);
 $app->router->addPostRoute('/login', [SiteController::class, 'login']);
-$app->router->addGetRoute('/login', [SiteController::class, 'register']);
-$app->router->addPostRoute('/login', [SiteController::class, 'register']);
+$app->router->addGetRoute('/register', [SiteController::class, 'register']);
+$app->router->addPostRoute('/register', [SiteController::class, 'register']);
 
 $app->run();

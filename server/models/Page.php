@@ -37,6 +37,9 @@ class Page
         return Application::$ROOT_DIR . "/view/$this->body.php";
     }
 
+    /**
+     * @return string complete HTML page with placeholders
+     */
     public function getPage(): string
     {
         ob_start();

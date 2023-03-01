@@ -16,7 +16,7 @@ class SiteController
      * To override these values specify them in the $placeholderValues array.
      */
     public static array $SiteSettings = [
-        'site:title'=>'Miner House',
+        'site:title' => 'Miner House',
         'site:favicon' => '',
     ];
 
@@ -29,7 +29,7 @@ class SiteController
     {
         $page = new Page(body: 'errorPage');
         $placeholderValues = [
-            'site:title' => self::$SiteSettings['site:title'].' - Not Found',
+            'site:title' => self::$SiteSettings['site:title'] . ' - Not Found',
             'errorPage:err-message' => $exception->getMessage()
         ];
         Application::$app->renderer->renderPage($page, $placeholderValues);
@@ -43,11 +43,21 @@ class SiteController
 
     public function login()
     {
+        if (Application::$app->request->isGet()) {
+            $page = new Page(body: 'forms/login');
+            Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
 
+        }
     }
 
     public function register()
     {
+        if (Application::$app->request->isGet()) {
+            $page = new Page(body: 'forms/register');
+            Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
 
+        }
     }
 }
