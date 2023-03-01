@@ -1,6 +1,6 @@
 <style>
     body {
-        background-image: url("background.jpg");
+        background-image: url("images/background.jpg");
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;

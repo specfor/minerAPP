@@ -13,12 +13,23 @@ class SiteController
 
     /**
      * This array is passed to render with every page.
-     * To override these values specify them in the $placeholderValues array.
+     * Override these values to change any settings for specific page.
      */
     public static array $SiteSettings = [
         'site:title' => 'Miner House',
         'site:favicon' => '',
     ];
+
+    /**
+     * Append this part to the beginning of the title.
+     * NOTE- should be called before calling render function.
+     * For example := calling with 'Login' will result in changing the title to 'Login - SiteName'.
+     * @param string $title Title for the page.
+     */
+    private static function changeTitle(string $title)
+    {
+        self::$SiteSettings['site:title'] = $title . ' - ' . self::$SiteSettings['site:title'];
+    }
 
 
     /**
@@ -29,9 +40,9 @@ class SiteController
     {
         $page = new Page(body: 'errorPage');
         $placeholderValues = [
-            'site:title' => self::$SiteSettings['site:title'] . ' - Not Found',
             'errorPage:err-message' => $exception->getMessage()
         ];
+        self::changeTitle($exception->getMessage());
         Application::$app->renderer->renderPage($page, $placeholderValues);
     }
 
@@ -45,6 +56,7 @@ class SiteController
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(body: 'forms/login');
+            self::changeTitle('Login');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
 
@@ -55,6 +67,7 @@ class SiteController
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(body: 'forms/register');
+            self::changeTitle('Register');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
 
