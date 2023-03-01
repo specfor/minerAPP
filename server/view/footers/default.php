@@ -15,9 +15,9 @@
     </div>
     <div class="col-sm-4 text-center">
       <h6>Follow Us</h6>
-      <a class="mt-1" href="#"><img src="faceB.png" alt="Facebook" style="height:75px;width:75px;"></a>
-      <a class="mt-1" href="#"><img src="Twitt.png" alt="Twitter" style="height:75px;width:75px;"></a>
-      <a class="mt-1" href="#"><img src="Ig.png" alt="Instagram" style="height:75px;width:75px;"></a>
+      <a class="mt-1" href="#"><img src="images/faceB.png" alt="Facebook" style="height:75px;width:75px;"></a>
+      <a class="mt-1" href="#"><img src="images/Twitt.png" alt="Twitter" style="height:75px;width:75px;"></a>
+      <a class="mt-1" href="#"><img src="images/Ig.png" alt="Instagram" style="height:75px;width:75px;"></a>
     </div>
   </div>
   <div class="container-fluid text-center" style="background-color:#0044cc ;">
