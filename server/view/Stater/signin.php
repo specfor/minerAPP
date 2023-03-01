@@ -62,7 +62,7 @@
   }
 </script>
 
-<body background="background.jpg" style="
+<body background="../../public/images/background.jpg" style="
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;

@@ -40,4 +40,14 @@ class SiteController
         $page = new Page();
         Application::$app->renderer->renderPage($page);
     }
+
+    public function login()
+    {
+
+    }
+
+    public function register()
+    {
+
+    }
 }
