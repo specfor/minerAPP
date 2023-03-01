@@ -4,20 +4,20 @@
 class Renderer
 {
     /**
-     * Render a page according to the given arguments
-     * @param string $pageType Type of the page
-     * @param array $options Options to render the page
+     * Render a page according to the given arguments.
+     * @param Page $page Page object to render.
      */
-    public function renderPage(string $pageType, array $options)
+    public function renderPage(Page $page, array $variables = [])
     {
-        if ($pageType === 'error') {
-            ob_start();
-            include_once Application::$ROOT_DIR . '/view/errorPage.php';
-            $pageData = ob_get_clean();
-            foreach ($options as $key => $value){
-                $pageData = str_replace("{{{$key}}}", $value, $pageData);
-            }
-            echo $pageData;
+        $pageData = $page->getPage();
+        foreach (SiteController::$SiteSettings as $placeholder => $value){
+            $pageData = str_replace("{{{$placeholder}}}", $value, $pageData);
         }
+        if (!empty($variables)){
+            foreach ($variables as $placeholder => $value){
+                $pageData = str_replace("{{{$placeholder}}}", $value, $pageData);
+            }
+        }
+        echo $pageData;
     }
 }

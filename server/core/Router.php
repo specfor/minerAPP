@@ -54,7 +54,8 @@ class Router
             throw new NotFoundException();
         }
         if (is_array($callback)){
-
+            $controller = new $callback[0];
+            $controller->{$callback[1]}();
         }
     }
 

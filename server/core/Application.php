@@ -13,6 +13,7 @@ require_once './../controllers/SiteController.php';
 
 //Import modules
 require_once './../models/User.php';
+require_once './../models/Page.php';
 
 //Import exceptions
 foreach (scandir(dirname(__FILE__).'/exceptions') as $filename) {
@@ -63,11 +64,7 @@ class Application
         try {
             $this->router->resolveRoute();
         } catch (Exception $e) {
-            $this->response->setStatusCode($e->getCode());
-            $this->renderer->renderPage('error', [
-                'err-code' => $e->getCode(),
-                'err-message' => $e->getMessage()
-            ]);
+            SiteController::httpError($e);
         }
     }
 }
