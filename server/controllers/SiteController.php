@@ -55,7 +55,7 @@ class SiteController
     public function login()
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(body: 'forms/login');
+            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login');
             self::changeTitle('Login');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
@@ -66,7 +66,7 @@ class SiteController
     public function register()
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(body: 'forms/register');
+            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register');
             self::changeTitle('Register');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {

@@ -3,6 +3,12 @@
 
 class Page
 {
+    public const DEFAULT_HEADER_WITH_MENU = 'default';
+    public const BLANK_HEADER = 'blank';
+    public const DEFAULT_FOOTER = 'default';
+    public const BLANK_FOOTER = 'blank';
+    public const DEFAULT_BODY = 'home';
+
     private string $header;
     private string $footer;
     private string $body;
@@ -10,11 +16,11 @@ class Page
     /**
      * Create a HTML page with the relevant tags.
      * Can be used to get dynamically rendered HTML elements.
-     * @param string $header Header template name to be used.
-     * @param string $footer Footer template name to be used.
-     * @param string $body Body template name to be used.
+     * @param string $header Header template name to be used. Can use predefined constants.
+     * @param string $footer Footer template name to be used. Can use predefined constants.
+     * @param string $body Body template name to be used. Can use predefined constants.
      */
-    public function __construct( string $header = 'default',
+    public function __construct(string $header = 'default',
                                 string $footer = 'default', string $body = 'home')
     {
         $this->header = $header;
