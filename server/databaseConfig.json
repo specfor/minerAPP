@@ -1,6 +1,5 @@
 {
   "servername": "localhost",
   "username": "root",
-  "password": "",
-  "dbname": "minerapp_database"
+  "password": ""
 }

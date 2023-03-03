@@ -11,8 +11,7 @@ $config = [
     'db' => [
         "servername" => $jsonData['servername'],
         "username" => $jsonData['username'],
-        "password" => $jsonData['password'],
-        "dbname" => $jsonData['dbname']
+        "password" => $jsonData['password']
     ]
 ];
 

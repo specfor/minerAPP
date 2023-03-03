@@ -2,21 +2,72 @@
 
 class Database
 {
+    /** Database name */
+    protected const DB_NAME = 'minerapp_database';
+    public const DB_TABLES = ['users'];
+
+    protected static string $servername;
+    protected static string $username;
+    protected static string $password;
+
     public PDO $pdo;
 
-    function __construct($servername, $dbname, $username, $password)
+
+    function __construct($servername, $username, $password)
     {
+        self::$servername = $servername;
+        self::$username = $username;
+        self::$password = $password;
+
         try {
-            $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            // Try to connect to mysql service.
+            $this->pdo = new PDO("mysql:host=$servername", $username, $password);
+        }catch (PDOException $e) {
+            $errPage = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, Page::ERROR_PAGE);
+            Application::$app->renderer->renderPage($errPage,
+                ['errorPage:err-message' => 'Internal Server Error occurred.']);
+            exit();
+        }
+
+        try {
+           $this->connectDatabase();
             // set the PDO error mode to exception
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            // This part runs when there is no database.
+            $this->createDatabase();
         }
     }
 
-    public function prepare($sql)
+    /**
+     * Set class instance pdo object to the pdo object with database connection.
+     */
+    protected function connectDatabase(){
+        // Try to connect to the relevant database.
+        $this->pdo = new PDO("mysql:host=".self::$servername.";dbname=" . self::DB_NAME,
+            self::$username, self::$password);
+    }
+
+    /**
+     * Create the database and tables.
+     */
+    private function createDatabase()
     {
-        return $this->pdo->prepare($sql);
+        $sql = "CREATE DATABASE " . self::DB_NAME;
+        $this->pdo->exec($sql);
+
+        // Connect to newly created database.
+        $this->connectDatabase();
+
+        $sql = "CREATE TABLE users (
+                    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    username varchar(24) NOT NULL,
+                    email varchar(24) NOT NULL,
+                    firstname varchar(24) NOT NULL,
+                    lastname varchar(24) NOT NULL,
+                    password varchar(256) NOT NULL,
+                    role int(5) NOT NULL
+                    )";
+        $this->pdo->exec($sql);
     }
 }
