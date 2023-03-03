@@ -1,23 +1,27 @@
 <?php
 
 //Import core modules
-require_once 'Database.php';
-require_once 'Router.php';
-require_once 'Session.php';
-require_once 'Request.php';
-require_once 'Response.php';
-require_once 'Renderer.php';
+foreach (scandir(__DIR__) as $filename) {
+    $path = __DIR__ . '/' . $filename;
+    if (is_file($path)) {
+        require_once $path;
+    }
+}
 
 //Import controllers
 require_once './../controllers/SiteController.php';
 
 //Import modules
-require_once './../models/User.php';
-require_once './../models/Page.php';
+foreach (scandir(dirname(__DIR__) . '/models') as $filename) {
+    $path = dirname(__DIR__) . '/models/' . $filename;
+    if (is_file($path)) {
+        require_once $path;
+    }
+}
 
 //Import exceptions
-foreach (scandir(dirname(__FILE__).'/exceptions') as $filename) {
-    $path = dirname(__FILE__).'/exceptions/' . $filename;
+foreach (scandir(dirname(__FILE__) . '/exceptions') as $filename) {
+    $path = dirname(__FILE__) . '/exceptions/' . $filename;
     if (is_file($path)) {
         require_once $path;
     }
@@ -39,6 +43,11 @@ class Application
     public static string $ROOT_DIR;
 
     /**
+     * Set the website to maintenance mode. When set to true, maintenance page will be displayed.
+     */
+    protected static bool $maintenanceMode = false;
+
+    /**
      * Return an instance of Application
      * @param array $config parse an nested array of configurations.
      */
@@ -47,12 +56,17 @@ class Application
         self::$app = $this;
         self::$ROOT_DIR = $config['rootPath'];
 
+        // If in maintenance mode, maintenance page is displayed. Application exits.
+        if (self::$maintenanceMode) {
+            require_once './../view/maintenanceMode.php';
+            exit();
+        }
+
         $this->response = new Response();
         $this->request = new Request();
         $this->renderer = new Renderer();
         $this->router = new Router($this->request, $this->response);
-        $this->db = new Database($config['db']['servername'], $config['db']['dbname'],
-            $config['db']['username'], $config['db']['password']);
+        $this->db = new Database($config['db']['servername'], $config['db']['username'], $config['db']['password']);
     }
 
     /**
