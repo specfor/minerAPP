@@ -74,7 +74,7 @@
     border-radius: 1.2rem;
      margin-top: 110px;">
 
-    <form action="#" method="post">
+    <form action="/register" method="post">
         <img class="mt-3" src="/images/logo.png" alt="Logo" style="height: 50px;width: 50px;">
         <h1 class="h3 mt-3">Sign In</h1>
         <input name="userName" type="text" class="form-control mt-4" id="username" placeholder="Username" autofocus required>
