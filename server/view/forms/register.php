@@ -78,14 +78,14 @@
         <img class="mt-3" src="/images/logo.png" alt="Logo" style="height: 50px;width: 50px;">
         <h1 class="h3 mt-3">Sign In</h1>
         <input name="userName" type="text" class="form-control mt-4" id="username" placeholder="Username" autofocus required>
-        <input name="Email" type="email" class="form-control mt-4" id="emailad" placeholder="Email Address" autofocus required
+        <input name="email" type="email" class="form-control mt-4" id="emailad" placeholder="Email Address" autofocus required
                onkeyup="">
         <p class="text-danger" id="notValidEmail" style="font-size: .8rem;"></p>
         <input name="password" type="password" class="form-control mt-4" id="password" maxlength="24" minlength="8"
                placeholder="Password"
                autofocus required onkeyup="passwordStrengthCheck()">
         <p class="text-danger" id="notValidPass" style="font-size: .8rem;"></p>
-        <input name="confirm_password" type="password" class="form-control mt-4" id="ConfirmPassword" placeholder="Confirm Password" autofocus
+        <input name="confirmPassword" type="password" class="form-control mt-4" id="ConfirmPassword" placeholder="Confirm Password" autofocus
                required onkeyup="confirmPass()">
         <p class="text-danger" id="confirmPw" style="font-size: .8rem;"></p>
         <div class="mt-4">
