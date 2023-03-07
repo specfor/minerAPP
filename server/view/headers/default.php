@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<header>
 <div class="container">
     <nav class="navbar navbar-expand-sm fixed-top" style="background-color: #001a4d;">
         <a class="navbar-brand text-white pb-0 ps-3" href=""><img src="images/logo.png" alt="Logo" height="50px" width="50px"></a>
@@ -40,3 +41,4 @@
         </div>
     </nav>
 </div>
+</header>
