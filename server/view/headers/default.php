@@ -11,6 +11,11 @@
 </head>
 
 <body>
+    <style>
+        ul a:hover{
+            background-color:#00091a;
+        }
+    </style>
 <header>
 <div class="container">
     <nav class="navbar navbar-expand-sm fixed-top" style="background-color: #001a4d;">
@@ -24,16 +29,16 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ">
                         <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">option1</a>
+                            <a class="nav-link active text-white " href="#">Home</a>
+                        </li>
+                        <li class="nav-item px-3 " >
+                            <a class="nav-link active text-white " href="#">Dashboard</a>
                         </li>
                         <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">option2</a>
+                            <a class="nav-link active text-white " href="#">My Account</a>
                         </li>
                         <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">option3</a>
-                        </li>
-                        <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">option4</a>
+                            <a class="nav-link active text-white " href="#">About</a>
                         </li>
                     </ul>
                 </div>
