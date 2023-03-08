@@ -16,7 +16,7 @@
     <form action="/login" method="post">
         <img class="mt-3" src="images/logo.png" alt="Logo" style="height: 50px;width: 50px;">
         <h1 class="h3 mt-3">Log In</h1>
-        <input name="email" type="email" class="form-control mt-4" id="emailAdd" placeholder="Email Address" autofocus required>
+        <input name="email" type="email/text" class="form-control mt-4" id="emailAdd" placeholder="Email/Username" autofocus required>
         <p class="text-danger" id="notValidEmail" style="font-size: .8rem;"></p>
         <input name="password" type="password" class="form-control mt-4" id="passW" placeholder="Password" autofocus required
                minlength="8" maxlength="24" onkeyup="passwordStrengthCheck()">
