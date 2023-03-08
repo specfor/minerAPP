@@ -8,6 +8,7 @@ class Page
     public const DEFAULT_FOOTER = 'default';
     public const BLANK_FOOTER = 'blank';
     public const DEFAULT_BODY = 'home';
+    public const ERROR_PAGE = 'errorPage';
 
     private string $header;
     private string $footer;
@@ -19,13 +20,17 @@ class Page
      * @param string $header Header template name to be used. Can use predefined constants.
      * @param string $footer Footer template name to be used. Can use predefined constants.
      * @param string $body Body template name to be used. Can use predefined constants.
+     * @param string $title Append to the beginning of the title. If 'Contact' is passed,
+     *                      title is changed to 'Contact - site title'
      */
     public function __construct(string $header = 'default',
-                                string $footer = 'default', string $body = 'home')
+                                string $footer = 'default', string $body = 'home', $title = '')
     {
         $this->header = $header;
         $this->footer = $footer;
         $this->body = $body;
+        if ($title)
+            SiteController::appendToTitle($title);
     }
 
     private function getHeaderPath(): string

@@ -6,6 +6,7 @@ class Renderer
     /**
      * Render a page according to the given arguments.
      * @param Page $page Page object to render.
+     * @param array $variables Array of [placeholder => Value] pairs to replace placeholders.
      */
     public function renderPage(Page $page, array $variables = [])
     {

@@ -28,7 +28,7 @@
             <button class="btn btn-primary " onclick="checkEmailValidity()"> Log In</button>
         </div>
         <div class="mt-3">
-            <p style="font-size:.8rem;">Don't have an account?<a href="signin.html">Sign In</a></p>
+            <p style="font-size:.8rem;">Don't have an account?<a href="register">Register</a></p>
         </div>
     </form>
 </div>

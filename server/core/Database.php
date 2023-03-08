@@ -4,7 +4,6 @@ class Database
 {
     /** Database name */
     protected const DB_NAME = 'minerapp_database';
-    public const DB_TABLES = ['users'];
 
     protected static string $servername;
     protected static string $username;
@@ -23,7 +22,8 @@ class Database
             // Try to connect to mysql service.
             $this->pdo = new PDO("mysql:host=$servername", $username, $password);
         }catch (PDOException $e) {
-            $errPage = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, Page::ERROR_PAGE);
+            $errPage = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER,
+                Page::ERROR_PAGE, 'Internal Server Error');
             Application::$app->renderer->renderPage($errPage,
                 ['errorPage:err-message' => 'Internal Server Error occurred.']);
             exit();
@@ -61,11 +61,11 @@ class Database
 
         $sql = "CREATE TABLE users (
                     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                    username varchar(24) NOT NULL,
-                    email varchar(24) NOT NULL,
-                    firstname varchar(24) NOT NULL,
-                    lastname varchar(24) NOT NULL,
-                    password varchar(256) NOT NULL,
+                    username varchar(255) NOT NULL,
+                    email varchar(255) NOT NULL,
+                    firstname varchar(255) NOT NULL,
+                    lastname varchar(255) NOT NULL,
+                    password varchar(255) NOT NULL,
                     role int(5) NOT NULL
                     )";
         $this->pdo->exec($sql);

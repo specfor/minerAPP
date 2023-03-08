@@ -26,7 +26,7 @@ class SiteController
      * For example := calling with 'Login' will result in changing the title to 'Login - SiteName'.
      * @param string $title Title for the page.
      */
-    private static function changeTitle(string $title)
+    public static function appendToTitle(string $title)
     {
         self::$SiteSettings['site:title'] = $title . ' - ' . self::$SiteSettings['site:title'];
     }
@@ -38,11 +38,10 @@ class SiteController
 
     public static function httpError(Exception $exception)
     {
-        $page = new Page(body: 'errorPage');
+        $page = new Page(body: 'errorPage', title: $exception->getMessage());
         $placeholderValues = [
             'errorPage:err-message' => $exception->getMessage()
         ];
-        self::changeTitle($exception->getMessage());
         Application::$app->renderer->renderPage($page, $placeholderValues);
     }
 
@@ -55,22 +54,36 @@ class SiteController
     public function login()
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login');
-            self::changeTitle('Login');
+            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login', title: 'Login');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
-
+            $params = Application::$app->request->getBodyParams();
+            $user = new User();
+            $userId = $user->validateUser($params['email'], $params['password']);
+            if ($userId) {
+                $_SESSION['userId'] = $userId;
+                Application::$app->response->redirect('/');
+            } else {
+                // Only a temporary code
+                Application::$app->response->redirect('/failedLogin');
+            }
         }
     }
 
     public function register()
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register');
-            self::changeTitle('Register');
+            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register', title: 'Register');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
-
+            $user = new User();
+            $success = $user->createNewUser(Application::$app->request->getBodyParams());
+            if ($success) {
+                Application::$app->response->redirect('/login');
+            } else {
+                // Only a temporary code
+                Application::$app->response->redirect('/failedRegister');
+            }
         }
     }
 }

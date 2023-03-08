@@ -77,7 +77,9 @@
     <form action="/register" method="post">
         <img class="mt-3" src="/images/logo.png" alt="Logo" style="height: 50px;width: 50px;">
         <h1 class="h3 mt-3">Sign In</h1>
-        <input name="userName" type="text" class="form-control mt-4" id="username" placeholder="Username" autofocus required>
+        <input name="firstname" type="text" class="form-control mt-4" id="firstname" placeholder="First Name" autofocus required>
+        <input name="lastname" type="text" class="form-control mt-4" id="lastname" placeholder="Last Name" autofocus required>
+        <input name="username" type="text" class="form-control mt-4" id="username" placeholder="Username" autofocus required>
         <input name="email" type="email" class="form-control mt-4" id="emailad" placeholder="Email Address" autofocus required
                onkeyup="">
         <p class="text-danger" id="notValidEmail" style="font-size: .8rem;"></p>
@@ -92,7 +94,7 @@
             <button class="btn btn-primary  " onclick="checkEmailValidity()">Sign In</button>
         </div>
         <div class="mt-3">
-            <p style="font-size:.8rem;">Have an account?<a href="index.html">Log In</a></p>
+            <p style="font-size:.8rem;">Have an account?<a href="login">Log In</a></p>
         </div>
     </form>
 </div>
