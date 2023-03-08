@@ -68,17 +68,23 @@
         background-size: cover;
     }
 </style>
-<div class="container-sm bg-white text-center " style="height: 500px;
+<div class="container-sm bg-white text-center " style="height: 550px;
     width:300px;
     margin:auto;
     border-radius: 1.2rem;
-     margin-top: 110px;">
+     margin-top: 60px;">
 
     <form action="/register" method="post">
         <img class="mt-3" src="/images/logo.png" alt="Logo" style="height: 50px;width: 50px;">
         <h1 class="h3 mt-3">Sign In</h1>
-        <input name="firstname" type="text" class="form-control mt-4" id="firstname" placeholder="First Name" autofocus required>
-        <input name="lastname" type="text" class="form-control mt-4" id="lastname" placeholder="Last Name" autofocus required>
+        <div class="row">
+            <div class="col-sm-6">
+                <input name="firstname" type="text" class="form-control mt-4" id="firstname" placeholder="First Name" autofocus required>
+            </div>
+            <div class="col-sm-6">
+                <input name="lastname" type="text" class="form-control mt-4" id="lastname" placeholder="Last Name" autofocus required>
+            </div>
+        </div>
         <input name="username" type="text" class="form-control mt-4" id="username" placeholder="Username" autofocus required>
         <input name="email" type="email" class="form-control mt-4" id="emailad" placeholder="Email Address" autofocus required
                onkeyup="">
