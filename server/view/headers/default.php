@@ -29,16 +29,16 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ">
                         <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">Home</a>
+                            <a class="nav-link active text-white px-3 py-3 " href="#">Home</a>
                         </li>
                         <li class="nav-item px-3 " >
-                            <a class="nav-link active text-white " href="#">Dashboard</a>
+                            <a class="nav-link active text-white px-3 py-3 " href="#">Dashboard</a>
                         </li>
                         <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">My Account</a>
+                            <a class="nav-link active text-white px-3 py-3" href="#">My Account</a>
                         </li>
                         <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white " href="#">About</a>
+                            <a class="nav-link active text-white px-3 py-3 " href="#">About</a>
                         </li>
                     </ul>
                 </div>
