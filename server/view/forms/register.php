@@ -62,13 +62,13 @@
 <style>
     body {
         background-image: url("images/background.jpg");
-        height: 100%;
+        height: 100vh;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
     }
 </style>
-<div class="container-sm bg-white text-center " style="height: 550px;
+<div class="container-sm bg-white text-center h-auto " style="height: 550px;
     width:300px;
     margin:auto;
     border-radius: 1.2rem;
