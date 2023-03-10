@@ -222,7 +222,7 @@ select::-ms-expand {
 }
 /*default view*/
 .default-view{
-    display: none;
+    /*display:none;*/                /*  change this to set mode of home tab  */
 }
 .left-home-pane{
     /*background-color: aquamarine;*/
@@ -270,6 +270,7 @@ select::-ms-expand {
     border: 1px solid rgba(0, 0, 0, 0.452);
     padding: 5px;
     border-radius: 5px;
+
 }
 .main{
     width: 230px;
@@ -278,9 +279,10 @@ select::-ms-expand {
     position: relative;
     top: -45px;
     font-weight: 700;
+    z-index: 1;
 }
 .main:hover{
-    background-color: rgba(0, 255, 17, 0.912);
+    background-color: rgba(19, 151, 28, 0.912);
     cursor: pointer;
     border:3px solid rgb(255, 255, 255);
     color: white;
@@ -290,7 +292,7 @@ select::-ms-expand {
     color: white;
     position: absolute;
     width: 80px;
-    left: 130px;
+    left: 170px;
     top: -15px;
 }
 .status-panel{
@@ -305,6 +307,13 @@ select::-ms-expand {
     margin: 10px;
     position: relative;
     left: 30px;
+
+}
+.status-panel h4{
+    font-size: 15px;
+    position: absolute;
+    top: -17px;
+    left: 40px;
 
 }
 .actions{
@@ -396,7 +405,7 @@ select::-ms-expand {
 .update-view{
     text-align: center;
     color: rgba(0, 0, 0, 0.464);
-    /*display: none;*/
+    display: none;                 /*  change this to set mode of home tab  */
 }
 .update-view h6{
     position: relative;

@@ -1,0 +1,2 @@
++ need to add preset button and should save current setting under given name ,
++ should be able to preload previous saved presets and should have loaded presets if user reinstall the softwear again
