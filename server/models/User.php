@@ -29,16 +29,6 @@ class User extends DbModel
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
-    /**
-     * Verify Password.
-     * @param string $password String password
-     * @return bool True if password match with hash. False if not.
-     */
-    private static function verifyPassword(string $password)
-    {
-        return password_verify($password, PASSWORD_DEFAULT);
-    }
-
     // Password Requirements
     private const MAX_PASSWORD_LENGTH = 24;
     private const MIN_PASSWORD_LENGTH = 8;
