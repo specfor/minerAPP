@@ -76,7 +76,7 @@
 
     <form action="/register" method="post">
         <img class="mt-3" src="/images/logo.png" alt="Logo" style="height: 50px;width: 50px;">
-        <h1 class="h3 mt-3">Sign In</h1>
+        <h1 class="h3 mt-3">Register</h1>
         <div class="row">
             <div class="col-sm-6">
                 <input name="firstname" type="text" class="form-control mt-4" id="firstname" placeholder="First Name" autofocus required>
@@ -97,7 +97,7 @@
                required onkeyup="confirmPass()">
         <p class="text-danger" id="confirmPw" style="font-size: .8rem;"></p>
         <div class="mt-4">
-            <button class="btn btn-primary  " onclick="checkEmailValidity()">Sign In</button>
+            <button class="btn btn-primary  " onclick="checkEmailValidity()">Create Account</button>
         </div>
         <div class="mt-3">
             <p style="font-size:.8rem;">Have an account?<a href="login">Log In</a></p>
