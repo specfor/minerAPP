@@ -48,29 +48,34 @@ class User extends DbModel
             [':username' => $params['username']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
             $errorFree = false;
-            //Todo: Show username already used error
+            Application::$app->session->setFlashMessage('registerError',
+                'Username already exists.', Page::ALERT_TYPE_ERROR);
         }
 
         $statement = self::getDataFromTable(['id'], self::TABLE_NAME, 'email=:email',
             [':email' => $params['email']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
             $errorFree = false;
-
+            Application::$app->session->setFlashMessage('registerError',
+                'Email already exists.', Page::ALERT_TYPE_ERROR);
         }
 
         if ($params['password'] !== $params['confirmPassword']) {
             $errorFree = false;
-
+            Application::$app->session->setFlashMessage('registerError',
+                'Password and confirm password fields do not match.', Page::ALERT_TYPE_ERROR);
         }
 
         if (strlen($params['password']) < self::MIN_PASSWORD_LENGTH) {
             $errorFree = false;
-
+            Application::$app->session->setFlashMessage('registerError',
+                'Password is too short.', Page::ALERT_TYPE_ERROR);
         }
 
         if (strlen($params['password']) > self::MAX_PASSWORD_LENGTH) {
             $errorFree = false;
-
+            Application::$app->session->setFlashMessage('registerError',
+                'Password is too long.', Page::ALERT_TYPE_ERROR);
         }
         $params['password'] = self::generatePasswordHash($params['password']);
 

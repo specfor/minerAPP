@@ -39,6 +39,7 @@ class Application
     public Request $request;
     public Response $response;
     public Renderer $renderer;
+    public Session $session;
 
     public static string $ROOT_DIR;
 
@@ -49,7 +50,7 @@ class Application
 
     /**
      * Return an instance of Application
-     * @param array $config parse an nested array of configurations.
+     * @param array $config parse a nested array of configurations.
      */
     public function __construct(array $config)
     {
@@ -65,6 +66,7 @@ class Application
         $this->response = new Response();
         $this->request = new Request();
         $this->renderer = new Renderer();
+        $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']['servername'], $config['db']['username'], $config['db']['password']);
     }

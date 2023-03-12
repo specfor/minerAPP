@@ -22,7 +22,7 @@ class SiteController
 
     /**
      * Append this part to the beginning of the title.
-     * NOTE- should be called before calling render function.
+     * NOTE - should be called before calling render function.
      * For example := calling with 'Login' will result in changing the title to 'Login - SiteName'.
      * @param string $title Title for the page.
      */
@@ -64,8 +64,9 @@ class SiteController
                 $_SESSION['userId'] = $userId;
                 Application::$app->response->redirect('/');
             } else {
-                // Only a temporary code
-                Application::$app->response->redirect('/failedLogin');
+                Application::$app->session->setFlashMessage('loginError',
+                    'Invalid Username/Email or Password', Page::ALERT_TYPE_ERROR);
+                Application::$app->response->redirect('/login');
             }
         }
     }
@@ -82,7 +83,7 @@ class SiteController
                 Application::$app->response->redirect('/login');
             } else {
                 // Only a temporary code
-                Application::$app->response->redirect('/failedRegister');
+                Application::$app->response->redirect('/register');
             }
         }
     }
