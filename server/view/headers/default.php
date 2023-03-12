@@ -11,15 +11,15 @@
 </head>
 
 <body>
-    <style>
-        ul a:hover{
-            background-color:#00091a;
-        }
-    </style>
+<style>
+    ul a:hover {
+        background-color: #00091a;
+    }
+</style>
 <header>
-<div class="container">
-    <nav class="navbar navbar-expand-sm fixed-top" style="background-color: #001a4d;">
-        <a class="navbar-brand text-white pb-0 ps-3" href=""><img src="images/logo.png" alt="Logo" height="50px" width="50px"></a>
+    <nav class="navbar navbar-expand-sm sticky-top" style="background-color: #001a4d;">
+        <a class="navbar-brand text-white pb-0 ps-3" href=""><img src="images/logo.png" alt="Logo" height="50px"
+                                                                  width="50px"></a>
         <div class="container-fluid justify-content-end">
             <div class="content-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -31,7 +31,7 @@
                         <li class="nav-item px-3 ">
                             <a class="nav-link active text-white px-3 py-3 " href="#">Home</a>
                         </li>
-                        <li class="nav-item px-3 " >
+                        <li class="nav-item px-3 ">
                             <a class="nav-link active text-white px-3 py-3 " href="#">Dashboard</a>
                         </li>
                         <li class="nav-item px-3 ">
@@ -45,5 +45,4 @@
             </div>
         </div>
     </nav>
-</div>
 </header>
