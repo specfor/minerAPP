@@ -80,9 +80,10 @@ class SiteController
             $user = new User();
             $success = $user->createNewUser(Application::$app->request->getBodyParams());
             if ($success) {
+                Application::$app->session->setFlashMessage('registerSuccess',
+                    'Successfully registered.', Page::ALERT_TYPE_SUCCESS);
                 Application::$app->response->redirect('/login');
             } else {
-                // Only a temporary code
                 Application::$app->response->redirect('/register');
             }
         }
