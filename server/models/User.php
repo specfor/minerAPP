@@ -2,15 +2,21 @@
 
 namespace AnyKey\Server\models;
 
+use AnyKey\Server\core\Application;
+use PDO;
+
 class User extends DbModel
 {
-    /**
-     * Following constants need to be initialized. They are used when executing Database actions.
-     */
+
+    // Following constants need to be initialized. They are used when executing Database actions.
+
     private const TABLE_NAME = 'users';
     private const PRIMARY_KEY = 'id';
     private const TABLE_COLUMNS = ['id', 'username', 'email', 'firstname', 'lastname', 'password', 'role'];
 
+    // User Roles
+    public const ROLE_ADMINISTRATOR = 1;
+    public const ROLE_USER = 2;
 
     public int $userId;
     public string $username;
@@ -91,15 +97,15 @@ class User extends DbModel
     }
 
     /**
-     * Set user instance variables from the DATABASE regarding to the <b>SESSION</b> userId.
-     * If success, return true.
-     * If no SESSION userId is not set or any error occurred then return false.
+     * If passed user ID is present, set instance variable values.
+     * @param int $userID User ID to look for
+     * @return bool True if user is present, false otherwise.
      */
-    public function getUserData(): bool
+    public function loadUserData(int $userID): bool
     {
-        if (isset($_SESSION['userId'])) {
-            $statement = self::getDataFromTable(['*'], 'users', "id=" . $_SESSION['userId']);
-            $userData = $statement->fetchAll()[0];
+        $statement = self::getDataFromTable(['*'], 'users', "id=" . $userID);
+        $userData = $statement->fetchAll()[0];
+        if ($userData) {
             $this->userId = $userData['id'];
             $this->username = $userData['username'];
             $this->email = $userData['email'];
@@ -132,4 +138,17 @@ class User extends DbModel
         return false;
     }
 
+    /**
+     * Get user type text.
+     * @return string Return user type message. 'none' if no role found.
+     */
+    public function getUserRoleText(): string
+    {
+        if ($this->userId == User::ROLE_ADMINISTRATOR)
+            return 'admin';
+        elseif ($this->userId == User::ROLE_USER)
+            return 'user';
+        else
+            return 'none';
+    }
 }
