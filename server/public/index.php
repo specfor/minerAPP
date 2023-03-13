@@ -6,16 +6,16 @@ use AnyKey\Server\core\Application;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-//Getting database details
-$jsonRead = file_get_contents('./../databaseConfig.json');
-$jsonData = json_decode($jsonRead, true);
+//Loading database details to environment variables
+$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
 $config = [
     'rootPath' => dirname(__DIR__),
     'db' => [
-        "servername" => $jsonData['servername'],
-        "username" => $jsonData['username'],
-        "password" => $jsonData['password']
+        "servername" => $_ENV['DB_SERVERNAME'],
+        "username" => $_ENV['DB_USERNAME'],
+        "password" => $_ENV['DB_PASSWORD']
     ]
 ];
 
