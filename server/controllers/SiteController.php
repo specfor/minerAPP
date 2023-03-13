@@ -1,5 +1,10 @@
 <?php
 
+namespace AnyKey\Server\controllers;
+
+use AnyKey\Server\core\Application;
+use AnyKey\Server\models\Page;
+use AnyKey\Server\models\User;
 
 class SiteController
 {
@@ -26,7 +31,7 @@ class SiteController
      * For example := calling with 'Login' will result in changing the title to 'Login - SiteName'.
      * @param string $title Title for the page.
      */
-    public static function appendToTitle(string $title)
+    public static function appendToTitle(string $title): void
     {
         self::$SiteSettings['site:title'] = $title . ' - ' . self::$SiteSettings['site:title'];
     }
@@ -36,7 +41,7 @@ class SiteController
      * All the functions in here are used to call render function with their placeholder values.
      */
 
-    public static function httpError(Exception $exception)
+    public static function httpError(\Exception $exception): void
     {
         $page = new Page(body: 'errorPage', title: $exception->getMessage());
         $placeholderValues = [
@@ -45,13 +50,13 @@ class SiteController
         Application::$app->renderer->renderPage($page, $placeholderValues);
     }
 
-    public function home()
+    public function home(): void
     {
         $page = new Page();
         Application::$app->renderer->renderPage($page);
     }
 
-    public function login()
+    public function login(): void
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login', title: 'Login');
@@ -71,7 +76,7 @@ class SiteController
         }
     }
 
-    public function register()
+    public function register(): void
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register', title: 'Register');

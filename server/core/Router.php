@@ -1,5 +1,8 @@
 <?php
 
+namespace AnyKey\Server\core;
+
+use AnyKey\Server\core\exceptions\NotFoundException;
 
 class Router
 {
@@ -24,7 +27,7 @@ class Router
      * @param array $callback array of the controller class and name of the relevant page.
      * ex :- [SiteController::class, 'home']
      */
-    public function addGetRoute(string $path, array $callback):void
+    public function addGetRoute(string $path, array $callback): void
     {
         self::$routes['get'][$path] = $callback;
     }
@@ -35,7 +38,7 @@ class Router
      * @param array $callback - array of the controller class and name of the relevant page.
      * ex :- [SiteController::class, 'contact']
      */
-    public function addPostRoute(string $path, array $callback):void
+    public function addPostRoute(string $path, array $callback): void
     {
         self::$routes['post'][$path] = $callback;
     }
@@ -45,15 +48,15 @@ class Router
      * with parameters.
      * @throws NotFoundException throw code 404 exception
      */
-    public function resolveRoute():void
+    public function resolveRoute(): void
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
         $callback = self::$routes[$method][$path] ?? false;
-        if ($callback === false){
+        if ($callback === false) {
             throw new NotFoundException();
         }
-        if (is_array($callback)){
+        if (is_array($callback)) {
             $controller = new $callback[0];
             $controller->{$callback[1]}();
         }

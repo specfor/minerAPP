@@ -1,5 +1,10 @@
 <?php
 
+namespace AnyKey\Server\models;
+
+use AnyKey\Server\core\Application;
+use PDOException;
+use PDOStatement;
 
 abstract class DbModel
 {
@@ -33,8 +38,8 @@ abstract class DbModel
         $values = [];
         foreach ($params as $key => $value) {
             if (in_array($key, $tableColumns)) {
-                array_push($attributes, $key);
-                array_push($values, $value);
+                $attributes[] = $key;
+                $values[] = $value;
             }
         }
         $placeholders = array_map(fn($attr) => ":$attr", $attributes);

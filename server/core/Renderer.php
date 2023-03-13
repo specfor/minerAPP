@@ -1,5 +1,9 @@
 <?php
 
+namespace AnyKey\Server\core;
+
+use AnyKey\Server\controllers\SiteController;
+use AnyKey\Server\models\Page;
 
 class Renderer
 {

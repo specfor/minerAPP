@@ -1,5 +1,11 @@
 <?php
 
+namespace AnyKey\Server\core;
+
+use AnyKey\Server\models\Page;
+use PDO;
+use PDOException;
+
 class Database
 {
     /** Database name */

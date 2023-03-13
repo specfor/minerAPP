@@ -1,5 +1,10 @@
 <?php
 
+namespace AnyKey\Server\models;
+
+use AnyKey\Server\controllers\SiteController;
+use AnyKey\Server\core\Application;
+use AnyKey\Server\core\Session;
 
 class Page
 {
@@ -32,8 +37,8 @@ class Page
         if ($title)
             SiteController::appendToTitle($title);
 
-        if ($_SESSION[Session::FLASH_KEY]){
-            foreach (Application::$app->session->getAllFlashMessages() as $flash){
+        if ($_SESSION[Session::FLASH_KEY]) {
+            foreach (Application::$app->session->getAllFlashMessages() as $flash) {
                 $this->addAlertMessage($flash['message'], $flash['type']);
             }
         }
@@ -64,7 +69,7 @@ class Page
             $msg .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
         }
         $msg .= '</div>';
-        array_push($this->alertMessages, $msg);
+        $this->alertMessages[] = $msg;
     }
 
     private function getHeaderPath(): string
@@ -89,8 +94,8 @@ class Page
     {
         ob_start();
         include_once $this->getHeaderPath();
-        if (!empty($this->alertMessages)){
-            foreach ($this->alertMessages as $message){
+        if (!empty($this->alertMessages)) {
+            foreach ($this->alertMessages as $message) {
                 echo $message;
             }
         }

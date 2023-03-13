@@ -1,31 +1,10 @@
 <?php
 
-//Import core modules
-foreach (scandir(__DIR__) as $filename) {
-    $path = __DIR__ . '/' . $filename;
-    if (is_file($path)) {
-        require_once $path;
-    }
-}
+namespace AnyKey\Server\core;
 
-//Import controllers
-require_once './../controllers/SiteController.php';
-
-//Import modules
-foreach (scandir(dirname(__DIR__) . '/models') as $filename) {
-    $path = dirname(__DIR__) . '/models/' . $filename;
-    if (is_file($path)) {
-        require_once $path;
-    }
-}
-
-//Import exceptions
-foreach (scandir(dirname(__FILE__) . '/exceptions') as $filename) {
-    $path = dirname(__FILE__) . '/exceptions/' . $filename;
-    if (is_file($path)) {
-        require_once $path;
-    }
-}
+use AnyKey\Server\controllers\SiteController;
+use AnyKey\Server\models\User;
+use Exception;
 
 /**
  * Class Application

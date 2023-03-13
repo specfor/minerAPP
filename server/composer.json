@@ -1,0 +1,16 @@
+{
+    "name": "anykey/server",
+    "description": "Server code with API",
+    "autoload": {
+        "psr-4": {
+            "AnyKey\\Server\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "vihanga",
+            "email": "vihanga2003nimsara@gmail.com"
+        }
+    ],
+    "require": {}
+}

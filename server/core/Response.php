@@ -1,5 +1,6 @@
 <?php
 
+namespace AnyKey\Server\core;
 
 class Response
 {

@@ -1,5 +1,6 @@
 <?php
 
+namespace AnyKey\Server\models;
 
 class User extends DbModel
 {
