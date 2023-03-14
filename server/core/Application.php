@@ -45,7 +45,6 @@ class Application
         $this->response = new Response();
         $this->request = new Request();
         $this->renderer = new Renderer();
-        $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']['servername'], $config['db']['username'], $config['db']['password']);
     }

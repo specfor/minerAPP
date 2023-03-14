@@ -3,11 +3,18 @@
 namespace AnyKey\Server\controllers;
 
 use AnyKey\Server\core\Application;
+use AnyKey\Server\core\CSRF_Token;
+use AnyKey\Server\core\Session;
 use AnyKey\Server\models\Page;
 use AnyKey\Server\models\User;
 
 class SiteController
 {
+    public function __construct()
+    {
+        Application::$app->session = new Session();
+    }
+
     /**
      * For site default values, naming convention to use in HTML document is 'site:variable'.
      * For other variables it should be path_to_file:filename:variable.
@@ -60,9 +67,17 @@ class SiteController
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login', title: 'Login');
-            Application::$app->renderer->renderPage($page);
+            $params = ['login:csrf-token'=>CSRF_Token::generateToken('/login')];
+            Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
             $params = Application::$app->request->getBodyParams();
+            if (!CSRF_Token::validateToken('/login', $params['csrf-token'] ?? false)){
+                Application::$app->session->setFlashMessage('loginError',
+                    'Invalid CSRF token', Page::ALERT_TYPE_ERROR);
+                Application::$app->response->redirect('/login');
+                exit();
+            }
+
             $user = new User();
             $userId = $user->validateUser($params['email'], $params['password']);
             if ($userId) {
@@ -80,10 +95,19 @@ class SiteController
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register', title: 'Register');
-            Application::$app->renderer->renderPage($page);
+            $params = ['register:csrf-token'=>CSRF_Token::generateToken('/register')];
+            Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
+            $params = Application::$app->request->getBodyParams();
+            if (!CSRF_Token::validateToken('/register', $params['csrf-token'] ?? false)){
+                Application::$app->session->setFlashMessage('RegisterError',
+                    'Invalid CSRF token', Page::ALERT_TYPE_ERROR);
+                Application::$app->response->redirect('/register');
+                exit();
+            }
+
             $user = new User();
-            $success = $user->createNewUser(Application::$app->request->getBodyParams());
+            $success = $user->createNewUser($params);
             if ($success) {
                 Application::$app->session->setFlashMessage('registerSuccess',
                     'Successfully registered.', Page::ALERT_TYPE_SUCCESS);
