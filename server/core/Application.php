@@ -53,7 +53,7 @@ class Application
      * Start the application. Call to resolveRoute.
      * If any error occurred, call to render the relevant error page.
      */
-    public function run()
+    public function run(): void
     {
         try {
             $this->router->resolveRoute();

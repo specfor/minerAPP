@@ -37,7 +37,7 @@ class Page
         if ($title)
             SiteController::appendToTitle($title);
 
-        if ($_SESSION[Session::FLASH_KEY]) {
+        if (isset($_SESSION) && $_SESSION[Session::FLASH_KEY]) {
             foreach (Application::$app->session->getAllFlashMessages() as $flash) {
                 $this->addAlertMessage($flash['message'], $flash['type']);
             }

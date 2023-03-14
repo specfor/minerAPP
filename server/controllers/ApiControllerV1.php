@@ -23,8 +23,8 @@ class ApiControllerV1 extends API
                 $user->loadUserData($userId);
                 $payload = [
                     'id' => $user->userId,
-                    'email'=> $user->email,
-                    'role'=>$user->getUserRoleText(),
+                    'email' => $user->email,
+                    'role' => $user->getUserRoleText(),
                     'exp' => Carbon::now()->addSeconds(self::JWT_EXPIRE_INTERVAL)
                 ];
                 $jwt = JWT::generateToken($payload);
@@ -42,4 +42,6 @@ class ApiControllerV1 extends API
             }
         }
     }
+
+
 }

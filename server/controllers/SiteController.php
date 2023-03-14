@@ -52,6 +52,7 @@ class SiteController
     {
         $page = new Page(body: 'errorPage', title: $exception->getMessage());
         $placeholderValues = [
+            'errorPage:err-code' => $exception->getCode(),
             'errorPage:err-message' => $exception->getMessage()
         ];
         Application::$app->renderer->renderPage($page, $placeholderValues);
@@ -67,11 +68,11 @@ class SiteController
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login', title: 'Login');
-            $params = ['login:csrf-token'=>CSRF_Token::generateToken('/login')];
+            $params = ['login:csrf-token' => CSRF_Token::generateToken('/login')];
             Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
             $params = Application::$app->request->getBodyParams();
-            if (!CSRF_Token::validateToken('/login', $params['csrf-token'] ?? false)){
+            if (!CSRF_Token::validateToken('/login', $params['csrf-token'] ?? false)) {
                 Application::$app->session->setFlashMessage('loginError',
                     'Invalid CSRF token', Page::ALERT_TYPE_ERROR);
                 Application::$app->response->redirect('/login');
@@ -95,11 +96,11 @@ class SiteController
     {
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register', title: 'Register');
-            $params = ['register:csrf-token'=>CSRF_Token::generateToken('/register')];
+            $params = ['register:csrf-token' => CSRF_Token::generateToken('/register')];
             Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
             $params = Application::$app->request->getBodyParams();
-            if (!CSRF_Token::validateToken('/register', $params['csrf-token'] ?? false)){
+            if (!CSRF_Token::validateToken('/register', $params['csrf-token'] ?? false)) {
                 Application::$app->session->setFlashMessage('RegisterError',
                     'Invalid CSRF token', Page::ALERT_TYPE_ERROR);
                 Application::$app->response->redirect('/register');

@@ -22,9 +22,19 @@ abstract class API
     public function sendResponse(int $statusCode, string $statusMessage, array $payload): void
     {
         $finalPayload = [
-            'statusCode'=> $statusCode,
-            'statusMessage'=>$statusMessage,
-            'body'=> $payload
+            'statusCode' => $statusCode,
+            'statusMessage' => $statusMessage,
+            'body' => $payload
+        ];
+        echo json_encode($finalPayload);
+    }
+
+    public static function endPointNotFound(): void
+    {
+        $finalPayload = [
+            'statusCode' => 404,
+            'statusMessage' => 'not found',
+            'body' => ['error' => 'API endpoint not found']
         ];
         echo json_encode($finalPayload);
     }
