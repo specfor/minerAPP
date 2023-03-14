@@ -29,6 +29,7 @@ class ApiControllerV1 extends API
                 ];
                 $jwt = JWT::generateToken($payload);
                 $returnPayload = [
+                    'message' => 'Login successful.',
                     'token' => $jwt
                 ];
                 $this->sendResponse(self::STATUS_CODE_SUCCESS, self::STATUS_MSG_SUCCESS,
@@ -43,5 +44,18 @@ class ApiControllerV1 extends API
         }
     }
 
+    public function register(): void
+    {
+        $params = Application::$app->request->getBodyParams();
+        $user = new User();
+        $status = $user->createNewUser($params);
+        if ($status === true) {
+            $this->sendResponse(self::STATUS_CODE_SUCCESS, self::STATUS_MSG_SUCCESS,
+                ['message' => 'Registration successful.']);
+        } else {
+            $this->sendResponse(self::STATUS_CODE_SUCCESS, self::STATUS_MSG_ERROR,
+                ['error' => $status]);
+        }
+    }
 
 }

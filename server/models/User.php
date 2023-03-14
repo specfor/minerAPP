@@ -43,57 +43,47 @@ class User extends DbModel
     /**
      * Create a new user in the database.
      * @param array $params An array of [key=> value] pairs.
-     * @return bool True if success, False if failed.
+     * @return bool|string True if success, Error msg if failed
      */
-    public function createNewUser(array $params): bool
+    public function createNewUser(array $params): bool|string
     {
-        $errorFree = true;
+        if (!isset($params['username']) || !isset($params['email']) || !isset($params['password']) ||
+            !isset($params['confirmPassword'])) {
+            return 'All required fields were not filled.';
+        }
 
         // Performing checks on input variables.
 
         $statement = self::getDataFromTable(['id'], self::TABLE_NAME, 'username=:username',
             [':username' => $params['username']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Username already exists.', Page::ALERT_TYPE_ERROR);
+            return 'Username already exists.';
         }
 
         $statement = self::getDataFromTable(['id'], self::TABLE_NAME, 'email=:email',
             [':email' => $params['email']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Email already exists.', Page::ALERT_TYPE_ERROR);
+            return 'Email already exists.';
         }
 
         if ($params['password'] !== $params['confirmPassword']) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Password and confirm password fields do not match.', Page::ALERT_TYPE_ERROR);
+            return 'Password and Confirm Password fields are not same.';
         }
 
         if (strlen($params['password']) < self::MIN_PASSWORD_LENGTH) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Password is too short.', Page::ALERT_TYPE_ERROR);
+            return 'Password is too short.';
         }
 
         if (strlen($params['password']) > self::MAX_PASSWORD_LENGTH) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Password is too long.', Page::ALERT_TYPE_ERROR);
+            return 'Password is too long.';
         }
+
         $params['password'] = self::generatePasswordHash($params['password']);
 
         //For now set user role to 1
         $params['role'] = 1;
 
-        if ($errorFree) {
-            self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params);
-            return true;
-        }
-        return false;
+        return self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params);
     }
 
     /**

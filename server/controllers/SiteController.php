@@ -108,12 +108,14 @@ class SiteController
             }
 
             $user = new User();
-            $success = $user->createNewUser($params);
-            if ($success) {
+            $status = $user->createNewUser($params);
+            if ($status === true) {
                 Application::$app->session->setFlashMessage('registerSuccess',
                     'Successfully registered.', Page::ALERT_TYPE_SUCCESS);
                 Application::$app->response->redirect('/login');
             } else {
+                Application::$app->session->setFlashMessage('registerError',
+                    $status, Page::ALERT_TYPE_ERROR);
                 Application::$app->response->redirect('/register');
             }
         }
