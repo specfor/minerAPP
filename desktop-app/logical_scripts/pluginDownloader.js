@@ -1,3 +1,4 @@
+
 async function downloadPlugin(event, { payload }) {
     let properties = payload.properties ? { ...payload.properties } : {};
     // download folder
