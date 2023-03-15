@@ -11,14 +11,14 @@ abstract class DbModel
     /**
      * Prepare sql statement
      * @param string $sql SQL statement to prepare
-     * @return PDOStatement|PDOException|bool PDOStatement if success, PDOException or false if any error occurred.
+     * @return mixed PDOStatement if success, PDOException or false if any error occurred.
      */
-    protected static function prepare(string $sql): PDOStatement|PDOException|bool
+    protected static function prepare(string $sql)
     {
         return Application::$app->db->pdo->prepare($sql);
     }
 
-    protected static function exec(string $sql): false|int
+    protected static function exec(string $sql)
     {
         return Application::$app->db->pdo->exec($sql);
     }
@@ -58,10 +58,10 @@ abstract class DbModel
      * @param string $conditionWithPlaceholders The condition to get data with placeholders(if needed) to values.
      *      Should be a valid sql condition.
      * @param array $placeholderValues Associative array of placeholder => value.
-     * @return bool|PDOStatement|PDOException Return PDOStatement|PDOException|bool based on scenario.
+     * @return mixed Return PDOStatement|PDOException|bool based on scenario.
      */
     protected static function getDataFromTable(array $rows, string $tableName, string $conditionWithPlaceholders = '',
-                                     array $placeholderValues = []): bool|PDOStatement|PDOException
+                                     array $placeholderValues = [])
     {
         if ($conditionWithPlaceholders)
             $sql = "SELECT " . implode(', ', $rows) . " FROM $tableName WHERE $conditionWithPlaceholders";

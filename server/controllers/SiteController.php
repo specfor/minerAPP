@@ -50,7 +50,8 @@ class SiteController
 
     public static function httpError(\Exception $exception): void
     {
-        $page = new Page(body: 'errorPage', title: $exception->getMessage());
+        $page = new Page(Page::DEFAULT_HEADER_WITH_MENU, Page::DEFAULT_FOOTER,
+            'errorPage', $exception->getMessage());
         $placeholderValues = [
             'errorPage:err-code' => $exception->getCode(),
             'errorPage:err-message' => $exception->getMessage()
@@ -67,7 +68,7 @@ class SiteController
     public function login(): void
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/login', title: 'Login');
+            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, 'forms/login', 'Login');
             $params = ['login:csrf-token' => CSRF_Token::generateToken('/login')];
             Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
@@ -80,9 +81,9 @@ class SiteController
             }
 
             $user = new User();
-            $userId = $user->validateUser($params['email'], $params['password']);
-            if ($userId) {
-                $_SESSION['userId'] = $userId;
+            $user->validateUser($params['email'], $params['password']);
+            if ($user->userId) {
+                $_SESSION['userId'] = $user->userId;
                 Application::$app->response->redirect('/');
             } else {
                 Application::$app->session->setFlashMessage('loginError',
@@ -95,7 +96,7 @@ class SiteController
     public function register(): void
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, body: 'forms/register', title: 'Register');
+            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, 'forms/register', 'Register');
             $params = ['register:csrf-token' => CSRF_Token::generateToken('/register')];
             Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
@@ -109,7 +110,7 @@ class SiteController
 
             $user = new User();
             $status = $user->createNewUser($params);
-            if ($status === true) {
+            if ($status === 'user created.') {
                 Application::$app->session->setFlashMessage('registerSuccess',
                     'Successfully registered.', Page::ALERT_TYPE_SUCCESS);
                 Application::$app->response->redirect('/login');

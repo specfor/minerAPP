@@ -36,7 +36,7 @@ class JWT
      * @param array|string $payload Payload to generate the JWT token.
      * @return string JWT token string.
      */
-    public static function generateToken(array|string $payload): string
+    public static function generateToken(string $payload): string
     {
         $payload = json_encode($payload);
 
@@ -76,7 +76,8 @@ class JWT
         $tokenParts = explode('.', $jwt);
         $payload = base64_decode($tokenParts[1]);
 
-        $expiration = Carbon::createFromTimestamp(json_decode($payload)->exp);
-        return (Carbon::now()->diffInSeconds($expiration, false) < 0);
+        $expiration  = new \DateTime(json_decode($payload)->exp);
+        $now = new \DateTime();
+        return ($now->diff($expiration) > 0);
     }
 }

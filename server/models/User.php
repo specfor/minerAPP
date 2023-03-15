@@ -43,9 +43,9 @@ class User extends DbModel
     /**
      * Create a new user in the database.
      * @param array $params An array of [key=> value] pairs.
-     * @return bool|string True if success, Error msg if failed
+     * @return string Return 'user created' if success, Error msg if failed
      */
-    public function createNewUser(array $params): bool|string
+    public function createNewUser(array $params): string
     {
         if (!isset($params['username']) || !isset($params['email']) || !isset($params['password']) ||
             !isset($params['confirmPassword'])) {
@@ -83,7 +83,10 @@ class User extends DbModel
         //For now set user role to 1
         $params['role'] = 1;
 
-        return self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params);
+        if(self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params)){
+            return 'user created.';
+        }
+        return 'Unknown error occured.';
     }
 
     /**
@@ -108,12 +111,12 @@ class User extends DbModel
     }
 
     /**
-     * Validate the user login.
+     * Validate the user presence. If user is present set userId value of the instance to the userId.
      * @param string $username Username / Email of the user.
      * @param string $password Password of the user.
-     * @return bool|int Return userId if user exists, false if not.
+     * @return bool Return true if user exists, false if not.
      */
-    public function validateUser(string $username, string $password): bool|int
+    public function validateUser(string $username, string $password):bool
     {
         $sql = "SELECT id, password FROM " . self::TABLE_NAME . " WHERE username=:username OR email=:username";
         $statement = self::prepare($sql);
@@ -122,7 +125,8 @@ class User extends DbModel
         $data = $statement->fetch(PDO::FETCH_ASSOC);
         if ($data) {
             if (password_verify($password, $data['password'])) {
-                return $data['id'];
+                $this->userId = $data['id'];
+                return true;
             }
         }
         return false;

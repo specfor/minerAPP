@@ -35,12 +35,12 @@ class Session
     /**
      * Return the value and the type of the flash message.
      * @param string $key Key to find the flash message.
-     * @return array|false Return an array of flash message and type if key is found, false if no key found.
+     * @return array|false Return an array of flash message and type if key is found, empty array if no key found.
      */
-    public function getFlashMessage(string $key): array|false
+    public function getFlashMessage(string $key): array
     {
         if (!$_SESSION[self::FLASH_KEY][$key])
-            return false;
+            return [];
 
         $msg = $_SESSION[self::FLASH_KEY][$key]['message'] ?? false;
         $type = $_SESSION[self::FLASH_KEY][$key]['type'] ?? false;
@@ -79,7 +79,7 @@ class Session
      * @param string $variable Name of session variable.
      * @return false|mixed Return value if variable is present and false if variable is absent.
      */
-    public function getVariable(string $variable): mixed
+    public function getVariable(string $variable)
     {
         return $_SESSION[$variable] ?? false;
     }

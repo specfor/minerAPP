@@ -58,4 +58,23 @@ class ApiControllerV1 extends API
         }
     }
 
+    public function settings()
+    {
+        $params = Application::$app->request->getBodyParams();
+        if (isset($params['coin'])){
+
+        }
+        if (isset($params['miner-plugin'])){
+
+        }
+        if(isset($params['wallet-address'])){
+
+        }
+        if (isset($params['pool-address'])){
+
+        }
+        if(isset($params['extra-params'])){
+
+        }
+    }
 }
