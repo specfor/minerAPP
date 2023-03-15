@@ -81,8 +81,7 @@ class SiteController
             }
 
             $user = new User();
-            $user->validateUser($params['email'], $params['password']);
-            if ($user->userId) {
+            if ($user->validateUser($params['email'], $params['password'])) {
                 $_SESSION['userId'] = $user->userId;
                 Application::$app->response->redirect('/');
             } else {

@@ -18,14 +18,13 @@ class ApiControllerV1 extends API
         if (Application::$app->request->isPost()) {
             $params = Application::$app->request->getBodyParams();
             $user = new User();
-            $userId = $user->validateUser($params['email/username'], $params['password']);
-            if ($userId) {
-                $user->loadUserData($userId);
+            if ($user->validateUser($params['email/username'], $params['password'])) {
+                $user->loadUserData($user->userId);
                 $payload = [
                     'id' => $user->userId,
                     'email' => $user->email,
                     'role' => $user->getUserRoleText(),
-                    'exp' => Carbon::now()->addSeconds(self::JWT_EXPIRE_INTERVAL)
+                    'exp' => time() + self::JWT_EXPIRE_INTERVAL
                 ];
                 $jwt = JWT::generateToken($payload);
                 $returnPayload = [
@@ -49,7 +48,7 @@ class ApiControllerV1 extends API
         $params = Application::$app->request->getBodyParams();
         $user = new User();
         $status = $user->createNewUser($params);
-        if ($status === true) {
+        if ($status === 'user created.') {
             $this->sendResponse(self::STATUS_CODE_SUCCESS, self::STATUS_MSG_SUCCESS,
                 ['message' => 'Registration successful.']);
         } else {

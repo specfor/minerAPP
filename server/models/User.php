@@ -43,7 +43,7 @@ class User extends DbModel
     /**
      * Create a new user in the database.
      * @param array $params An array of [key=> value] pairs.
-     * @return string Return 'user created' if success, Error msg if failed
+     * @return string Return 'user created.' if success, Error msg if failed
      */
     public function createNewUser(array $params): string
     {
