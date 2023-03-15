@@ -83,7 +83,12 @@ class User extends DbModel
         //For now set user role to 1
         $params['role'] = 1;
 
-        if(self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params)){
+        foreach ($params as $key => $value){
+            if (!in_array($key, self::TABLE_COLUMNS)){
+                unset($params[$key]);
+            }
+        }
+        if(self::insertIntoTable(self::TABLE_NAME, $params)){
             return 'user created.';
         }
         return 'Unknown error occured.';

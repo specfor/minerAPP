@@ -27,24 +27,36 @@ abstract class DbModel
      * Insert data into table. There must be a <b>TABLE_NAME</b> constant defining the relevant table name
      * in the Class definition.
      * @param string $tableName Name of the table where to insert data.
-     * @param array $tableColumns Array of table columns where to insert data.
      * @param array $params An array of placeholder=>value pairs.
+     * @param string $condition SQL condition to insert data. Placeholders can be added if it is needed
+     *      to use prepared statements.
+     * @param array $placeholderValues If passed a condition with placeholders, associative array of [placeholder => value]
+     *      need to be passed.
      * @return bool True if success in inserting to table.False if any error.
      */
-    protected static function insertIntoTable(string $tableName,array $tableColumns, array $params): bool
+    protected static function insertIntoTable(string $tableName, array $params,
+                                              string $condition = '', array $placeholderValues = []): bool
     {
         // Check whether all the keys passed here are real column names as user passed request data is passed to this.
         $attributes = [];
         $values = [];
         foreach ($params as $key => $value) {
-            if (in_array($key, $tableColumns)) {
-                $attributes[] = $key;
-                $values[] = $value;
-            }
+            $attributes[] = $key;
+            $values[] = $value;
+
         }
         $placeholders = array_map(fn($attr) => ":$attr", $attributes);
-        $statement = self::prepare("INSERT INTO $tableName (" . implode(',', $attributes) .
-            ") VALUES (" . implode(',', $placeholders) . ")");
+        $sql = "INSERT INTO $tableName (" . implode(',', $attributes) . ") VALUES (" .
+            implode(',', $placeholders) . ")";
+        if ($condition) {
+            $sql .= " WHERE $condition";
+        }
+        $statement = self::prepare($sql);
+        if (!empty($placeholderValues)) {
+            foreach ($placeholderValues as $placeholder => $value) {
+                $statement->bindValue($placeholder, $value);
+            }
+        }
         for ($i = 0; $i < count($placeholders); $i++) {
             $statement->bindValue($placeholders[$i], $values[$i]);
         }
@@ -61,15 +73,15 @@ abstract class DbModel
      * @return mixed Return PDOStatement|PDOException|bool based on scenario.
      */
     protected static function getDataFromTable(array $rows, string $tableName, string $conditionWithPlaceholders = '',
-                                     array $placeholderValues = [])
+                                               array $placeholderValues = [])
     {
         if ($conditionWithPlaceholders)
             $sql = "SELECT " . implode(', ', $rows) . " FROM $tableName WHERE $conditionWithPlaceholders";
         else
             $sql = "SELECT " . implode(', ', $rows) . " FROM $tableName";
         $statement = self::prepare($sql);
-        if ($conditionWithPlaceholders && !empty($placeholderValues)){
-            foreach ($placeholderValues as $placeholder=>$value){
+        if ($conditionWithPlaceholders && !empty($placeholderValues)) {
+            foreach ($placeholderValues as $placeholder => $value) {
                 $statement->bindValue($placeholder, $value);
             }
         }
