@@ -1,11 +1,11 @@
 <div class="container m-2">
-    <div class="row align-items-center p-4">
-        <div class="col-md-6 p-2">
-            <h1>{{errorPage:err-code}}</h1>
-            <h2>{{errorPage:err-message}}</h2>
+    <div class="row align-items-center">
+        <div class="col-sm-6 p-2 text-center text-sm-end">
+            <h1 class="display-1 fw-bolder">{{errorPage:err-code}}</h1>
+            <h2 class="display-3">{{errorPage:err-message}}</h2>
         </div>
-        <div class="col-md-6 p-2 ">
-            <img src="images/errorPage_broken.jpg" style="overflow: hidden" class="rounded" alt="Something Broken">
+        <div class="col-sm-6 p-2 ">
+            <img src="images/errorPage_broken.jpg" class="rounded img" alt="Something Broken">
         </div>
     </div>
 </div>
