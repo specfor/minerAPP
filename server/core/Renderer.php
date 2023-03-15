@@ -12,7 +12,7 @@ class Renderer
      * @param Page $page Page object to render.
      * @param array $variables Array of [placeholder => Value] pairs to replace placeholders.
      */
-    public function renderPage(Page $page, array $variables = [])
+    public function renderPage(Page $page, array $variables = []) :void
     {
         $pageData = $page->getPage();
         foreach (SiteController::$SiteSettings as $placeholder => $value){

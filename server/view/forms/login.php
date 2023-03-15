@@ -27,6 +27,7 @@
         <div class="mt-3">
             <button class="btn btn-primary " onclick="checkEmailValidity()"> Log In</button>
         </div>
+        <input type="hidden" name="csrf-token" value="{{login:csrf-token}}">
         <div class="mt-3">
             <p style="font-size:.8rem;">Don't have an account?<a href="register">Register</a></p>
         </div>

@@ -96,6 +96,7 @@
         <input name="confirmPassword" type="password" class="form-control mt-4" id="ConfirmPassword" placeholder="Confirm Password" autofocus
                required onkeyup="confirmPass()">
         <p class="text-danger" id="confirmPw" style="font-size: .8rem;"></p>
+        <input type="hidden" name="csrf-token" value="{{register:csrf-token}}">
         <div class="mt-4">
             <button class="btn btn-primary  " onclick="checkEmailValidity()">Create Account</button>
         </div>

@@ -2,7 +2,9 @@
 
 namespace AnyKey\Server\core;
 
+use AnyKey\Server\controllers\ApiControllerV1;
 use AnyKey\Server\core\exceptions\NotFoundException;
+use AnyKey\Server\models\API;
 
 class Router
 {
@@ -54,7 +56,12 @@ class Router
         $method = $this->request->getMethod();
         $callback = self::$routes[$method][$path] ?? false;
         if ($callback === false) {
-            throw new NotFoundException();
+            $pathPieces = explode('/', $path);
+            if ($pathPieces[0] === 'api'){
+                API::endPointNotFound();
+            }else{
+                throw new NotFoundException();
+            }
         }
         if (is_array($callback)) {
             $controller = new $callback[0];

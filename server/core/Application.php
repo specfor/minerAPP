@@ -45,7 +45,6 @@ class Application
         $this->response = new Response();
         $this->request = new Request();
         $this->renderer = new Renderer();
-        $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']['servername'], $config['db']['username'], $config['db']['password']);
     }
@@ -54,7 +53,7 @@ class Application
      * Start the application. Call to resolveRoute.
      * If any error occurred, call to render the relevant error page.
      */
-    public function run()
+    public function run(): void
     {
         try {
             $this->router->resolveRoute();

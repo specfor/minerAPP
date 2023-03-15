@@ -8,15 +8,15 @@ const tabNavBtns = document.getElementsByClassName("nav-btn");
 console.log(tabs.length);
 
 // Default tab is home
-var lastTabId = "home";
+let lastTabId = "home";
 
 for (let index = 0; index < tabNavBtns.length; index++) {
     tabNavBtns.item(index).addEventListener("click", () => {
-        var newSelectedTab = document.getElementById(
+        let newSelectedTab = document.getElementById(
             tabNavBtns.item(index).id.substring(4)
         );
-        var oldSelectedTab = document.getElementById(lastTabId);
-        if (newSelectedTab == oldSelectedTab) {
+        let oldSelectedTab = document.getElementById(lastTabId);
+        if (newSelectedTab === oldSelectedTab) {
             return;
         }
         newSelectedTab.style.display = "block";

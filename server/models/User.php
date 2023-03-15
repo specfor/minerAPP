@@ -2,15 +2,21 @@
 
 namespace AnyKey\Server\models;
 
+use AnyKey\Server\core\Application;
+use PDO;
+
 class User extends DbModel
 {
-    /**
-     * Following constants need to be initialized. They are used when executing Database actions.
-     */
+
+    // Following constants need to be initialized. They are used when executing Database actions.
+
     private const TABLE_NAME = 'users';
     private const PRIMARY_KEY = 'id';
     private const TABLE_COLUMNS = ['id', 'username', 'email', 'firstname', 'lastname', 'password', 'role'];
 
+    // User Roles
+    public const ROLE_ADMINISTRATOR = 1;
+    public const ROLE_USER = 2;
 
     public int $userId;
     public string $username;
@@ -37,69 +43,62 @@ class User extends DbModel
     /**
      * Create a new user in the database.
      * @param array $params An array of [key=> value] pairs.
-     * @return bool True if success, False if failed.
+     * @return string Return 'user created.' if success, Error msg if failed
      */
-    public function createNewUser(array $params): bool
+    public function createNewUser(array $params): string
     {
-        $errorFree = true;
+        if (!isset($params['username']) || !isset($params['email']) || !isset($params['password']) ||
+            !isset($params['confirmPassword'])) {
+            return 'All required fields were not filled.';
+        }
 
         // Performing checks on input variables.
 
         $statement = self::getDataFromTable(['id'], self::TABLE_NAME, 'username=:username',
             [':username' => $params['username']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Username already exists.', Page::ALERT_TYPE_ERROR);
+            return 'Username already exists.';
         }
 
         $statement = self::getDataFromTable(['id'], self::TABLE_NAME, 'email=:email',
             [':email' => $params['email']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Email already exists.', Page::ALERT_TYPE_ERROR);
+            return 'Email already exists.';
         }
 
         if ($params['password'] !== $params['confirmPassword']) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Password and confirm password fields do not match.', Page::ALERT_TYPE_ERROR);
+            return 'Password and Confirm Password fields are not same.';
         }
 
         if (strlen($params['password']) < self::MIN_PASSWORD_LENGTH) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Password is too short.', Page::ALERT_TYPE_ERROR);
+            return 'Password is too short.';
         }
 
         if (strlen($params['password']) > self::MAX_PASSWORD_LENGTH) {
-            $errorFree = false;
-            Application::$app->session->setFlashMessage('registerError',
-                'Password is too long.', Page::ALERT_TYPE_ERROR);
+            return 'Password is too long.';
         }
+
         $params['password'] = self::generatePasswordHash($params['password']);
 
         //For now set user role to 1
         $params['role'] = 1;
 
-        if ($errorFree) {
-            self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params);
-            return true;
+        if(self::insertIntoTable(self::TABLE_NAME, self::TABLE_COLUMNS, $params)){
+            return 'user created.';
         }
-        return false;
+        return 'Unknown error occured.';
     }
 
     /**
-     * Set user instance variables from the DATABASE regarding to the <b>SESSION</b> userId.
-     * If success, return true.
-     * If no SESSION userId is not set or any error occurred then return false.
+     * If passed user ID is present, set instance variable values.
+     * @param int $userID User ID to look for
+     * @return bool True if user is present, false otherwise.
      */
-    public function getUserData(): bool
+    public function loadUserData(int $userID): bool
     {
-        if (isset($_SESSION['userId'])) {
-            $statement = self::getDataFromTable(['*'], 'users', "id=" . $_SESSION['userId']);
-            $userData = $statement->fetchAll()[0];
+        $statement = self::getDataFromTable(['*'], 'users', "id=" . $userID);
+        $userData = $statement->fetchAll()[0];
+        if ($userData) {
             $this->userId = $userData['id'];
             $this->username = $userData['username'];
             $this->email = $userData['email'];
@@ -112,12 +111,12 @@ class User extends DbModel
     }
 
     /**
-     * Validate the user login.
+     * Validate the user presence. If user is present set userId value of the instance to the userId.
      * @param string $username Username / Email of the user.
      * @param string $password Password of the user.
-     * @return bool|int Return userId if user exists, false if not.
+     * @return bool Return true if user exists, false if not.
      */
-    public function validateUser(string $username, string $password): bool|int
+    public function validateUser(string $username, string $password):bool
     {
         $sql = "SELECT id, password FROM " . self::TABLE_NAME . " WHERE username=:username OR email=:username";
         $statement = self::prepare($sql);
@@ -126,10 +125,24 @@ class User extends DbModel
         $data = $statement->fetch(PDO::FETCH_ASSOC);
         if ($data) {
             if (password_verify($password, $data['password'])) {
-                return $data['id'];
+                $this->userId = $data['id'];
+                return true;
             }
         }
         return false;
     }
 
+    /**
+     * Get user type text.
+     * @return string Return user type message. 'none' if no role found.
+     */
+    public function getUserRoleText(): string
+    {
+        if ($this->userId == User::ROLE_ADMINISTRATOR)
+            return 'admin';
+        elseif ($this->userId == User::ROLE_USER)
+            return 'user';
+        else
+            return 'none';
+    }
 }
