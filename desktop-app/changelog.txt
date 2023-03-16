@@ -5,5 +5,5 @@
         +update-view
         +default-view
     >#settings
+    >#chat
     >#info
-    >#default
