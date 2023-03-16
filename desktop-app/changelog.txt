@@ -8,6 +8,6 @@
     >#settings
         >chat-right-pane
             +chat-selection-view
-            +chat-token-selection-view
+            +chat-token-selection-view  (NOTICE: TICKET ALERT (Green color dot) SHOUD BE SHOW WHEN WE REPLIED TO OUR CLIENT) 
     >#chat
     >#info
