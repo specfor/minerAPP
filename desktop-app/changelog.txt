@@ -4,6 +4,7 @@
     >#home
         +update-view
         +default-view
+        +login-view       ( !!!should set "display: none;" under "menu-section )
     >#settings
     >#chat
     >#info

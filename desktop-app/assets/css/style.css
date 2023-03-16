@@ -20,6 +20,7 @@
     justify-content: center;
     align-items: center;
     top: 5px;
+    display: none;
 }
 .nav-btn{
     padding: 8px;
@@ -223,8 +224,9 @@ select::-ms-expand {
 }
 /*default view*/
 .default-view{
-    /*display:none;*/                /*  change this to set mode of home tab  */
+    display:none;               /*  change this to set mode of home tab  */
 }
+
 .left-home-pane{
     /*background-color: aquamarine;*/
     position: absolute;
@@ -405,6 +407,136 @@ select::-ms-expand {
 
 }
 
+/*login-view*/
+.login-view{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    top: -30px;
+    left: 8px;
+    box-shadow: 0px 0px 20px #aaaaaa;
+    border-radius: 15px;
+}
+.login-view .left-login-pane img{
+    position: relative;
+    width: 400px;
+    height: 400px;
+}
+
+.login-view .right-login-pane{
+    width: 350px;
+    position: relative;
+    background-color: #FFFFFF;
+    height: 400px;
+    top: -2px;
+}
+
+.box{
+    background-color: rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    display: flex;
+    padding: 10px;
+    position: relative;
+    left: -35px;
+    top: 8px;
+    backdrop-filter: blur(15px);
+    transition: .5s;
+    border-radius: 5px;
+}
+
+.box h2{
+    margin: 20px;
+    color: white;
+    
+}
+.login-input-section{
+    width: 280px;
+    padding: 10px;
+    position: relative;
+    left: -30px;
+    text-align: left;
+}
+.login-input-section input{
+    position: relative;
+    outline: none;
+    padding: 8px;
+    width: 300px;
+    padding: 14px;
+    font-size: 19px;
+    margin-bottom: -25px;
+    left: 10px;
+    padding-left: 15px;
+    border: 2px solid white;
+    background-color: transparent;
+    border-radius: 10px;
+}
+.login-input-section label{
+    position: relative;
+    top: -20px;
+    left: 35px;
+    text-align: left;
+    transition: .3s;
+}
+.login-input-section input:focus ~ label,
+.login-input-section input:valid ~ label{
+    top:-45px;
+    background-color: white;
+    padding: 2px  8px;
+    border-radius: 5px;
+}
+
+.login-btn{
+    width: 250px;
+    border-radius: 40px;
+    background-color: white;
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 20px;
+    margin: 10px 0px;
+    font-weight: 600;
+    margin-top: 25px;
+}
+.login-btn:hover{
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+}
+.login-action-box{
+    margin: 0px 5px;
+    text-align: start;
+    position: relative;
+    left: -10px;
+}
+.login-action-box a{
+    text-decoration: none;
+    color: black;
+    font-weight: 570;
+    position: relative;
+    left:65px;
+}
+
+.login-action-box a:hover{
+    text-decoration: underline;
+}
+.box p{
+    padding: 10px;
+}
+.box p a{
+    text-decoration: none;
+    font-weight: 590;
+    position: relative;
+    top: 5px;
+    color: rgba(0, 0, 0, 0.397);
+}
+
+
 /*update view*/
 .update-view{
     text-align: center;
@@ -455,7 +587,6 @@ select::-ms-expand {
 /*Chat tab */
 .container_C{
     position: absolute;
-
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -507,11 +638,15 @@ select::-ms-expand {
     top: 340px;
     border-radius: 15px;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.119);
+    pointer-events: none;      
+    outline: none ;                                /**************************/
 }
 .button_input_msg{
     position:absolute;
     margin-left: auto;
-    background-color: rgba(0, 0, 0, 0.242);
+
+    background-color: rgba(255, 255, 255, 0.591);
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.345);
     padding: 15px;
     border: none;
     border-radius: 45%;
@@ -529,7 +664,7 @@ select::-ms-expand {
 }
 .button_input_msg:hover{
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.557);
+    background-color: rgba(0, 0, 0, 0.242);
     color: white;
     content: "Enter";
 }
