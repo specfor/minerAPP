@@ -455,7 +455,7 @@ select::-ms-expand {
 /*Chat tab */
 .container_C{
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.092);
+
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -501,31 +501,36 @@ select::-ms-expand {
     padding-left: 20px;
     flex: 1;
     height: 30px;
-    width:460px;
+    width:720px;
     font-size: 18px;
     margin: 5px;
     top: 340px;
-    border-radius: 8px;
+    border-radius: 15px;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.119);
 }
 .button_input_msg{
     position:absolute;
     margin-left: auto;
     background-color: rgba(0, 0, 0, 0.242);
-    padding: 12px;
+    padding: 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 45%;
     z-index: 1;
-    left: 410px;
+    left: 705px;
     top: 348px;
-    width: 80px;
-
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+}
+.button_input_msg img{
+    position: relative;
+    top: -8px;
+    left:-8px;
 }
 .button_input_msg:hover{
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.557);
     color: white;
-    font-size: 16px;
     content: "Enter";
 }
     /* heading selection of chat related to issues */
@@ -536,7 +541,7 @@ select::-ms-expand {
     width: 245px;
     height: 360px;
     left: 518px;
-    top: 35px;
+    top: 20px;
     padding: 8px;
     z-index: 0;
 }
@@ -545,15 +550,16 @@ select::-ms-expand {
 }
 .chat-info-box{
     margin-bottom: 5px;
+
 }
 .chat-info-box h1{
-    font-size: 30px;
+    font-size: 29px;
     font-weight: 600;
     background-color: transparent;
     color: gray;
     z-index: 0;
     position: relative;
-
+    margin-bottom: 8px;
 }
 .chat-info-box h6{
     font-size: 13px;
@@ -578,7 +584,6 @@ select::-ms-expand {
     width: 230px;
     background-color: rgba(0, 0, 0, 0.189);
     margin: 5px;
-    
 }
 .chat-selection-box button:hover{
     cursor: pointer;
