@@ -1,0 +1,9 @@
+>container
+    >menu-section
+>tabs
+    >#home
+        +update-view
+        +default-view
+    >#settings
+    >#info
+    >#default
