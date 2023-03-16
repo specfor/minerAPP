@@ -20,7 +20,7 @@
     justify-content: center;
     align-items: center;
     top: 5px;
-    display: none;
+
 }
 .nav-btn{
     padding: 8px;
@@ -438,7 +438,7 @@ select::-ms-expand {
     left: 8px;
     box-shadow: 0px 0px 20px #aaaaaa;
     border-radius: 15px;
-   
+   display: none;
 }
 .login-view .left-login-pane img{
     position: relative;
@@ -555,6 +555,10 @@ select::-ms-expand {
     top: 5px;
     color: rgba(0, 0, 0, 0.397);
 }
+.box p a:hover{
+    text-decoration: underline;
+}
+
 
 
 
@@ -718,7 +722,9 @@ select::-ms-expand {
 
 
     /* heading selection of chat related to issues */
-
+.chat-selection-view{
+    display: none;
+}
 .chat-right-pane{
     position: relative;
     /*background-color: #069;*/
@@ -774,4 +780,116 @@ select::-ms-expand {
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
     margin: 5px;
+}
+
+
+/*chat-token-selection-view*/
+
+.chat-token-selection-view{
+    background-color: rgb(255, 255, 255);
+}
+
+.chat-token-selection-view{
+    position: relative;
+    /*background-color: #069;*/
+    width: 270px;
+    height: 320px;
+    top: -8px;
+    left: -15px;
+    border-left: 2px solid rgba(0, 0, 0, 0.278);
+}
+.chat-token-selection-view .head-chats{
+    font-size: 26px;
+    color: rgba(0, 0, 0, 0.237);
+    padding: 5px;
+    text-align: center;
+    padding-top: 8px;
+    top: 0px;
+    position: relative;
+}
+.chat-token-selection-view .continue{
+    position: relative;
+    right: -200px;
+    top: -43px;
+    background-color:transparent;
+    border: none;
+}
+.continue:hover{
+    cursor: pointer;
+}
+.continue img{
+    width: 45px;
+    height: 45px;
+}
+.tickets{
+    position: relative;
+    background-color: transparent;
+    width: 255px;
+    height: 270px;
+    padding: 5px;
+    overflow: auto;
+    scroll-behavior: auto;
+    top: -40px;
+    left: 3px;
+}
+.tickets::-webkit-scrollbar{
+    display: none;
+}
+.tickets{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none; 
+}
+
+.ticket{
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    display: flex;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.135);
+    border-radius: 5px;
+    margin: 8px 0px;
+    height: 30px;
+    align-items: center;
+    justify-content: left;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.ticket-info h6{
+    font-size: 14px;
+    color: black;
+}
+.ticket-info h4{
+    position: relative;
+    top: 3px;
+    left: 0px;
+    color: black;
+}
+.ticket .close-btn {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 50px;
+    height: 50px;
+}
+.ticket .close-btn{
+    position: absolute;
+    right: 5px;
+}
+.close-btn:hover{
+    cursor: pointer;
+}
+.ticket .close-btn img{
+    width: 45px;
+    height: 45px;
+}
+.alert{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    color: chartreuse;
+    background-color: chartreuse;
+    position: absolute;
+    right: 55px;
+    justify-content: center;
+    align-items: center;
+    font-size: 1px;
+    padding:.5px;
 }

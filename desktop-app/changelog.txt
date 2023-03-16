@@ -6,5 +6,8 @@
         +default-view
         +login-view       ( !!!should set "display: none;" under "menu-section )
     >#settings
+        >chat-right-pane
+            +chat-selection-view
+            +chat-token-selection-view
     >#chat
     >#info
