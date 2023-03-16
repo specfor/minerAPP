@@ -20,7 +20,7 @@
     justify-content: center;
     align-items: center;
     top: 5px;
-
+    display: none;
 }
 .nav-btn{
     padding: 8px;
@@ -438,7 +438,7 @@ select::-ms-expand {
     left: 8px;
     box-shadow: 0px 0px 20px #aaaaaa;
     border-radius: 15px;
-    display: none;
+   
 }
 .login-view .left-login-pane img{
     position: relative;
@@ -681,8 +681,7 @@ select::-ms-expand {
     margin: 5px;
     top: 340px;
     border-radius: 15px;
-    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.119);
-    pointer-events: none;      
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.119);     
     outline: none ;                                /**************************/
 }
 .button_input_msg{
