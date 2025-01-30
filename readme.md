@@ -1,9 +1,1 @@
-electron app
-<<<<<<< Updated upstream
->menu added!
->home tab widjet added!
-=======
->menu added 
->home widjets added!
->redesign home menu widjets
->>>>>>> Stashed changes
+This is an electron destop application designed for windows. This program manages some of the bitcoin mining applications and give users an unified user interface to manage them all at one place.
